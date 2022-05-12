@@ -1,0 +1,75 @@
+[
+  {
+    "key": "nom",
+    "type": "string",
+    "title": "Nom de la personne",
+    "description":"Nom de la personne"
+  },
+  {
+    "key": "prenom",
+    "type": "string",
+    "title": "Prenom de la personne",
+    "description":"Prenom de la personne"
+  },
+  {
+    "key": "genre",
+    "type": "string",
+    "title": "Genre de la personne",
+    "description":"Genre de la personne"
+  },
+  
+  {
+    "key": "code_ville_naissance",
+    "type": "string",
+    "title": "Code du commune de la ville de naissance",
+    "description": "Code du commune de la ville de naissance"
+  },
+  {
+    "key": "nom_ville_naissance",
+    "type": "string",
+    "title": "Nom de la commune de naissance",
+    "description":"Nom de la commune de naissance"
+  },
+  {
+    "key": "pays_naissance",
+    "type": "string",
+    "title": "Pays de la commune de naissance",
+    "description": "Pays de la commune de naissance"
+  },
+  {
+    "key": "age_deces",
+    "type": "string",
+    "title": "Age de deces de la personne",
+    "description": "Age de décès de la personne"
+  },
+  {
+    "key": "date_naissance",
+    "type": "string",
+    "title": "Date de naissance de la personne",
+    "description": "Date de naissance de la personne"
+  },
+  {
+    "key": "date_mort",
+    "type": "string",
+    "title": "Date de deces de la personne",
+    "description": "Date de décès de la personne"
+  },
+  {
+    "key": "code_ville_deces",
+    "type": "string",
+    "title": "Code du commune de la ville de deces",
+    "description":"Code du commune de la ville de décès"
+  },
+  {
+    "key": "nom_ville_deces",
+    "type": "string",
+    "title": "Nom de la commune de deces",
+    "description":"Nom de la commune de deces"
+  },
+  {
+    "key": "numero_acte_deces",
+    "type": "string",
+    "title": "Numero acte de deces",
+    "description":"Numero d'acte de décès"
+  }
+]
