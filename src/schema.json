@@ -38,7 +38,7 @@
   },
   {
     "key": "age_deces",
-    "type": "string",
+    "type": "integer",
     "title": "Age de deces de la personne",
     "description": "Age de décès de la personne"
   },

@@ -33,11 +33,11 @@ describe('deaths processing', () => {
       return Promise.reject(error.response)
     })
 
-    const pluginConfig = { pluginMessage: 'Hello' }
+    const pluginConfig = { }
 
     const processingConfig = {
       clearFiles: false,
-      datasetMode: 'create',
+      datasetMode: 'update',
       dataset: {
         title: 'deces-test',
         id: 'process-deces-id'
@@ -62,7 +62,7 @@ describe('deaths processing', () => {
     await fs.ensureDir('data/')
     // process.chdir('data/')
     console.log(process.cwd())
-    await processing.run({pluginConfig, processingConfig, tmpDir: path.resolve('./data'), axios, log, patchConfig})
+    await processing.run({pluginConfig, processingConfig, tmpDir: path.resolve('./data'), axios: axiosInstance, log, patchConfig})
     // process.chdir(cwd)
   })
 })

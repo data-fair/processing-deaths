@@ -15,7 +15,7 @@ exports.run = async ({ pluginConfig, processingConfig, tmpDir, axios, log, patch
       href: 'https://www.etalab.gouv.fr/licence-ouverte-open-licence'
     },
     schema: require('./src/schema.json'),
-    primaryKey: ['nom', 'numero_acte_deces'],
+    primaryKey: ['nom','prenom','numero_acte_deces'],
     rest: {
       history: true,
       historyTTL: {
@@ -58,6 +58,6 @@ exports.run = async ({ pluginConfig, processingConfig, tmpDir, axios, log, patch
     await log.info(`le jeu de donnée existe, id="${dataset.id}", title="${dataset.title}"`)
   }
 
-  // await processData(tmpDir, log)
+  await processData(tmpDir, dataset, axios, log)
   //if (!processingConfig.skipUpload) await upload(processingConfig, tmpDir, axios, log, patchConfig)
 }

@@ -9,6 +9,8 @@ const InseeCode = require('insee-municipality-code')
 const pump = util.promisify(require('pump'))
 const stream = require('stream')
 const lineReader = require('line-reader')
+const readline = require('readline')
+const { once } = require('events');
 
 function parseLines(lines) {
   const out = []
@@ -25,8 +27,8 @@ function parseLines(lines) {
       date_mort: line.slice(154, 162),
       code_ville_deces: line.slice(162, 167),
       nom_ville_deces: '',
-      numero_acte_deces: line.slice(168, 176)
-    }            
+      numero_acte_deces: line.slice(167, 176).trim()
+    }
     const date1 = identity.date_naissance
     let mois_naissance = date1.slice(4, 6)
     let jour_naissance = date1.slice(6, 8)
@@ -52,51 +54,20 @@ function parseLines(lines) {
 
     }
     identity.date_mort = date2.slice(0, 4) + "-" + mois_deces + "-" + jour_deces
-    identity.age_deces = getAge(identity.date_naissance, identity.date_mort)
+    identity.age_deces = getAge(identity.date_naissance, identity.date_mort) < 150 ? getAge(identity.date_naissance, identity.date_mort) : undefined
 
-    if (identity.code_ville_deces.match('[0-9]{5}') ) {
+    if (identity.code_ville_deces.match('[0-9]{5}')) {
       if (InseeCode.getMunicipality(identity.code_ville_deces) != null) {
-        identity.nom_ville_deces =InseeCode.getMunicipality(identity.code_ville_deces).name
+        identity.nom_ville_deces = InseeCode.getMunicipality(identity.code_ville_deces).name
       }
     }
     if (identity.pays_naissance.match(/[A-Z]+/g) === null) {
       identity.pays_naissance = 'FRANCE'
     }
-    out.push(Object.values(identity).join(','))
+
+    out.push(identity)
   }
   return out
-}
-
-module.exports = async (tmpDir, log) => {
-  await log.step('Traitement des fichiers')
-  let dir = await fs.readdir(tmpDir)
-  dir = dir.filter(file => file.endsWith('.txt'))
-  console.log(dir)
-  const outStream = fs.createWriteStream("out.csv")
-  outStream.write(datasetSchema.map(f => `"${f.key}"`).join(',') + endOfLine)
-  const lines = []
-  for (const file of dir) {
-
-    let readStream = fs.createReadStream(file)
-    lineReader.eachLine(readStream, async function(line) {
-      if ( lines.length > 10000) {
-        const tabLines = parseLines(lines, outStream)
-        await log.info(`envoi de ${tablines.length} lignes vers le jeu de données`)
-        while (tablines.length) {
-          // if (_stopped) return await log.info('interruption demandée')
-          const lines = tablines.splice(0, 1000)
-          const res = await axios.post(`api/v1/datasets/${dataset.id}/_bulk_lines`, lines)
-          if (res.data.nbErrors) {
-            log.error(`${res.data.nbErrors} échecs sur ${lines.length} lignes à insérer`, res.data.errors)
-            throw new Error('échec à l\'insertion des lignes dans le jeu de données')
-          }
-        }
-        lines.length = 0
-      } else {
-        lines.push(line)
-      }
-    })
-  }
 }
 
 function getAge(FirstDate, SecondDate) {
@@ -112,4 +83,53 @@ function getAge(FirstDate, SecondDate) {
   }
 
   return yearDiff
+}
+
+module.exports = async (tmpDir, dataset, axios, log) => {
+  await log.step('Traitement des fichiers')
+  let dir = await fs.readdir(tmpDir)
+  dir = dir.filter(file => file.endsWith('.txt'))
+  console.log(dir)
+  const linesTab = []
+  for (const file of dir) {
+    await log.info(`Traitement de ${file}`)
+    const rl = readline.createInterface({
+      input: fs.createReadStream(path.join(tmpDir, file)),
+      crlfDelay: Infinity
+    });
+
+    rl.on('line', async function(line) {
+      // console.log(linesTab.length)
+      linesTab.push(line)
+      if (linesTab.length >= 2000) {
+        const tablines = parseLines(linesTab)
+        console.log('parse réalisé')
+        let sizeTab = linesTab.length
+        linesTab.length = 0
+        await log.info(`envoi de ${sizeTab} lignes vers le jeu de données`)
+        
+        while (tablines.length) {
+          // if (_stopped) return await log.info('interruption demandée')
+          const lines = tablines.splice(0, 100)
+          console.log('Traitement de', lines.length)
+          try {
+            await axios.post(`api/v1/datasets/${dataset.id}/_bulk_lines`, lines)
+          } catch(err) {
+            console.log(err.status, err.statusText)
+          }
+        }
+      }
+    })
+
+    await once(rl, 'close');
+    // console.log(linesTab.length)
+    const tablines = parseLines(linesTab)
+    await log.info(`envoi de ${linesTab.length} lignes vers le jeu de données`)
+    try {
+      const res = await axios.post(`api/v1/datasets/${dataset.id}/_bulk_lines`, tablines)
+    } catch(err) {
+      console.log(err)
+    }
+    linesTab.length = 0
+  }
 }
