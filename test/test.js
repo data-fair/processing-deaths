@@ -1,4 +1,4 @@
-process.env.NODE_ENV = 'test'
+process.env.NODE_ENV = 'local-dev'
 const fs = require('fs-extra')
 const config = require('config')
 const axios = require('axios')
@@ -8,7 +8,7 @@ const assert = require('assert').strict
 const processing = require('../')
 const path = require('path')
 
-describe('Station service processing', () => {
+describe('deaths processing', () => {
   it('should expose a processing config schema for users', async () => {
     const schema = require('../processing-config-schema.json')
     assert.equal(schema.type, 'object')
@@ -37,10 +37,10 @@ describe('Station service processing', () => {
 
     const processingConfig = {
       clearFiles: false,
-      skipUpload: false,
-      datasetIdPrefix: 'gasoline',
+      datasetMode: 'create',
       dataset: {
-        title: 'gasoline - test'
+        title: 'deces-test',
+        id: 'process-deces-id'
       }
     }
 
@@ -60,9 +60,9 @@ describe('Station service processing', () => {
 
     const cwd = process.cwd()
     await fs.ensureDir('data/')
-    process.chdir('data/')
+    // process.chdir('data/')
     console.log(process.cwd())
-    await processing.run({pluginConfig, processingConfig, tmpDir: path.resolve('./'), axios, log, patchConfig})
-    process.chdir(cwd)
+    await processing.run({pluginConfig, processingConfig, tmpDir: path.resolve('./data'), axios, log, patchConfig})
+    // process.chdir(cwd)
   })
 })

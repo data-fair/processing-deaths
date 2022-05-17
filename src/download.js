@@ -26,7 +26,7 @@ module.exports = async (pluginConfig, dir = 'data', axios, log) => {
   const ressources = res.data.resources
   for (const file of ressources) {
     var year = new Date().getFullYear()
-    if (file.title.match('deces-'+ year +'-m[0-1][0-9].txt')){
+    if (file.title.match('deces-'+ year +'-m[0-1][0-9].txt') || file.title.match('deces-[0-9]{4}.txt')){
       log.step(`téléchargement du fichier ${file.title}`)
       
       const url = new URL(file.url)
@@ -40,27 +40,7 @@ module.exports = async (pluginConfig, dir = 'data', axios, log) => {
         log.debug(`extraction de l'archive ${fileName}`, '')
         const { stderr } = await exec(`unzip -o ${fileName}`)
         if (stderr) throw new Error(`échec à l'extraction de l'archive ${fileName} : ${stderr}`)
-      }
-      
+      } 
     }
-    
-    if (file.title.match('deces-[0-9]{4}.txt')) {
-      log.step(`téléchargement du fichier ${file.title}`)
-      
-      const url = new URL(file.url)
-      const fileName = path.parse(url.pathname).base
-      await withStreamableFile(fileName, async (writeStream) => {
-        const res = await axios({ url: url.href, method: 'GET', responseType: 'stream' })
-        await pump(res.data, writeStream)
-      })
-
-      if (fileName.endsWith('.zip')) {
-        log.debug(`extraction de l'archive ${fileName}`, '')
-        const { stderr } = await exec(`unzip -o ${fileName}`)
-        if (stderr) throw new Error(`échec à l'extraction de l'archive ${fileName} : ${stderr}`)
-      }
-      
-    }
-    
   }
 }
