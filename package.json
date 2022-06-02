@@ -25,19 +25,17 @@
   "devDependencies": {
     "axios": "^0.21.4",
     "config": "^3.3.6",
-    "eslint": "^7.18.0",
+    "eslint": "^8.16.0",
+    "eslint-config-standard": "^17.0.0",
     "mocha": "^8.2.1"
   },
   "dependencies": {
-    "codes-postaux": "^3.6.0",
-    "csv": "^6.0.5",
+    "byline": "^5.0.0",
+    "dayjs": "^1.11.2",
     "download": "^8.0.0",
     "fetch": "^1.1.0",
     "form-data": "^4.0.0",
     "fs-extra": "^10.0.1",
-    "insee-municipality-code": "^1.2.1",
-    "libzip": "^1.0.8",
-    "line-reader": "^0.4.0",
     "moment": "^2.29.2",
     "pump": "^3.0.0"
   }

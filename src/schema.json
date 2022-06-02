@@ -3,73 +3,79 @@
     "key": "nom",
     "type": "string",
     "title": "Nom de la personne",
-    "description":"Nom de la personne"
+    "description": "Nom de la personne"
   },
   {
     "key": "prenom",
     "type": "string",
     "title": "Prenom de la personne",
-    "description":"Prenom de la personne"
+    "description": "Prenom de la personne"
   },
   {
     "key": "genre",
     "type": "string",
     "title": "Genre de la personne",
-    "description":"Genre de la personne"
+    "description": "Genre de la personne"
   },
-  
   {
-    "key": "code_ville_naissance",
+    "key": "codeVilleNaissance",
     "type": "string",
     "title": "Code du commune de la ville de naissance",
     "description": "Code du commune de la ville de naissance"
   },
   {
-    "key": "nom_ville_naissance",
+    "key": "nomVilleNaissance",
     "type": "string",
     "title": "Nom de la commune de naissance",
-    "description":"Nom de la commune de naissance"
+    "description": "Nom de la commune de naissance"
   },
   {
-    "key": "pays_naissance",
+    "key": "paysNaissance",
     "type": "string",
     "title": "Pays de la commune de naissance",
     "description": "Pays de la commune de naissance"
   },
   {
-    "key": "age_deces",
+    "key": "ageDeces",
     "type": "integer",
     "title": "Age de deces de la personne",
     "description": "Age de décès de la personne"
   },
   {
-    "key": "date_naissance",
+    "key": "dateNaissance",
     "type": "string",
     "title": "Date de naissance de la personne",
     "description": "Date de naissance de la personne"
   },
   {
-    "key": "date_mort",
+    "key": "dateMort",
     "type": "string",
     "title": "Date de deces de la personne",
     "description": "Date de décès de la personne"
   },
   {
-    "key": "code_ville_deces",
+    "key": "codeVilleDeces",
     "type": "string",
     "title": "Code du commune de la ville de deces",
-    "description":"Code du commune de la ville de décès"
+    "description": "Code du commune de la ville de décès"
   },
   {
-    "key": "nom_ville_deces",
+    "key": "nomVilleDeces",
     "type": "string",
     "title": "Nom de la commune de deces",
-    "description":"Nom de la commune de deces"
+    "description": "Nom de la commune de deces"
   },
   {
-    "key": "numero_acte_deces",
+    "key": "nomPaysDeces",
+    "type": "string",
+    "title": "Nom du pays de deces",
+    "description": "Nom du pays de deces",
+    "x-refersTo": "http://schema.org/addressCountry"
+  },
+  {
+    "key": "numeroActeDeces",
     "type": "string",
     "title": "Numero acte de deces",
-    "description":"Numero d'acte de décès"
+    "description": "Numero d'acte de décès"
   }
 ]

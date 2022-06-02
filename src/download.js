@@ -2,10 +2,7 @@ const fs = require('fs-extra')
 const path = require('path')
 const util = require('util')
 const pump = util.promisify(require('pump'))
-const exec = util.promisify(require('child_process').exec)
-// const config = require('config')
-
-// const { write } = require("fs")
+const dayjs = require('dayjs')
 
 const withStreamableFile = async (filePath, fn) => {
   // creating empty file before streaming seems to fix some weird bugs with NFS
@@ -19,28 +16,21 @@ const withStreamableFile = async (filePath, fn) => {
   await fs.move(filePath + '.tmp', filePath, { overwrite: true })
 }
 
-module.exports = async (pluginConfig, dir = 'data', axios, log) => {
+module.exports = async (dir = 'data', axios, log) => {
   const datasetId = '5de8f397634f4164071119c5'
-  const res = await axios.get('https://www.data.gouv.fr/api/1/datasets/' + datasetId)
-
+  const res = await axios.get('https://www.data.gouv.fr/api/1/datasets/' + datasetId + '/')
   const ressources = res.data.resources
+
   for (const file of ressources) {
-    var year = new Date().getFullYear()
-    if (file.title.match('deces-'+ year +'-m[0-1][0-9].txt') || file.title.match('deces-[0-9]{4}.txt')){
-      log.step(`téléchargement du fichier ${file.title}`)
-      
+    if (file.title.match('deces-' + dayjs().year() + '-m[0-1][0-9].txt') || file.title.match('deces-[0-9]{4}.txt')) {
       const url = new URL(file.url)
-      const fileName = path.parse(url.pathname).base
-      await withStreamableFile(fileName, async (writeStream) => {
+      const filePath = `${dir}/${path.parse(url.pathname).base}`
+
+      await log.info(`téléchargement du fichier ${file.title}, écriture dans ${filePath}`)
+      await withStreamableFile(filePath, async (writeStream) => {
         const res = await axios({ url: url.href, method: 'GET', responseType: 'stream' })
         await pump(res.data, writeStream)
       })
-
-      if (fileName.endsWith('.zip')) {
-        log.debug(`extraction de l'archive ${fileName}`, '')
-        const { stderr } = await exec(`unzip -o ${fileName}`)
-        if (stderr) throw new Error(`échec à l'extraction de l'archive ${fileName} : ${stderr}`)
-      } 
     }
   }
 }

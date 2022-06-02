@@ -13,8 +13,7 @@
           "type": "object",
           "required": ["title"],
           "properties": {
-            "id": {"type": "string", "title": "station-essence-france-metropole"},
-            "title": {"type": "string", "title": "Titre", "default": "station_essence_france_metropole"}
+            "title": {"type": "string", "title": "Titre", "default": "Décès"}
           }
         }
       }
@@ -38,11 +37,36 @@
     }]
   },{
     "title": "Paramètres",
+    "required": ["datasetCodeInsee"],
     "properties": {
-      "skipUpload": {
-        "title": "ne pas charger les jeux de données",
+      "clearFiles": {
+        "title": "Supprimer les fichiers téléchargés",
         "type": "boolean",
-        "default": false
+        "default": true
+      },
+      "datasetCodeInseeCommune": {
+        "title": "Jeu de données de référence - Codes INSEE commune",
+        "type": "object",
+        "x-fromUrl": "{context.dataFairUrl}/api/v1/datasets?q={q}&select=id,title&concepts=http://rdf.insee.fr/def/geo#codeCommune,http://schema.org/City&{context.ownerFilter}",
+        "x-itemsProp": "results",
+        "x-itemTitle": "title",
+        "x-itemKey": "id",
+        "properties": {
+          "id": {"type": "string", "title": "Identifiant"},
+          "title": {"type": "string", "title": "Titre"}
+        }
+      },
+      "datasetCodeInseePays": {
+        "title": "Jeu de données de référence - Codes INSEE pays",
+        "type": "object",
+        "x-fromUrl": "{context.dataFairUrl}/api/v1/datasets?q={q}&select=id,title&concepts=http://rdf.insee.fr/def/geo#codeCommune&{context.ownerFilter}",
+        "x-itemsProp": "results",
+        "x-itemTitle": "title",
+        "x-itemKey": "id",
+        "properties": {
+          "id": {"type": "string", "title": "Identifiant"},
+          "title": {"type": "string", "title": "Titre"}
+        }
       }
     }
   }]

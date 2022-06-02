@@ -1,11 +1,7 @@
 const download = require('./src/download')
 const processData = require('./src/process')
-const upload = require('./src/upload')
 
-exports.run = async ({ pluginConfig, processingConfig, tmpDir, axios, log, patchConfig }) => {
-  
-  // await download(pluginConfig, tmpDir, axios, log)
-
+exports.run = async ({ pluginConfig, processingConfig, tmpDir, axios, log }) => {
   const baseDataset = {
     isRest: true,
     description: '',
@@ -15,7 +11,7 @@ exports.run = async ({ pluginConfig, processingConfig, tmpDir, axios, log, patch
       href: 'https://www.etalab.gouv.fr/licence-ouverte-open-licence'
     },
     schema: require('./src/schema.json'),
-    primaryKey: ['nom','prenom','numero_acte_deces'],
+    primaryKey: ['nom', 'prenom', 'numeroActeDeces'],
     rest: {
       history: true,
       historyTTL: {
@@ -35,6 +31,7 @@ exports.run = async ({ pluginConfig, processingConfig, tmpDir, axios, log, patch
   }
 
   let dataset
+  await log.step('Vérification du jeu de données')
   if (processingConfig.datasetMode === 'create') {
     if (processingConfig.dataset.id) {
       try {
@@ -52,12 +49,49 @@ exports.run = async ({ pluginConfig, processingConfig, tmpDir, axios, log, patch
     await log.info(`jeu de donnée créé, id="${dataset.id}", title="${dataset.title}"`)
   } else if (processingConfig.datasetMode === 'update') {
     // permet de vérifier l'existance du jeu de donnée avant de réaliser des opérations dessus
-    await log.step('Vérification du jeu de données')
     dataset = (await axios.get(`api/v1/datasets/${processingConfig.dataset.id}`)).data
     if (!dataset) throw new Error(`le jeu de données n'existe pas, id${processingConfig.dataset.id}`)
     await log.info(`le jeu de donnée existe, id="${dataset.id}", title="${dataset.title}"`)
   }
 
-  await processData(tmpDir, dataset, axios, log)
-  //if (!processingConfig.skipUpload) await upload(processingConfig, tmpDir, axios, log, patchConfig)
+  let keyInseeComm, keyNomComm
+  let keyInseePays, keyNomPays
+
+  await log.step('Récupération des jeux de données de références')
+
+  const schemaInseeCommRef = (await axios.get(`api/v1/datasets/${processingConfig.datasetCodeInseeCommune.id}/schema`)).data
+  const schemaInseePaysRef = (await axios.get(`api/v1/datasets/${processingConfig.datasetCodeInseePays.id}/schema`)).data
+  // console.log(schemaInseeRef)
+  for (const i of schemaInseeCommRef) {
+    if (i['x-refersTo'] === 'http://rdf.insee.fr/def/geo#codeCommune') keyInseeComm = i.key
+    if (i['x-refersTo'] === 'http://schema.org/City') keyNomComm = i.key
+  }
+
+  for (const i of schemaInseePaysRef) {
+    if (i['x-refersTo'] === 'http://rdf.insee.fr/def/geo#codePays') keyInseePays = i.key
+    if (i['x-refersTo'] === 'http://schema.org/addressCountry') keyNomPays = i.key
+  }
+
+  const keysRef = {
+    keyInseeComm,
+    keyNomComm,
+    keyInseePays,
+    keyNomPays
+  }
+
+  const refCodeInseeComm = []
+  // let codesCommunes = (await axios.get(`api/v1/datasets/${processingConfig.datasetCodeInseeCommune.id}/lines`, { params: { size: 10000, select: `${keyInseeComm},${keyNomComm}` } })).data
+  let codesCommunes = (await axios.get(`api/v1/datasets/${processingConfig.datasetCodeInseeCommune.id}/lines`, { params: { size: 10000, select: `${keyInseeComm},${keyNomComm}` } })).data
+  refCodeInseeComm.push(...codesCommunes.results)
+  while (codesCommunes.results.length === 10000) {
+    codesCommunes = (await axios.get(codesCommunes.next)).data
+    refCodeInseeComm.push(...codesCommunes.results)
+  }
+
+  await log.info(`${refCodeInseeComm.length} lignes dans les données de référence "${processingConfig.datasetCodeInseeCommune.title}"`)
+  const refCodeInseePays = (await axios.get(`api/v1/datasets/${processingConfig.datasetCodeInseePays.id}/lines`, { params: { size: 10000, select: `${keyInseePays},${keyNomPays}` } })).data.results
+  await log.info(`${refCodeInseePays.length} lignes dans les données de référence "${processingConfig.datasetCodeInseePays.title}"`)
+
+  // await download(tmpDir, axios, log)
+  await processData(tmpDir, refCodeInseeComm, refCodeInseePays, keysRef, dataset, axios, log)
 }

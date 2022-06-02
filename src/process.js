@@ -1,76 +1,80 @@
-const fs = require('fs-extra');
+const fs = require('fs-extra')
 const path = require('path')
 const util = require('util')
-const endOfLine = require('os').EOL
-const csvSync = require('csv/sync')
-const datasetSchema = require('./schema.json')
-const csv = require('csv')
-const InseeCode = require('insee-municipality-code')
 const pump = util.promisify(require('pump'))
 const stream = require('stream')
-const lineReader = require('line-reader')
-const readline = require('readline')
-const { once } = require('events');
+const byline = require('byline')
 
-function parseLines(lines) {
+// parse n lines and return an array of json object
+function parseLines (lines, refCodeInseeComm, refCodeInseePays, keysRef) {
   const out = []
   for (const line of lines) {
-    identity = {
-      nom: line.match('\^.+?\\*').toString().replace('\*', ''),
-      prenom: line.match('\\*.+?\/') === null ? ' ' : line.match('\\*.+?\/').toString().replace('\*', '').replace('\/', ''),
-      genre: line[80] === '1' ? 'Homme' : 'Femme',
-      code_ville_naissance: line.slice(89, 94),
-      nom_ville_naissance: line.slice(94, 124).trim(),
-      pays_naissance: line.slice(124, 154).trim(),
-      age_deces: '',
-      date_naissance: line.slice(81, 89),
-      date_mort: line.slice(154, 162),
-      code_ville_deces: line.slice(162, 167),
-      nom_ville_deces: '',
-      numero_acte_deces: line.slice(167, 176).trim()
-    }
-    const date1 = identity.date_naissance
-    let mois_naissance = date1.slice(4, 6)
-    let jour_naissance = date1.slice(6, 8)
-    if (mois_naissance === '00') {
-      mois_naissance = date1.substr(4, 2).replace('00', '01')
-
-    }
-    if (jour_naissance === '00') {
-      jour_naissance = date1.substr(4, 2).replace('00', '01')
-
-    }
-    identity.date_naissance = date1.slice(0, 4) + "-" + mois_naissance + "-" + jour_naissance
-
-    const date2 = identity.date_mort
-    let mois_deces = date2.slice(4, 6)
-    let jour_deces = date2.slice(6, 8)
-    if (mois_deces === '00') {
-      mois_deces = date2.substr(4, 2).replace('00', '01')
-
-    }
-    if (jour_deces === '00') {
-      jour_deces = date2.substr(4, 2).replace('00', '01')
-
-    }
-    identity.date_mort = date2.slice(0, 4) + "-" + mois_deces + "-" + jour_deces
-    identity.age_deces = getAge(identity.date_naissance, identity.date_mort) < 150 ? getAge(identity.date_naissance, identity.date_mort) : undefined
-
-    if (identity.code_ville_deces.match('[0-9]{5}')) {
-      if (InseeCode.getMunicipality(identity.code_ville_deces) != null) {
-        identity.nom_ville_deces = InseeCode.getMunicipality(identity.code_ville_deces).name
+    try {
+      const identity = {
+        nom: line.substr(0, line.indexOf('*')).replace('*', ''),
+        prenom: line.substr(line.indexOf('*'), line.indexOf('/')).toString().replace('*', '').replace('/', ''),
+        genre: line[80] === '1' ? 'Homme' : 'Femme',
+        codeVilleNaissance: line.slice(89, 94),
+        nomVilleNaissance: line.slice(94, 124).trim(),
+        paysNaissance: line.slice(124, 154).trim(),
+        ageDeces: '',
+        dateNaissance: line.slice(81, 89),
+        dateMort: line.slice(154, 162),
+        codeVilleDeces: line.slice(162, 167),
+        nomVilleDeces: '',
+        nomPaysDeces: '',
+        numeroActeDeces: line.slice(167, 176).trim()
       }
-    }
-    if (identity.pays_naissance.match(/[A-Z]+/g) === null) {
-      identity.pays_naissance = 'FRANCE'
-    }
+      const date1 = identity.dateNaissance
+      let moisNaissance = date1.slice(4, 6)
+      let jourNaissance = date1.slice(6, 8)
+      if (moisNaissance === '00') {
+        moisNaissance = date1.substr(4, 2).replace('00', '01')
+      }
+      if (jourNaissance === '00') {
+        jourNaissance = date1.substr(4, 2).replace('00', '01')
+      }
+      identity.dateNaissance = date1.slice(0, 4) + '-' + moisNaissance + '-' + jourNaissance
 
-    out.push(identity)
+      const date2 = identity.dateMort
+      let moisDeces = date2.slice(4, 6)
+      let jourDeces = date2.slice(6, 8)
+      if (moisDeces === '00') {
+        moisDeces = date2.substr(4, 2).replace('00', '01')
+      }
+      if (jourDeces === '00') {
+        jourDeces = date2.substr(4, 2).replace('00', '01')
+      }
+      identity.dateMort = date2.slice(0, 4) + '-' + moisDeces + '-' + jourDeces
+      identity.ageDeces = getAge(identity.dateNaissance, identity.dateMort) < 150 ? getAge(identity.dateNaissance, identity.dateMort) : undefined
+
+      if (identity.codeVilleDeces.startsWith('99')) {
+        for (const elem of refCodeInseePays) {
+          if (elem[keysRef.keyInseePays] === identity.codeVilleDeces) {
+            identity.nomPaysDeces = elem[keysRef.keyNomPays]
+          }
+        }
+      } else {
+        identity.nomPaysDeces = 'FRANCE'
+        for (const elem of refCodeInseeComm) {
+          if (elem[keysRef.keyInseeComm] === identity.codeVilleDeces) {
+            identity.nomVilleDeces = elem[keysRef.keyNomComm]
+          }
+        }
+      }
+      if (identity.paysNaissance.match(/[A-Z]+/g) === null) {
+        identity.paysNaissance = 'FRANCE'
+      }
+      out.push(identity)
+    } catch (err) {
+      console.log(line)
+      console.log(err)
+    }
   }
   return out
 }
 
-function getAge(FirstDate, SecondDate) {
+function getAge (FirstDate, SecondDate) {
   const birthDate = new Date(FirstDate)
   const deathDate = new Date(SecondDate)
 
@@ -85,51 +89,56 @@ function getAge(FirstDate, SecondDate) {
   return yearDiff
 }
 
-module.exports = async (tmpDir, dataset, axios, log) => {
+module.exports = async (tmpDir, refCodeInseeComm, refCodeInseePays, keysRef, dataset, axios, log) => {
   await log.step('Traitement des fichiers')
   let dir = await fs.readdir(tmpDir)
   dir = dir.filter(file => file.endsWith('.txt'))
-  console.log(dir)
-  const linesTab = []
+  // console.log(dir)
+  let linesTab = []
   for (const file of dir) {
-    await log.info(`Traitement de ${file}`)
-    const rl = readline.createInterface({
-      input: fs.createReadStream(path.join(tmpDir, file)),
-      crlfDelay: Infinity
-    });
-
-    rl.on('line', async function(line) {
-      // console.log(linesTab.length)
-      linesTab.push(line)
-      if (linesTab.length >= 2000) {
-        const tablines = parseLines(linesTab)
-        console.log('parse réalisé')
-        let sizeTab = linesTab.length
-        linesTab.length = 0
-        await log.info(`envoi de ${sizeTab} lignes vers le jeu de données`)
-        
-        while (tablines.length) {
-          // if (_stopped) return await log.info('interruption demandée')
-          const lines = tablines.splice(0, 100)
-          console.log('Traitement de', lines.length)
-          try {
-            await axios.post(`api/v1/datasets/${dataset.id}/_bulk_lines`, lines)
-          } catch(err) {
-            console.log(err.status, err.statusText)
+    await log.info(`Traitement du fichier ${file}`)
+    await pump(
+      byline.createStream(fs.createReadStream(path.join(tmpDir, file), { encoding: 'utf8' })),
+      new stream.Transform({
+        objectMode: true,
+        transform: async (obj, _, next) => {
+          linesTab.push(obj)
+          if (linesTab.length >= 10000) {
+            const sendTab = parseLines(linesTab, refCodeInseeComm, refCodeInseePays, keysRef)
+            linesTab = []
+            const sizeTab = sendTab.length
+            await log.info(`envoi de ${sizeTab} lignes vers le jeu de données`)
+            while (sendTab.length) {
+              // split the array into smaller arrays to avoid too much requests
+              const lines = sendTab.splice(0, 3000)
+              try {
+                await axios.post(`api/v1/datasets/${dataset.id}/_bulk_lines`, lines)
+                // console.log('envoyé')
+              } catch (err) {
+                console.log(err.status, err.statusText)
+              }
+            }
+          }
+          next()
+        },
+        flush: async (callback) => {
+          if (linesTab.length > 0) {
+            const sendTab = parseLines(linesTab, refCodeInseeComm, refCodeInseePays, keysRef)
+            await log.info(`envoi de ${sendTab.length} lignes vers le jeu de données`)
+            while (sendTab.length) {
+              // split the array into smaller arrays to avoid too much requests
+              const lines = sendTab.splice(0, 3000)
+              try {
+                await axios.post(`api/v1/datasets/${dataset.id}/_bulk_lines`, lines)
+              } catch (err) {
+                console.log(err.status, err.statusText, err.errors)
+              }
+            }
+            linesTab = []
+            callback()
           }
         }
-      }
-    })
-
-    await once(rl, 'close');
-    // console.log(linesTab.length)
-    const tablines = parseLines(linesTab)
-    await log.info(`envoi de ${linesTab.length} lignes vers le jeu de données`)
-    try {
-      const res = await axios.post(`api/v1/datasets/${dataset.id}/_bulk_lines`, tablines)
-    } catch(err) {
-      console.log(err)
-    }
-    linesTab.length = 0
+      })
+    )
   }
 }
