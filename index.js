@@ -1,4 +1,3 @@
-const download = require('./src/download')
 const processData = require('./src/process')
 
 exports.run = async ({ pluginConfig, processingConfig, tmpDir, axios, log }) => {
@@ -12,22 +11,12 @@ exports.run = async ({ pluginConfig, processingConfig, tmpDir, axios, log }) => 
     },
     schema: require('./src/schema.json'),
     primaryKey: ['nom', 'prenom', 'numeroActeDeces'],
-    rest: {
-      history: true,
-      historyTTL: {
-        active: true,
-        delay: {
-          value: 30,
-          unit: 'days'
-        }
-      }
-    }
+    extras: {}
   }
 
   const body = {
     ...baseDataset,
-    title: processingConfig.dataset.title,
-    extras: { }
+    title: processingConfig.dataset.title
   }
 
   let dataset
@@ -92,6 +81,5 @@ exports.run = async ({ pluginConfig, processingConfig, tmpDir, axios, log }) => 
   const refCodeInseePays = (await axios.get(`api/v1/datasets/${processingConfig.datasetCodeInseePays.id}/lines`, { params: { size: 10000, select: `${keyInseePays},${keyNomPays}` } })).data.results
   await log.info(`${refCodeInseePays.length} lignes dans les données de référence "${processingConfig.datasetCodeInseePays.title}"`)
 
-  // await download(tmpDir, axios, log)
-  await processData(tmpDir, refCodeInseeComm, refCodeInseePays, keysRef, dataset, axios, log)
+  await processData(tmpDir, refCodeInseeComm, refCodeInseePays, keysRef, processingConfig, dataset, axios, log)
 }

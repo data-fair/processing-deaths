@@ -44,12 +44,14 @@
   {
     "key": "dateNaissance",
     "type": "string",
+    "format": "date",
     "title": "Date de naissance de la personne",
     "description": "Date de naissance de la personne"
   },
   {
     "key": "dateMort",
     "type": "string",
+    "format": "date",
     "title": "Date de deces de la personne",
     "description": "Date de décès de la personne"
   },
