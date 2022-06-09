@@ -56,9 +56,27 @@ exports.run = async ({ pluginConfig, processingConfig, tmpDir, axios, log }) => 
     if (i['x-refersTo'] === 'http://schema.org/City') keyNomComm = i.key
   }
 
+  if (!keyInseeComm) {
+    await log.error(`Le jeu de données "${processingConfig.datasetCodeInseeCommune.title}" ne possède pas le concept requis "Code commune INSEE"`)
+    throw new Error('Jeu de donnée de référence avec un concept manquant')
+  }
+  if (!keyNomComm) {
+    await log.error(`Le jeu de données "${processingConfig.datasetCodeInseeCommune.title}" ne possède pas le concept requis "Commune"`)
+    throw new Error('Jeu de donnée de référence avec un concept manquant')
+  }
+
   for (const i of schemaInseePaysRef) {
     if (i['x-refersTo'] === 'http://rdf.insee.fr/def/geo#codePays') keyInseePays = i.key
     if (i['x-refersTo'] === 'http://schema.org/addressCountry') keyNomPays = i.key
+  }
+
+  if (!keyInseePays) {
+    await log.error(`Le jeu de données "${processingConfig.datasetCodeInseePays.title}" ne possède pas le concept requis "Code pays INSEE"`)
+    throw new Error('Jeu de donnée de référence avec un concept manquant')
+  }
+  if (!keyNomPays) {
+    await log.error(`Le jeu de données "${processingConfig.datasetCodeInseePays.title}" ne possède pas le concept requis "Pays"`)
+    throw new Error('Jeu de donnée de référence avec un concept manquant')
   }
 
   const keysRef = {

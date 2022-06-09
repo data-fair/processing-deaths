@@ -38,21 +38,23 @@
   {
     "key": "ageDeces",
     "type": "integer",
-    "title": "Age de deces de la personne",
+    "title": "Age de décès",
     "description": "Age de décès de la personne"
   },
   {
     "key": "dateNaissance",
     "type": "string",
     "format": "date",
-    "title": "Date de naissance de la personne",
+    "x-refersTo": "https://schema.org/startDate",
+    "title": "Date de naissance",
     "description": "Date de naissance de la personne"
   },
   {
     "key": "dateMort",
     "type": "string",
     "format": "date",
-    "title": "Date de deces de la personne",
+    "x-refersTo": "https://schema.org/endDate",
+    "title": "Date de décès",
     "description": "Date de décès de la personne"
   },
   {

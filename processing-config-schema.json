@@ -47,7 +47,7 @@
       "datasetCodeInseeCommune": {
         "title": "Jeu de données de référence - Codes INSEE commune",
         "type": "object",
-        "x-fromUrl": "{context.dataFairUrl}/api/v1/datasets?q={q}&select=id,title&concepts=http://rdf.insee.fr/def/geo#codeCommune,http://schema.org/City&{context.ownerFilter}",
+        "x-fromUrl": "{context.dataFairUrl}/api/v1/datasets?q={q}&select=id,title&concepts=http://rdf.insee.fr/def/geo%23codeCommune,http://schema.org/City&{context.ownerFilter}",
         "x-itemsProp": "results",
         "x-itemTitle": "title",
         "x-itemKey": "id",
@@ -59,7 +59,7 @@
       "datasetCodeInseePays": {
         "title": "Jeu de données de référence - Codes INSEE pays",
         "type": "object",
-        "x-fromUrl": "{context.dataFairUrl}/api/v1/datasets?q={q}&select=id,title&concepts=http://rdf.insee.fr/def/geo#codeCommune&{context.ownerFilter}",
+        "x-fromUrl": "{context.dataFairUrl}/api/v1/datasets?q={q}&select=id,title&concepts=http://rdf.insee.fr/def/geo%23codePays,http://schema.org/addressCountry&{context.ownerFilter}",
         "x-itemsProp": "results",
         "x-itemTitle": "title",
         "x-itemKey": "id",

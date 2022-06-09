@@ -37,7 +37,7 @@ describe('deaths processing', () => {
 
     const processingConfig = {
       clearFiles: true,
-      datasetMode: 'create',
+      datasetMode: 'update',
       dataset: {
         title: 'deces-test',
         id: 'process-deces-id'

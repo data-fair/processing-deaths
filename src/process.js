@@ -38,28 +38,29 @@ function parseLines (lines, refCodeInseeComm, refCodeInseePays, keysRef) {
         nomPaysDeces: '',
         numeroActeDeces: line.slice(167, 176).trim()
       }
-      const date1 = identity.dateNaissance
-      let moisNaissance = date1.slice(4, 6)
-      let jourNaissance = date1.slice(6, 8)
+      const dateN = identity.dateNaissance
+      let moisNaissance = dateN.slice(4, 6)
+      let jourNaissance = dateN.slice(6, 8)
       if (moisNaissance === '00') {
-        moisNaissance = date1.substr(4, 2).replace('00', '01')
+        moisNaissance = dateN.substr(4, 2).replace('00', '01')
       }
       if (jourNaissance === '00') {
-        jourNaissance = date1.substr(4, 2).replace('00', '01')
+        jourNaissance = dateN.substr(4, 2).replace('00', '01')
       }
-      identity.dateNaissance = date1.slice(0, 4) + '-' + moisNaissance + '-' + jourNaissance
+      identity.dateNaissance = dateN.slice(0, 4) + '-' + moisNaissance + '-' + jourNaissance
 
-      const date2 = identity.dateMort
-      let moisDeces = date2.slice(4, 6)
-      let jourDeces = date2.slice(6, 8)
+      const dateM = identity.dateMort
+      let moisDeces = dateM.slice(4, 6)
+      let jourDeces = dateM.slice(6, 8)
       if (moisDeces === '00') {
-        moisDeces = date2.substr(4, 2).replace('00', '01')
+        moisDeces = dateM.substr(4, 2).replace('00', '01')
       }
       if (jourDeces === '00') {
-        jourDeces = date2.substr(4, 2).replace('00', '01')
+        jourDeces = dateM.substr(4, 2).replace('00', '01')
       }
-      identity.dateMort = date2.slice(0, 4) + '-' + moisDeces + '-' + jourDeces
-      identity.ageDeces = getAge(identity.dateNaissance, identity.dateMort) < 150 ? getAge(identity.dateNaissance, identity.dateMort) : undefined
+      identity.dateMort = dateM.slice(0, 4) + '-' + moisDeces + '-' + jourDeces
+      const age = dayjs(identity.dateMort).diff(dayjs(identity.dateNaissance), 'year')
+      identity.ageDeces = age < 150 ? age : undefined
 
       if (identity.codeVilleDeces.startsWith('99')) {
         for (const elem of refCodeInseePays) {
@@ -85,21 +86,6 @@ function parseLines (lines, refCodeInseeComm, refCodeInseePays, keysRef) {
     }
   }
   return out
-}
-
-function getAge (FirstDate, SecondDate) {
-  const birthDate = new Date(FirstDate)
-  const deathDate = new Date(SecondDate)
-
-  const yearDiff = deathDate.getFullYear() - birthDate.getFullYear()
-  const monthDiff = deathDate.getMonth() - birthDate.getMonth()
-  const pastDate = deathDate.getDate() - birthDate.getDate()
-
-  if (monthDiff < 0 || (monthDiff === 0 && pastDate < 0)) {
-    return yearDiff - 1
-  }
-
-  return yearDiff
 }
 
 module.exports = async (tmpDir, refCodeInseeComm, refCodeInseePays, keysRef, processingConfig, dataset, axios, log) => {
