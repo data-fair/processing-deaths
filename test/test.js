@@ -38,7 +38,7 @@ describe('deaths processing', () => {
     const processingConfig = {
       clearFiles: true,
       datasetMode: 'create',
-      startYear: 1970,
+      startYear: 2022,
       dataset: {
         title: 'deces-test',
         id: 'process-deces-id'

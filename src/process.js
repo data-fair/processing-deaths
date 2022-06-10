@@ -24,16 +24,16 @@ function parseLines (lines, refCodeInseeComm, refCodeInseePays, keysRef) {
   for (const line of lines) {
     try {
       const identity = {
-        nom: line.substr(0, line.indexOf('*')).replace('*', ''),
-        prenom: line.substr(line.indexOf('*'), line.indexOf('/')).toString().replace('*', '').replace('/', ''),
-        genre: line[80] === '1' ? 'HOMME' : 'FEMME',
-        codeVilleNaissance: line.slice(89, 94),
+        nom: line.substr(0, line.indexOf('*')).replace('*', '').trim(),
+        prenom: line.substr(line.indexOf('*'), line.indexOf('/') - 1).toString().replace('*', '').replace('/', '').trim(),
+        sexe: line[80],
+        codeVilleNaissance: line.slice(89, 94).trim(),
         nomVilleNaissance: line.slice(94, 124).trim(),
         paysNaissance: line.slice(124, 154).trim(),
         ageDeces: '',
-        dateNaissance: line.slice(81, 89),
-        dateMort: line.slice(154, 162),
-        codeVilleDeces: line.slice(162, 167),
+        dateNaissance: line.slice(81, 89).trim(),
+        dateMort: line.slice(154, 162).trim(),
+        codeVilleDeces: line.slice(162, 167).trim(),
         nomVilleDeces: '',
         nomPaysDeces: '',
         numeroActeDeces: line.slice(167, 176).trim()
@@ -65,14 +65,14 @@ function parseLines (lines, refCodeInseeComm, refCodeInseePays, keysRef) {
       if (identity.codeVilleDeces.startsWith('99')) {
         for (const elem of refCodeInseePays) {
           if (elem[keysRef.keyInseePays] === identity.codeVilleDeces) {
-            identity.nomPaysDeces = elem[keysRef.keyNomPays]
+            identity.nomPaysDeces = elem[keysRef.keyNomPays].trim()
           }
         }
       } else {
         identity.nomPaysDeces = 'FRANCE'
         for (const elem of refCodeInseeComm) {
           if (elem[keysRef.keyInseeComm] === identity.codeVilleDeces) {
-            identity.nomVilleDeces = elem[keysRef.keyNomComm]
+            identity.nomVilleDeces = elem[keysRef.keyNomComm].trim()
           }
         }
       }

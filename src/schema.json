@@ -4,7 +4,6 @@
     "type": "string",
     "title": "Nom",
     "x-capabilities": {
-      "textAgg": false,
       "text": false
     }
   },
@@ -13,17 +12,18 @@
     "type": "string",
     "title": "Prénom",
     "x-capabilities": {
-      "textAgg": false,
       "text": false
     }
   },
   {
-    "key": "genre",
-    "type": "string",
+    "key": "sexe",
     "title": "Sexe",
+    "type": "string",
+    "ignoreDetection": true,
+    "x-labels": {"1": "Homme", "2": "Femme"},
+    "enum": ["1", "2"],
     "x-capabilities": {
       "insensitive": false,
-      "textAgg": false,
       "text": false
     }
   },
@@ -110,7 +110,6 @@
     "title": "Pays de décès",
     "x-refersTo": "http://schema.org/addressCountry",
     "x-capabilities": {
-      "textAgg": false,
       "text": false
     }
   },
@@ -123,8 +122,7 @@
       "textAgg": false,
       "text": false,
       "textStandard": false,
-      "values": false,
-      "index": false
+      "values": false
     }
   }
 ]
