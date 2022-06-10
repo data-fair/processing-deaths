@@ -2,44 +2,67 @@
   {
     "key": "nom",
     "type": "string",
-    "title": "Nom de la personne",
-    "description": "Nom de la personne"
+    "title": "Nom",
+    "x-capabilities": {
+      "textAgg": false,
+      "text": false
+    }
   },
   {
     "key": "prenom",
     "type": "string",
-    "title": "Prenom de la personne",
-    "description": "Prenom de la personne"
+    "title": "Prénom",
+    "x-capabilities": {
+      "textAgg": false,
+      "text": false
+    }
   },
   {
     "key": "genre",
     "type": "string",
-    "title": "Genre de la personne",
-    "description": "Genre de la personne"
+    "title": "Sexe",
+    "x-capabilities": {
+      "insensitive": false,
+      "textAgg": false,
+      "text": false
+    }
   },
   {
     "key": "codeVilleNaissance",
     "type": "string",
-    "title": "Code du commune de la ville de naissance",
-    "description": "Code du commune de la ville de naissance"
+    "title": "Code de la commune de naissance",
+    "x-capabilities": {
+      "insensitive": false,
+      "textAgg": false,
+      "text": false,
+      "textStandard": false
+    }
   },
   {
     "key": "nomVilleNaissance",
     "type": "string",
     "title": "Nom de la commune de naissance",
-    "description": "Nom de la commune de naissance"
+    "x-capabilities": {
+      "textAgg": false,
+      "text": false
+    }
   },
   {
     "key": "paysNaissance",
     "type": "string",
-    "title": "Pays de la commune de naissance",
-    "description": "Pays de la commune de naissance"
+    "title": "Pays de naissance",
+    "x-capabilities": {
+      "textAgg": false,
+      "text": false
+    }
   },
   {
     "key": "ageDeces",
     "type": "integer",
     "title": "Age de décès",
-    "description": "Age de décès de la personne"
+    "x-capabilities": {
+      "textStandard": false
+    }
   },
   {
     "key": "dateNaissance",
@@ -47,7 +70,9 @@
     "format": "date",
     "x-refersTo": "https://schema.org/startDate",
     "title": "Date de naissance",
-    "description": "Date de naissance de la personne"
+    "x-capabilities": {
+      "textStandard": false
+    }
   },
   {
     "key": "dateMort",
@@ -55,31 +80,51 @@
     "format": "date",
     "x-refersTo": "https://schema.org/endDate",
     "title": "Date de décès",
-    "description": "Date de décès de la personne"
+    "x-capabilities": {
+      "textStandard": false
+    }
   },
   {
     "key": "codeVilleDeces",
     "type": "string",
-    "title": "Code du commune de la ville de deces",
-    "description": "Code du commune de la ville de décès"
+    "title": "Code de la commune de deces",
+    "x-capabilities": {
+      "insensitive": false,
+      "textAgg": false,
+      "text": false,
+      "textStandard": false
+    }
   },
   {
     "key": "nomVilleDeces",
     "type": "string",
     "title": "Nom de la commune de deces",
-    "description": "Nom de la commune de deces"
+    "x-capabilities": {
+      "textAgg": false,
+      "text": false
+    }
   },
   {
     "key": "nomPaysDeces",
     "type": "string",
-    "title": "Nom du pays de deces",
-    "description": "Nom du pays de deces",
-    "x-refersTo": "http://schema.org/addressCountry"
+    "title": "Pays de décès",
+    "x-refersTo": "http://schema.org/addressCountry",
+    "x-capabilities": {
+      "textAgg": false,
+      "text": false
+    }
   },
   {
     "key": "numeroActeDeces",
     "type": "string",
-    "title": "Numero acte de deces",
-    "description": "Numero d'acte de décès"
+    "title": "Numéro acte de décès",
+    "x-capabilities": {
+      "insensitive": false,
+      "textAgg": false,
+      "text": false,
+      "textStandard": false,
+      "values": false,
+      "index": false
+    }
   }
 ]
