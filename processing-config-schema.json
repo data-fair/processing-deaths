@@ -13,8 +13,15 @@
           "type": "object",
           "required": ["title"],
           "properties": {
-            "title": {"type": "string", "title": "Titre", "default": "Décès"}
+            "title": {"type": "string", "title": "Nom du jeu de données", "default": "Décès"}
           }
+        },
+        "startYear": {
+          "title": "Commencer le traitement à partir de l'année",
+          "description": "Veuillez spécifier une année à partir de 1970",
+          "type": "integer",
+          "minimum": 1970,
+          "default": 1970
         }
       }
     }, {

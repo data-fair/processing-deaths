@@ -36,11 +36,16 @@ exports.run = async ({ pluginConfig, processingConfig, tmpDir, axios, log }) => 
       dataset = (await axios.post('api/v1/datasets', body)).data
     }
     await log.info(`jeu de donnée créé, id="${dataset.id}", title="${dataset.title}"`)
+    if (!processingConfig.startYear) processingConfig.startYear = 1970
+    await log.info(`Début du traitement en : ${processingConfig.startYear}`)
   } else if (processingConfig.datasetMode === 'update') {
     // permet de vérifier l'existance du jeu de donnée avant de réaliser des opérations dessus
-    dataset = (await axios.get(`api/v1/datasets/${processingConfig.dataset.id}`)).data
-    if (!dataset) throw new Error(`le jeu de données n'existe pas, id${processingConfig.dataset.id}`)
-    await log.info(`le jeu de donnée existe, id="${dataset.id}", title="${dataset.title}"`)
+    try {
+      dataset = (await axios.get(`api/v1/datasets/${processingConfig.dataset.id}`)).data
+      await log.info(`le jeu de donnée existe, id="${dataset.id}", title="${dataset.title}"`)
+    } catch (err) {
+      if (!dataset) throw new Error(`le jeu de données n'existe pas, id="${processingConfig.dataset.id}"`)
+    }
   }
 
   let keyInseeComm, keyNomComm

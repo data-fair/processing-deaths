@@ -26,7 +26,7 @@ function parseLines (lines, refCodeInseeComm, refCodeInseePays, keysRef) {
       const identity = {
         nom: line.substr(0, line.indexOf('*')).replace('*', ''),
         prenom: line.substr(line.indexOf('*'), line.indexOf('/')).toString().replace('*', '').replace('/', ''),
-        genre: line[80] === '1' ? 'Homme' : 'Femme',
+        genre: line[80] === '1' ? 'HOMME' : 'FEMME',
         codeVilleNaissance: line.slice(89, 94),
         nomVilleNaissance: line.slice(94, 124).trim(),
         paysNaissance: line.slice(124, 154).trim(),
@@ -102,7 +102,11 @@ module.exports = async (tmpDir, refCodeInseeComm, refCodeInseePays, keysRef, pro
     let downloadYear = true
     if (extras.currentFile.includes('m') && (extras.currentFile.substr(6, 4) === file.title.substr(6, 4))) downloadYear = false
     if (file.title.match('deces-' + dayjs().year() + '-m[0-1][0-9].txt') || (file.title.match('deces-[0-9]{4}.txt') && downloadYear)) {
-      downloadFile.push({ title: file.title, url: file.url })
+      if (processingConfig.datasetMode === 'create') {
+        if (parseInt(file.title.substr(6, 4)) >= processingConfig.startYear) downloadFile.push({ title: file.title, url: file.url })
+      } else {
+        downloadFile.push({ title: file.title, url: file.url })
+      }
     }
     if (file.title === extras.currentFile) break
   }
