@@ -59,7 +59,7 @@ function parseLines (lines, refCodeInseeComm, refCodeInseePays, keysRef) {
         jourDeces = dateM.substr(4, 2).replace('00', '01')
       }
       identity.dateMort = dateM.slice(0, 4) + '-' + moisDeces + '-' + jourDeces
-      const age = dayjs(identity.dateMort).diff(dayjs(identity.dateNaissance), 'year')
+      const age = parseFloat(dayjs(identity.dateMort).diff(dayjs(identity.dateNaissance), 'year', true).toFixed(3))
       identity.ageDeces = age < 150 ? age : undefined
 
       if (identity.codeVilleDeces.startsWith('99')) {
@@ -149,7 +149,7 @@ module.exports = async (tmpDir, refCodeInseeComm, refCodeInseePays, keysRef, pro
                 try {
                   await axios.post(`api/v1/datasets/${dataset.id}/_bulk_lines`, lines)
                 } catch (err) {
-                  await log.info(err.statusText)
+                  await log.info(`${err.status}, ${err.statusText}`)
                 }
               }
             }
@@ -165,7 +165,7 @@ module.exports = async (tmpDir, refCodeInseeComm, refCodeInseePays, keysRef, pro
                 try {
                   await axios.post(`api/v1/datasets/${dataset.id}/_bulk_lines`, lines)
                 } catch (err) {
-                  await log.info(err.statusText)
+                  await log.info(`${err.status}, ${err.statusText}`)
                 }
               }
               linesTab = []
@@ -179,11 +179,11 @@ module.exports = async (tmpDir, refCodeInseeComm, refCodeInseePays, keysRef, pro
         try {
           await fs.remove(filePath)
         } catch (err) {
-          await log.info(err.statusText)
+          await log.info(`${err.status}, ${err.statusText}`)
         }
       }
     }
   } catch (err) {
-    await log.info(err.statusText)
+    await log.info(`${err.status}, ${err.statusText}`)
   }
 }

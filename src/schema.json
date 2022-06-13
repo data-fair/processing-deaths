@@ -58,7 +58,7 @@
   },
   {
     "key": "ageDeces",
-    "type": "integer",
+    "type": "number",
     "title": "Age de décès",
     "x-capabilities": {
       "textStandard": false
