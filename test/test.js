@@ -37,11 +37,13 @@ describe('deaths processing', () => {
 
     const processingConfig = {
       clearFiles: true,
-      datasetMode: 'create',
-      startYear: 2022,
+      datasetMode: 'inconsistency',
+      startYear: 1996,
+      maxAge: 123,
+      urlOpposition: 'https://www.data.gouv.fr/fr/datasets/r/7bcdfa57-dc50-43a8-beb6-6c76537e7057',
       dataset: {
         title: 'deces-test',
-        id: 'process-deces-id'
+        id: 'process-deces-id-test'
       },
       datasetCodeInseeCommune: {
         title: 'Base officielle des codes postaux 0.1',
