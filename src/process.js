@@ -5,21 +5,22 @@ const pump = util.promisify(require('pump'))
 const stream = require('stream')
 const byline = require('byline')
 const dayjs = require('dayjs')
+const csvSync = require('csv/sync')
 
 const withStreamableFile = async (filePath, fn) => {
   // creating empty file before streaming seems to fix some weird bugs with NFS
   await fs.ensureFile(filePath + '.tmp')
   await fn(fs.createWriteStream(filePath + '.tmp'))
   // Try to prevent weird bug with NFS by forcing syncing file before reading it
-  const fd = await fs.open(filePath + '.tmp', 'r')
-  await fs.fsync(fd)
-  await fs.close(fd)
-  // write in tmp file then move it for a safer operation that doesn't create partial files
+  // const fd = await fs.open(filePath + '.tmp', 'r')
+  // await fs.fsync(fd)
+  // await fs.close(fd)
+  // // write in tmp file then move it for a safer operation that doesn't create partial files
   await fs.move(filePath + '.tmp', filePath, { overwrite: true })
 }
 
 // parse n lines and return an array of json object
-function parseLines (lines, refCodeInseeComm, refCodeInseePays, keysRef) {
+function parseLines (lines, refCodeInseeComm, refCodeInseePays, keysRef, processingConfig) {
   const out = []
   for (const line of lines) {
     try {
@@ -60,7 +61,12 @@ function parseLines (lines, refCodeInseeComm, refCodeInseePays, keysRef) {
       }
       identity.dateMort = dateM.slice(0, 4) + '-' + moisDeces + '-' + jourDeces
       const age = parseFloat(dayjs(identity.dateMort).diff(dayjs(identity.dateNaissance), 'year', true).toFixed(3))
-      identity.ageDeces = age < 150 ? age : undefined
+      if (age >= 0 && age <= processingConfig.maxAge) {
+        identity.ageDeces = age
+      } else {
+        identity.ageDeces = undefined
+        identity.dateNaissance = undefined
+      }
 
       if (identity.codeVilleDeces.startsWith('99')) {
         for (const elem of refCodeInseePays) {
@@ -88,102 +94,154 @@ function parseLines (lines, refCodeInseeComm, refCodeInseePays, keysRef) {
   return out
 }
 
-module.exports = async (tmpDir, refCodeInseeComm, refCodeInseePays, keysRef, processingConfig, dataset, axios, log) => {
-  const datasetId = '5de8f397634f4164071119c5'
-  const res = await axios.get('https://www.data.gouv.fr/api/1/datasets/' + datasetId + '/')
-  const ressources = res.data.resources
-  // get the current extras
-  const extras = dataset.extras
-  if (!extras.currentFile) extras.currentFile = ''
-
-  const downloadFile = []
-  // get the title and url of file to process
-  for (const file of ressources) {
-    let downloadYear = true
-    if (extras.currentFile.includes('m') && (extras.currentFile.substr(6, 4) === file.title.substr(6, 4))) downloadYear = false
-    if (file.title.match('deces-' + dayjs().year() + '-m[0-1][0-9].txt') || (file.title.match('deces-[0-9]{4}.txt') && downloadYear)) {
-      if (processingConfig.datasetMode === 'create') {
-        if (parseInt(file.title.substr(6, 4)) >= processingConfig.startYear) downloadFile.push({ title: file.title, url: file.url })
-      } else {
-        downloadFile.push({ title: file.title, url: file.url })
-      }
-    }
-    if (file.title === extras.currentFile) break
+async function updateInconsistency(tmpDir, processingConfig, dataset, axios, log) {
+  await log.info('Mise à jour des données incohérentes')
+  const params = {
+    qs: `ageDeces:(<0 OR >${processingConfig.maxAge})`
+  }
+  const weirdAge = (await axios.get(`api/v1/datasets/${dataset.id}/lines`, { params })).data.results
+  await log.info(`${weirdAge.length} ligne(s) avec un age incohérent (<0 ou >${processingConfig.maxAge})`)
+  const toUpdate = []
+  for (const age of weirdAge) {
+    age._action = 'update'
+    age.ageDeces = undefined
+    age.dateNaissance = undefined
+    delete age._score
+    delete age._rand
+    delete age._i
+    delete age._updatedAt
+    toUpdate.push(age)
   }
 
-  await log.step(`Traitement des ${downloadFile.length} fichier(s) restant(s).`)
-  if (extras.currentFile !== '') { await log.info(`Dernier fichier traité : ${extras.currentFile}`) }
-  let linesTab = []
+  const url = new URL(processingConfig.urlOpposition)
+  const filePath = `${tmpDir}/${path.parse(url.pathname).base}`
+  await withStreamableFile(filePath, async (writeStream) => {
+    const res = await axios({ url: url.href, method: 'GET', responseType: 'stream' })
+    await pump(res.data, writeStream)
+  })
 
+  const opposition = csvSync.parse(fs.readFileSync(filePath), { delimiter: ';' })
+  console.log(opposition)
+
+  await log.info(`Suppression de ${filePath}`)
   try {
-    // reverse the array to process latest file first
-    for (const file of downloadFile.reverse()) {
-      extras.currentFile = file.title
-      // set the file name in the extras
-      await axios.patch(`api/v1/datasets/${dataset.id}/`, { extras })
-
-      // download the file to process
-      const url = new URL(file.url)
-      const filePath = `${tmpDir}/${path.parse(url.pathname).base}`
-      await log.info(`Téléchargement du fichier ${file.title}, écriture dans ${filePath}`)
-      await withStreamableFile(filePath, async (writeStream) => {
-        const res = await axios({ url: url.href, method: 'GET', responseType: 'stream' })
-        await pump(res.data, writeStream)
-      })
-
-      await log.info(`Traitement du fichier ${file.title}`)
-      await pump(
-        byline.createStream(fs.createReadStream(path.join(tmpDir, file.title), { encoding: 'utf8' })),
-        new stream.Transform({
-          objectMode: true,
-          transform: async (obj, _, next) => {
-            linesTab.push(obj)
-            if (linesTab.length >= 15000) {
-              const sendTab = parseLines(linesTab, refCodeInseeComm, refCodeInseePays, keysRef)
-              linesTab = []
-              const sizeTab = sendTab.length
-              await log.info(`envoi de ${sizeTab} lignes vers le jeu de données`)
-              while (sendTab.length) {
-                // split the array into smaller arrays to avoid too heavy request
-                const lines = sendTab.splice(0, 3000)
-                try {
-                  await axios.post(`api/v1/datasets/${dataset.id}/_bulk_lines`, lines)
-                } catch (err) {
-                  await log.info(`${err.status}, ${err.statusText}`)
-                }
-              }
-            }
-            next()
-          },
-          flush: async (callback) => {
-            if (linesTab.length > 0) {
-              const sendTab = parseLines(linesTab, refCodeInseeComm, refCodeInseePays, keysRef)
-              await log.info(`envoi de ${sendTab.length} lignes vers le jeu de données`)
-              while (sendTab.length) {
-                // split the array into smaller arrays to avoid too much requests
-                const lines = sendTab.splice(0, 3000)
-                try {
-                  await axios.post(`api/v1/datasets/${dataset.id}/_bulk_lines`, lines)
-                } catch (err) {
-                  await log.info(`${err.status}, ${err.statusText}`)
-                }
-              }
-              linesTab = []
-              callback()
-            }
-          }
-        })
-      )
-      if (processingConfig.clearFiles) {
-        await log.info(`Suppression de ${filePath}`)
-        try {
-          await fs.remove(filePath)
-        } catch (err) {
-          await log.info(`${err.status}, ${err.statusText}`)
-        }
-      }
-    }
+    await fs.remove(filePath)
   } catch (err) {
     await log.info(`${err.status}, ${err.statusText}`)
+  }
+
+  try {
+    await axios.post(`api/v1/datasets/${dataset.id}/_bulk_lines`, toUpdate)
+  } catch (err) {
+    await log.info(`${err.status}, ${err.statusText} ${JSON.stringify(err.data.errors)}`)
+  }
+}
+
+module.exports = async (tmpDir, refCodeInseeComm, refCodeInseePays, keysRef, processingConfig, dataset, axios, log) => {
+  if (processingConfig.datasetMode !== 'inconsistency') {
+    const datasetId = '5de8f397634f4164071119c5'
+    const res = await axios.get('https://www.data.gouv.fr/api/1/datasets/' + datasetId + '/')
+    const ressources = res.data.resources
+    // get the current extras
+    const extras = dataset.extras
+    if (!extras.currentFile) extras.currentFile = ''
+
+    const downloadFile = []
+    // get the title and url of file to process
+    for (const file of ressources) {
+      let downloadYear = true
+      if (extras.currentFile.includes('m') && (extras.currentFile.substr(6, 4) === file.title.substr(6, 4))) downloadYear = false
+      if (file.title.match('deces-' + dayjs().year() + '-m[0-1][0-9].txt') || (file.title.match('deces-[0-9]{4}.txt') && downloadYear)) {
+        if (processingConfig.datasetMode === 'create') {
+          if (parseInt(file.title.substr(6, 4)) >= processingConfig.startYear) downloadFile.push({ title: file.title, url: file.url })
+        } else {
+          downloadFile.push({ title: file.title, url: file.url })
+        }
+      }
+      if (file.title === extras.currentFile) break
+    }
+
+    await log.step(`Traitement des ${downloadFile.length} fichier(s) restant(s).`)
+    if (extras.currentFile !== '') { await log.info(`Dernier fichier traité : ${extras.currentFile}`) }
+    let linesTab = []
+
+    try {
+      // reverse the array to process latest file first
+      for (const file of downloadFile.reverse()) {
+        extras.currentFile = file.title
+        // set the file name in the extras
+        await axios.patch(`api/v1/datasets/${dataset.id}/`, { extras })
+
+        // download the file to process
+        const url = new URL(file.url)
+        const filePath = `${tmpDir}/${path.parse(url.pathname).base}`
+        await log.info(`Téléchargement du fichier ${file.title}, écriture dans ${filePath}`)
+        await withStreamableFile(filePath, async (writeStream) => {
+          const res = await axios({ url: url.href, method: 'GET', responseType: 'stream' })
+          await pump(res.data, writeStream)
+        }) 
+
+        await log.info(`Traitement du fichier ${file.title}`)
+        await pump(
+          byline.createStream(fs.createReadStream(path.join(tmpDir, file.title), { encoding: 'utf8' })),
+          new stream.Transform({
+            objectMode: true,
+            transform: async (obj, _, next) => {
+              linesTab.push(obj)
+              if (linesTab.length >= 15000) {
+                const sendTab = parseLines(linesTab, refCodeInseeComm, refCodeInseePays, keysRef, processingConfig)
+                linesTab = []
+                const sizeTab = sendTab.length
+                await log.info(`envoi de ${sizeTab} lignes vers le jeu de données`)
+                while (sendTab.length) {
+                  // split the array into smaller arrays to avoid too heavy request
+                  const lines = sendTab.splice(0, 3000)
+                  try {
+                    await axios.post(`api/v1/datasets/${dataset.id}/_bulk_lines`, lines)
+                  } catch (err) {
+                    await log.info(`${err.status}, ${err.statusText}`)
+                  }
+                } 
+              }
+              next()
+            },
+            flush: async (callback) => {
+              if (linesTab.length > 0) {
+                const sendTab = parseLines(linesTab, refCodeInseeComm, refCodeInseePays, keysRef, processingConfig)
+                await log.info(`envoi de ${sendTab.length} lignes vers le jeu de données`)
+                while (sendTab.length) {
+                  // split the array into smaller arrays to avoid too much requests
+                  const lines = sendTab.splice(0, 3000)
+                  try {
+                    await axios.post(`api/v1/datasets/${dataset.id}/_bulk_lines`, lines)
+                  } catch (err) {
+                    await log.info(`${err.status}, ${err.statusText}`)
+                  }
+                }
+                linesTab = []
+                callback()
+              }
+            }
+          })
+        )
+        if (processingConfig.clearFiles) {
+          await log.info(`Suppression de ${filePath}`)
+          try {
+            await fs.remove(filePath)
+          } catch (err) {
+            await log.info(`${err.status}, ${err.statusText}`)
+          }
+        }
+      }
+    } catch (err) {
+      await log.info(`${err.status}, ${err.statusText}`)
+    }
+  } else {
+    // try {
+      await updateInconsistency(tmpDir, processingConfig, dataset, axios, log)
+    // } catch (err) {
+      // console.log(err)
+      // await log.info(`${err.status}, ${err.statusText}`)
+    // }
   }
 }
