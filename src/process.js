@@ -94,14 +94,18 @@ function parseLines (lines, refCodeInseeComm, refCodeInseePays, keysRef, process
   return out
 }
 
-async function updateInconsistency(tmpDir, processingConfig, dataset, axios, log) {
-  await log.info('Mise à jour des données incohérentes')
-  const params = {
-    qs: `ageDeces:(<0 OR >${processingConfig.maxAge})`
-  }
-  const weirdAge = (await axios.get(`api/v1/datasets/${dataset.id}/lines`, { params })).data.results
+async function updateInconsistency (tmpDir, pluginConfig, processingConfig, dataset, axios, log) {
+  await log.step('Vérification des données incohérentes et demandes d\'opposition')
+
+  const weirdAge = (await axios.get(`api/v1/datasets/${dataset.id}/lines`, { params: { qs: `ageDeces:(<0 OR >${processingConfig.maxAge})` } })).data.results
   await log.info(`${weirdAge.length} ligne(s) avec un age incohérent (<0 ou >${processingConfig.maxAge})`)
   const toUpdate = []
+
+  const stats = {
+    update: 0,
+    remove: 0
+  }
+
   for (const age of weirdAge) {
     age._action = 'update'
     age.ageDeces = undefined
@@ -111,33 +115,65 @@ async function updateInconsistency(tmpDir, processingConfig, dataset, axios, log
     delete age._i
     delete age._updatedAt
     toUpdate.push(age)
+    stats.update++
   }
 
-  const url = new URL(processingConfig.urlOpposition)
-  const filePath = `${tmpDir}/${path.parse(url.pathname).base}`
-  await withStreamableFile(filePath, async (writeStream) => {
-    const res = await axios({ url: url.href, method: 'GET', responseType: 'stream' })
-    await pump(res.data, writeStream)
-  })
+  if (pluginConfig.urlOpposition) {
+    try {
+      const url = new URL(pluginConfig.urlOpposition)
+      const filePath = `${tmpDir}/${path.parse(url.pathname).base}`
 
-  const opposition = csvSync.parse(fs.readFileSync(filePath), { delimiter: ';' })
-  console.log(opposition)
+      await withStreamableFile(filePath, async (writeStream) => {
+        const res = await axios({ url: url.href, method: 'GET', responseType: 'stream' })
+        await pump(res.data, writeStream)
+      })
 
-  await log.info(`Suppression de ${filePath}`)
-  try {
-    await fs.remove(filePath)
-  } catch (err) {
-    await log.info(`${err.status}, ${err.statusText}`)
+      const opposition = csvSync.parse(fs.readFileSync(filePath), { delimiter: ';' })
+      await log.info(`Traitement des ${opposition.length - 1} lignes du fichier des oppositions`)
+      for (const line of opposition) {
+        if (line[0].match(/[0-9]{8}/)) {
+          const date = `${line[0].substr(0, 4)}-${line[0].substr(4, 2)}-${line[0].substr(6, 2)}`
+          const params = {
+            qs: `dateMort:${date} AND codeVilleDeces:${line[1]} AND numeroActeDeces:${line[2]}`
+          }
+          const inconsistencyLine = (await axios.get(`api/v1/datasets/${dataset.id}/lines`, { params })).data
+          if (inconsistencyLine.total === 1) {
+            const line = inconsistencyLine.results[0]
+            line._action = 'delete'
+            delete line._score
+            delete line._rand
+            delete line._i
+            delete line._updatedAt
+            toUpdate.push(line)
+            stats.remove++
+          } else if (inconsistencyLine.total > 1) {
+            console.log(inconsistencyLine)
+            await log.info('Impossible de déterminer la personne à supprimer')
+          }
+        }
+      }
+
+      await log.info(`Suppression de ${stats.remove} ligne(s) suite à demande d'opposition`)
+
+      await log.info(`Suppression de ${filePath}`)
+      try {
+        await fs.remove(filePath)
+      } catch (err) {
+        await log.info(`${err.status}, ${err.statusText}`)
+      }
+    } catch (err) {
+      await log.info(`${err.status}, ${err.statusText}`)
+    }
   }
 
   try {
-    await axios.post(`api/v1/datasets/${dataset.id}/_bulk_lines`, toUpdate)
+    if (toUpdate.length > 0) await axios.post(`api/v1/datasets/${dataset.id}/_bulk_lines`, toUpdate)
   } catch (err) {
     await log.info(`${err.status}, ${err.statusText} ${JSON.stringify(err.data.errors)}`)
   }
 }
 
-module.exports = async (tmpDir, refCodeInseeComm, refCodeInseePays, keysRef, processingConfig, dataset, axios, log) => {
+module.exports = async (tmpDir, refCodeInseeComm, refCodeInseePays, keysRef, pluginConfig, processingConfig, dataset, axios, log) => {
   if (processingConfig.datasetMode !== 'inconsistency') {
     const datasetId = '5de8f397634f4164071119c5'
     const res = await axios.get('https://www.data.gouv.fr/api/1/datasets/' + datasetId + '/')
@@ -179,7 +215,7 @@ module.exports = async (tmpDir, refCodeInseeComm, refCodeInseePays, keysRef, pro
         await withStreamableFile(filePath, async (writeStream) => {
           const res = await axios({ url: url.href, method: 'GET', responseType: 'stream' })
           await pump(res.data, writeStream)
-        }) 
+        })
 
         await log.info(`Traitement du fichier ${file.title}`)
         await pump(
@@ -201,7 +237,7 @@ module.exports = async (tmpDir, refCodeInseeComm, refCodeInseePays, keysRef, pro
                   } catch (err) {
                     await log.info(`${err.status}, ${err.statusText}`)
                   }
-                } 
+                }
               }
               next()
             },
@@ -237,11 +273,11 @@ module.exports = async (tmpDir, refCodeInseeComm, refCodeInseePays, keysRef, pro
       await log.info(`${err.status}, ${err.statusText}`)
     }
   } else {
-    // try {
-      await updateInconsistency(tmpDir, processingConfig, dataset, axios, log)
-    // } catch (err) {
-      // console.log(err)
-      // await log.info(`${err.status}, ${err.statusText}`)
-    // }
+    try {
+      await updateInconsistency(tmpDir, pluginConfig, processingConfig, dataset, axios, log)
+    } catch (err) {
+      console.log(err)
+      await log.info(`${err.status}, ${err.statusText}`)
+    }
   }
 }

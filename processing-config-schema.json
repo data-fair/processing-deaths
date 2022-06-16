@@ -6,7 +6,7 @@
     "title": "Jeu de données",
     "oneOf": [{
       "title": "Créer un jeu de données",
-      "required": ["dataset"],
+      "required": ["dataset", "maxAge"],
       "properties": {
         "datasetMode": { "type": "string", "const": "create", "title": "Action" },
         "dataset": {
@@ -24,15 +24,15 @@
           "default": 1970
         },
         "maxAge": {
-          "title": "Définir un age maximal",
-          "description": "Veuillez spécifier un age maximal",
+          "title": "Définir un âge maximal",
+          "description": "Les âges au dessus de cette valeur seront considérés comme incohérents",
           "type": "integer",
           "default": 130
         }
       }
     }, {
       "title": "Mettre à jour un jeu de données",
-      "required": ["dataset"],
+      "required": ["dataset", "maxAge"],
       "properties": {
         "datasetMode": { "type": "string", "const": "update" },
         "dataset": {
@@ -45,11 +45,17 @@
             "id": {"type": "string", "title": "Identifiant"},
             "title": {"type": "string", "title": "Titre"}
           }
+        },
+        "maxAge": {
+          "title": "Définir un âge maximal",
+          "description": "Les âges au dessus de cette valeur seront considérés comme incohérents",
+          "type": "integer",
+          "default": 130
         }
       }
     }, {
-      "title": "Supprimer les incohérences",
-      "required": ["dataset"],
+      "title": "Mettre à jour les incohérences et demandes d'opposition",
+      "required": ["dataset", "maxAge"],
       "properties": {
         "datasetMode": { "type": "string", "const": "inconsistency" },
         "dataset": {
@@ -64,8 +70,8 @@
           }
         },
         "maxAge": {
-          "title": "Définir un age maximal",
-          "description": "Veuillez spécifier un age maximal",
+          "title": "Définir un âge maximal",
+          "description": "Les âges au dessus de cette valeur seront considérés comme incohérents",
           "type": "integer",
           "default": 130
         }

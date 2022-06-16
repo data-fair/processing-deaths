@@ -51,6 +51,8 @@ exports.run = async ({ pluginConfig, processingConfig, tmpDir, axios, log }) => 
   let keyInseeComm, keyNomComm
   let keyInseePays, keyNomPays
 
+  if (!processingConfig.maxAge) throw new Error('Pas d\'âge maximal défini')
+
   if (processingConfig.datasetMode !== 'inconsistency') {
     await log.step('Récupération des jeux de données de références')
 
@@ -105,8 +107,8 @@ exports.run = async ({ pluginConfig, processingConfig, tmpDir, axios, log }) => 
     const refCodeInseePays = (await axios.get(`api/v1/datasets/${processingConfig.datasetCodeInseePays.id}/lines`, { params: { size: 10000, select: `${keyInseePays},${keyNomPays}` } })).data.results
     await log.info(`${refCodeInseePays.length} lignes dans les données de référence "${processingConfig.datasetCodeInseePays.title}"`)
 
-    await processData(tmpDir, refCodeInseeComm, refCodeInseePays, keysRef, processingConfig, dataset, axios, log)
+    await processData(tmpDir, refCodeInseeComm, refCodeInseePays, keysRef, pluginConfig, processingConfig, dataset, axios, log)
   } else {
-    await processData(tmpDir, undefined, undefined, undefined, processingConfig, dataset, axios, log)
+    await processData(tmpDir, undefined, undefined, undefined, pluginConfig, processingConfig, dataset, axios, log)
   }
 }

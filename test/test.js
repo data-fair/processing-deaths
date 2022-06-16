@@ -33,14 +33,15 @@ describe('deaths processing', () => {
       return Promise.reject(error.response)
     })
 
-    const pluginConfig = { }
+    const pluginConfig = {
+      urlOpposition: config.urlOpposition
+    }
 
     const processingConfig = {
       clearFiles: true,
       datasetMode: 'inconsistency',
       startYear: 1996,
       maxAge: 123,
-      urlOpposition: 'https://www.data.gouv.fr/fr/datasets/r/7bcdfa57-dc50-43a8-beb6-6c76537e7057',
       dataset: {
         title: 'deces-test',
         id: 'process-deces-id-test'
