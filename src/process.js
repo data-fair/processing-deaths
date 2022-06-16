@@ -97,7 +97,7 @@ function parseLines (lines, refCodeInseeComm, refCodeInseePays, keysRef, process
 async function updateInconsistency (tmpDir, pluginConfig, processingConfig, dataset, axios, log) {
   await log.step('Vérification des données incohérentes et demandes d\'opposition')
 
-  const weirdAge = (await axios.get(`api/v1/datasets/${dataset.id}/lines`, { params: { qs: `ageDeces:(<0 OR >${processingConfig.maxAge})` } })).data.results
+  const weirdAge = (await axios.get(`api/v1/datasets/${dataset.id}/lines`, { params: { qs: `ageDeces:(<0 OR >${processingConfig.maxAge})`, size: 10000 } })).data.results
   await log.info(`${weirdAge.length} ligne(s) avec un age incohérent (<0 ou >${processingConfig.maxAge})`)
   const toUpdate = []
 
