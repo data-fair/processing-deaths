@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "byline": "^5.0.0",
+    "csv": "^6.1.2",
     "dayjs": "^1.11.2",
     "form-data": "^4.0.0",
     "fs-extra": "^10.0.1",
