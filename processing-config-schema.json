@@ -22,6 +22,12 @@
           "type": "integer",
           "minimum": 1970,
           "default": 1970
+        },
+        "maxAge": {
+          "title": "Définir un age maximal",
+          "description": "Veuillez spécifier un age maximal",
+          "type": "integer",
+          "default": 130
         }
       }
     }, {
@@ -39,6 +45,29 @@
             "id": {"type": "string", "title": "Identifiant"},
             "title": {"type": "string", "title": "Titre"}
           }
+        }
+      }
+    }, {
+      "title": "Supprimer les incohérences",
+      "required": ["dataset"],
+      "properties": {
+        "datasetMode": { "type": "string", "const": "inconsistency" },
+        "dataset": {
+          "type": "object",
+          "x-fromUrl": "{context.dataFairUrl}/api/v1/datasets?q={q}&select=id,title&{context.ownerFilter}",
+          "x-itemsProp": "results",
+          "x-itemTitle": "title",
+          "x-itemKey": "id",
+          "properties": {
+            "id": {"type": "string", "title": "Identifiant"},
+            "title": {"type": "string", "title": "Titre"}
+          }
+        },
+        "maxAge": {
+          "title": "Définir un age maximal",
+          "description": "Veuillez spécifier un age maximal",
+          "type": "integer",
+          "default": 130
         }
       }
     }]
