@@ -1,5 +1,5 @@
 {
-  "name": "processing-deaths",
+  "name": "@data-fair/processing-deaths",
   "version": "0.4.1",
   "description": "Inject deaths in France into data-fair datasets",
   "main": "index.js",
@@ -11,24 +11,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/WiPhil/processing-deces.git"
+    "url": "git+https://github.com/data-fair/processing-deaths.git"
   },
   "keywords": [
     "data-fair-processings-plugin"
   ],
-  "author": "Philippe Laidin, Benjamin Giraud-renard",
+  "author": " ",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/WiPhil/processing-deces/issues"
+    "url": "https://github.com/data-fair/processing-deaths/issues"
   },
-  "homepage": "https://github.com/WiPhil/processing-deces#readme",
+  "homepage": "https://github.com/data-fair/processing-deaths#readme",
   "devDependencies": {
     "axios": "^0.21.4",
     "config": "^3.3.6",
     "eslint": "^8.16.0",
     "eslint-config-standard": "^17.0.0",
-    "mocha": "^8.2.1",
-    "moment": "^2.29.2"
+    "mocha": "^10.2.0"
   },
   "dependencies": {
     "byline": "^5.0.0",

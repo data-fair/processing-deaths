@@ -1,4 +1,4 @@
-const processData = require('./src/process')
+const processData = require('./lib/process')
 
 exports.run = async ({ pluginConfig, processingConfig, tmpDir, axios, log }) => {
   const baseDataset = {
@@ -9,7 +9,7 @@ exports.run = async ({ pluginConfig, processingConfig, tmpDir, axios, log }) => 
       title: 'Licence Ouverte / Open Licence',
       href: 'https://www.etalab.gouv.fr/licence-ouverte-open-licence'
     },
-    schema: require('./src/schema.json'),
+    schema: require('./lib/schema.json'),
     primaryKey: ['nom', 'prenom', 'numeroActeDeces'],
     extras: {}
   }
