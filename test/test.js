@@ -1,3 +1,8 @@
+process.env.NODE_ENV = 'test'
+const config = require('config')
+const testUtils = require('@data-fair/processings-test-utils')
+const deathProcessing = require('../index.js')
+/*
 process.env.NODE_ENV = 'local-dev'
 const fs = require('fs-extra')
 const config = require('config')
@@ -32,50 +37,53 @@ describe('deaths processing', () => {
       error.response.config = { method: error.response.config.method, url: error.response.config.url, data: error.response.config.data }
       return Promise.reject(error.response)
     })
-
-    const pluginConfig = {
-      urlOpposition: config.urlOpposition
-    }
-
-    const processingConfig = {
-      clearFiles: true,
-      datasetMode: 'inconsistency',
-      startYear: 1996,
-      maxAge: 123,
-      dataset: {
-        title: 'deces-test',
-        id: 'process-deces-id-test'
+  */
+describe('deaths processing', () => {
+  it('should run a task', async function () {
+    this.timeout(1000000)
+    const context = testUtils.context({
+      pluginConfig: {
+        urlOpposition: config.urlOpposition
       },
-      datasetCodeInseeCommune: {
-        title: 'Base officielle des codes postaux 0.1',
-        id: 'laposte-hexasmal'
+      processingConfig: {
+        clearFiles: false,
+        datasetMode: 'incremental',
+        startYear: 1996,
+        maxAge: 123,
+        dataset: {
+          title: 'Test Deaths',
+          id: 'test-deaths'
+        },
+        datasetCodeInseeCommune: {
+          title: 'Base officielle des codes postaux 0.1',
+          id: 'laposte-hexasmal'
+        },
+        datasetCodeInseePays: {
+          title: 'Base officielle des codes Pays',
+          id: 'process-cog'
+        }
       },
-      datasetCodeInseePays: {
-        title: 'Base officielle des codes Pays',
-        id: 'process-cog'
-      },
-      tmpDir: 'data/tmp',
-      workDir: 'data/work'
-    }
-
-    const log = {
-      step: (msg) => console.log(chalk.blue.bold.underline(`[${moment().format('LTS')}] ${msg}`)),
-      error: (msg, extra) => console.log(chalk.red.bold(`[${moment().format('LTS')}] ${msg}`), extra),
-      warning: (msg, extra) => console.log(chalk.red(`[${moment().format('LTS')}] ${msg}`), extra),
-      info: (msg, extra) => console.log(chalk.blue(`[${moment().format('LTS')}] ${msg}`), extra),
-      debug: (msg, extra) => {
-        console.log(`[${moment().format('LTS')}] ${msg}`, extra)
-      }
-    }
-    const patchConfig = async (patch) => {
-      console.log('received config patch', patch)
-      Object.assign(processingConfig, patch)
-    }
-
-    await fs.ensureDir(processingConfig.tmpDir)
-    await fs.ensureDir(processingConfig.workDir)
-    const tmpDir = path.resolve(processingConfig.tmpDir)
-    process.chdir(processingConfig.workDir)
-    await processing.run({ pluginConfig, processingConfig, tmpDir, axios: axiosInstance, log, patchConfig })
+      tmpDir: 'data/'
+    }, config, false)
+    await deathProcessing.run(context)
   })
-})
+}) /*
+describe('Deaths', function () {
+  it('should download, process files and upload a csv on the staging', async function () {
+    this.timeout(1000000)
+    const context = testUtils.context({
+      pluginConfig: {
+      },
+      processingConfig: {
+        clearFiles: false,
+        datasetMode: 'create',
+        dataset: { title: 'Fichier des personnes décédées' },
+        datasetID: 'fichier-des-personnes-decedees',
+        filter: '56', // Département de la Loire-Atlantique
+        forceUpdate: false
+      },
+      tmpDir: 'data/'
+    }, config, false)
+    await deathProcessing.run(context)
+  })
+}) */
