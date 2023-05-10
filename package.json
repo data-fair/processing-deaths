@@ -1,6 +1,6 @@
 {
   "name": "@data-fair/processing-deaths",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "Inject deaths in France into data-fair datasets",
   "main": "index.js",
   "scripts": {
