@@ -4,7 +4,8 @@
     "type": "string",
     "title": "Nom",
     "x-capabilities": {
-      "text": false
+      "text": false,
+      "textAgg": false
     }
   },
   {
@@ -12,7 +13,8 @@
     "type": "string",
     "title": "Prénom",
     "x-capabilities": {
-      "text": false
+      "text": false,
+      "textAgg": false
     }
   },
   {
@@ -21,51 +23,13 @@
     "type": "string",
     "ignoreDetection": true,
     "x-labels": {"1": "Homme", "2": "Femme"},
-    "enum": ["1", "2"],
     "x-capabilities": {
       "insensitive": false,
       "text": false
     }
   },
   {
-    "key": "codeVilleNaissance",
-    "type": "string",
-    "title": "Code de la commune de naissance",
-    "x-capabilities": {
-      "insensitive": false,
-      "textAgg": false,
-      "text": false,
-      "textStandard": false
-    }
-  },
-  {
-    "key": "nomVilleNaissance",
-    "type": "string",
-    "title": "Nom de la commune de naissance",
-    "x-capabilities": {
-      "textAgg": false,
-      "text": false
-    }
-  },
-  {
-    "key": "paysNaissance",
-    "type": "string",
-    "title": "Pays de naissance",
-    "x-capabilities": {
-      "textAgg": false,
-      "text": false
-    }
-  },
-  {
-    "key": "ageDeces",
-    "type": "number",
-    "title": "Age de décès",
-    "x-capabilities": {
-      "textStandard": false
-    }
-  },
-  {
-    "key": "dateNaissance",
+    "key": "date_naissance",
     "type": "string",
     "format": "date",
     "x-refersTo": "https://schema.org/startDate",
@@ -75,7 +39,7 @@
     }
   },
   {
-    "key": "dateMort",
+    "key": "date_mort",
     "type": "string",
     "format": "date",
     "x-refersTo": "https://schema.org/endDate",
@@ -85,9 +49,9 @@
     }
   },
   {
-    "key": "codeVilleDeces",
+    "key": "code_source_ville_naissance",
     "type": "string",
-    "title": "Code de la commune de deces",
+    "title": "Code originel de la commune de naissance",
     "x-capabilities": {
       "insensitive": false,
       "textAgg": false,
@@ -96,16 +60,173 @@
     }
   },
   {
-    "key": "nomVilleDeces",
+    "key": "nom_source_ville_naissance",
     "type": "string",
-    "title": "Nom de la commune de deces",
+    "title": "Nom originel de la commune de naissance",
     "x-capabilities": {
       "textAgg": false,
       "text": false
     }
   },
   {
-    "key": "nomPaysDeces",
+    "key": "code_actuel_ville_naissance",
+    "type": "string",
+    "title": "Code actuel de la commune de naissance",
+    "x-capabilities": {
+      "insensitive": false,
+      "textAgg": false,
+      "text": false,
+      "textStandard": false
+    }
+  },
+  {
+    "key": "nom_actuel_ville_naissance",
+    "type": "string",
+    "title": "Nom actuel de la commune de naissance",
+    "x-capabilities": {
+      "textAgg": false,
+      "text": false
+    }
+  },
+  {
+    "key": "code_actuel_departement_naissance",
+    "type": "string",
+    "title": "Code actuel du département de naissance",
+    "x-capabilities": {
+      "insensitive": false,
+      "textAgg": false,
+      "text": false,
+      "textStandard": false
+    }
+  },
+  {
+    "key": "nom_actuel_departement_naissance",
+    "type": "string",
+    "title": "Nom actuel du département de naissance",
+    "x-capabilities": {
+      "textAgg": false,
+      "text": false
+    }
+  },
+  {
+    "key": "code_actuel_region_naissance",
+    "type": "string",
+    "title": "Code actuel de la région de naissance",
+    "x-capabilities": {
+      "insensitive": false,
+      "textAgg": false,
+      "text": false,
+      "textStandard": false
+    }
+  },
+  {
+    "key": "nom_actuel_region_naissance",
+    "type": "string",
+    "title": "Nom actuel du région de naissance",
+    "x-capabilities": {
+      "textAgg": false,
+      "text": false
+    }
+  },
+  {
+    "key": "pays_naissance",
+    "type": "string",
+    "title": "Pays de naissance",
+    "x-capabilities": {
+      "textAgg": false,
+      "text": false
+    }
+  },
+  {
+    "key": "age_deces",
+    "type": "number",
+    "title": "Age de décès",
+    "x-capabilities": {
+      "textStandard": false
+    }
+  },
+  {
+    "key": "code_source_ville_deces",
+    "type": "string",
+    "title": "Code originel de la commune de déces",
+    "x-capabilities": {
+      "insensitive": false,
+      "textAgg": false,
+      "text": false,
+      "textStandard": false
+    }
+  },
+  {
+    "key": "nom_source_ville_deces",
+    "type": "string",
+    "title": "Nom originel de la commune de deces",
+    "x-capabilities": {
+      "textAgg": false,
+      "text": false
+    }
+  },
+  {
+    "key": "code_actuel_ville_deces",
+    "type": "string",
+    "title": "Code actuel de la commune de deces",
+    "x-capabilities": {
+      "insensitive": false,
+      "textAgg": false,
+      "text": false,
+      "textStandard": false
+    }
+  },
+  {
+    "key": "nom_actuel_ville_deces",
+    "type": "string",
+    "title": "Nom actuel de la commune de deces",
+    "x-capabilities": {
+      "textAgg": false,
+      "text": false
+    }
+  },
+  {
+    "key": "code_actuel_departement_deces",
+    "type": "string",
+    "title": "Code actuel du département de deces",
+    "x-capabilities": {
+      "insensitive": false,
+      "textAgg": false,
+      "text": false,
+      "textStandard": false
+    }
+  },
+  {
+    "key": "nom_actuel_departement_deces",
+    "type": "string",
+    "title": "Nom actuel du département de deces",
+    "x-capabilities": {
+      "textAgg": false,
+      "text": false
+    }
+  },
+  {
+    "key": "code_actuel_region_deces",
+    "type": "string",
+    "title": "Code actuel de la région de deces",
+    "x-capabilities": {
+      "insensitive": false,
+      "textAgg": false,
+      "text": false,
+      "textStandard": false
+    }
+  },
+  {
+    "key": "nom_actuel_region_deces",
+    "type": "string",
+    "title": "Nom actuel du région de deces",
+    "x-capabilities": {
+      "textAgg": false,
+      "text": false
+    }
+  },
+  {
+    "key": "nom_pays_deces",
     "type": "string",
     "title": "Pays de décès",
     "x-refersTo": "http://schema.org/addressCountry",
@@ -114,7 +235,7 @@
     }
   },
   {
-    "key": "numeroActeDeces",
+    "key": "numero_acte_deces",
     "type": "string",
     "title": "Numéro acte de décès",
     "x-capabilities": {
