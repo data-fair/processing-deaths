@@ -47,21 +47,26 @@ describe('deaths processing', () => {
       },
       processingConfig: {
         clearFiles: false,
-        datasetMode: 'incremental',
+        datasetMode: 'create',
         startYear: 1996,
         maxAge: 123,
         dataset: {
-          title: 'Test Deaths',
-          id: 'test-deaths'
+          title: 'Test Deaths 56',
+          id: 'test-deaths-56'
         },
-        datasetCodeInseeCommune: {
-          title: 'Base officielle des codes postaux 0.1',
-          id: 'laposte-hexasmal'
+        datasetInsee: {
+          title: 'Code officiel geographique',
+          id: 'code-officiel-geographique'
         },
         datasetCodeInseePays: {
           title: 'Base officielle des codes Pays',
           id: 'process-cog'
-        }
+        },
+        datasetChangementCommune: {
+          title: 'Changement de commune',
+          id: 'cog-changements2'
+        },
+        datasetID: 'fichier-des-personnes-decedees'
       },
       tmpDir: 'data/'
     }, config, false)

@@ -157,15 +157,6 @@
     }
   },
   {
-    "key": "nom_source_ville_deces",
-    "type": "string",
-    "title": "Nom originel de la commune de deces",
-    "x-capabilities": {
-      "textAgg": false,
-      "text": false
-    }
-  },
-  {
     "key": "code_actuel_ville_deces",
     "type": "string",
     "title": "Code actuel de la commune de deces",

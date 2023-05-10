@@ -55,6 +55,8 @@ exports.run = async ({ pluginConfig, processingConfig, tmpDir, axios, log, patch
   await download(processingConfig, tmpDir, axios, log)
 
   let keyInseeComm, keyNomComm
+  let keyInseeDept, keyNomDept
+  let keyInseeRegion, keyNomRegion
   let keyInseePays, keyNomPays
 
   if (!processingConfig.maxAge) throw new Error('Pas d\'âge maximal défini')
@@ -62,21 +64,41 @@ exports.run = async ({ pluginConfig, processingConfig, tmpDir, axios, log, patch
   if (processingConfig.datasetMode !== 'inconsistency') {
     await log.step('Récupération des jeux de données de références')
 
-    const schemaInseeCommRef = (await axios.get(`api/v1/datasets/${processingConfig.datasetCodeInseeCommune.id}/schema`)).data
+    const schemaInseeRef = (await axios.get(`api/v1/datasets/${processingConfig.datasetInsee.id}/schema`)).data
     const schemaInseePaysRef = (await axios.get(`api/v1/datasets/${processingConfig.datasetCodeInseePays.id}/schema`)).data
     // console.log(schemaInseeRef)
-    for (const i of schemaInseeCommRef) {
+    for (const i of schemaInseeRef) {
       if (i['x-refersTo'] === 'http://rdf.insee.fr/def/geo#codeCommune') keyInseeComm = i.key
       if (i['x-refersTo'] === 'http://schema.org/City') keyNomComm = i.key
+      if (i['x-refersTo'] === 'http://rdf.insee.fr/def/geo#codeDepartement') keyInseeDept = i.key
+      keyNomDept = 'nom_departement'
+      if (i['x-refersTo'] === 'http://rdf.insee.fr/def/geo#codeRegion') keyInseeRegion = i.key
+      keyNomRegion = 'nom_region'
     }
 
     if (!keyInseeComm) {
-      await log.error(`Le jeu de données "${processingConfig.datasetCodeInseeCommune.title}" ne possède pas le concept requis "Code commune INSEE"`)
+      await log.error(`Le jeu de données "${processingConfig.datasetInsee.title}" ne possède pas le concept requis "Code commune INSEE"`)
       throw new Error('Jeu de donnée de référence avec un concept manquant')
     }
     if (!keyNomComm) {
-      await log.error(`Le jeu de données "${processingConfig.datasetCodeInseeCommune.title}" ne possède pas le concept requis "Commune"`)
+      await log.error(`Le jeu de données "${processingConfig.datasetInsee.title}" ne possède pas le concept requis "Commune"`)
       throw new Error('Jeu de donnée de référence avec un concept manquant')
+    }
+    if (!keyInseeDept) {
+      await log.error(`Le jeu de données "${processingConfig.datasetInsee.title}" ne possède pas le concept requis "Code département INSEE"`)
+      throw new Error('Jeu de donnée de référence avec un concept manquant')
+    }
+    if (!keyNomDept) {
+      await log.error(`Le jeu de données "${processingConfig.datasetInsee.title}" ne possède pas la colonne "nom_departement"`)
+      throw new Error('Jeu de donnée de référence avec une colonne manquante')
+    }
+    if (!keyInseeRegion) {
+      await log.error(`Le jeu de données "${processingConfig.datasetInsee.title}" ne possède pas le concept requis "Code région INSEE"`)
+      throw new Error('Jeu de donnée de référence avec un concept manquant')
+    }
+    if (!keyNomRegion) {
+      await log.error(`Le jeu de données "${processingConfig.datasetInsee.title}" ne possède pas la colonne "nom_region"`)
+      throw new Error('Jeu de donnée de référence avec une colonne manquante')
     }
 
     for (const i of schemaInseePaysRef) {
@@ -96,20 +118,24 @@ exports.run = async ({ pluginConfig, processingConfig, tmpDir, axios, log, patch
     const keysRef = {
       keyInseeComm,
       keyNomComm,
+      keyInseeDept,
+      keyNomDept,
+      keyInseeRegion,
+      keyNomRegion,
       keyInseePays,
       keyNomPays
     }
 
     const refCodeInseeComm = []
     // let codesCommunes = (await axios.get(`api/v1/datasets/${processingConfig.datasetCodeInseeCommune.id}/lines`, { params: { size: 10000, select: `${keyInseeComm},${keyNomComm}` } })).data
-    let codesCommunes = (await axios.get(`api/v1/datasets/${processingConfig.datasetCodeInseeCommune.id}/lines`, { params: { size: 10000, select: `${keyInseeComm},${keyNomComm}` } })).data
+    let codesCommunes = (await axios.get(`api/v1/datasets/${processingConfig.datasetInsee.id}/lines`, { params: { size: 10000, select: `${keyInseeComm},${keyNomComm},${keyInseeDept},${keyNomDept},${keyInseeRegion},${keyNomRegion}` } })).data
     refCodeInseeComm.push(...codesCommunes.results)
     while (codesCommunes.results.length === 10000) {
       codesCommunes = (await axios.get(codesCommunes.next)).data
       refCodeInseeComm.push(...codesCommunes.results)
     }
 
-    await log.info(`${refCodeInseeComm.length} lignes dans les données de référence "${processingConfig.datasetCodeInseeCommune.title}"`)
+    await log.info(`${refCodeInseeComm.length} lignes dans les données de référence "${processingConfig.datasetInsee.title}"`)
     const refCodeInseePays = (await axios.get(`api/v1/datasets/${processingConfig.datasetCodeInseePays.id}/lines`, { params: { size: 10000, select: `${keyInseePays},${keyNomPays}` } })).data.results
     await log.info(`${refCodeInseePays.length} lignes dans les données de référence "${processingConfig.datasetCodeInseePays.title}"`)
 
