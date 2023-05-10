@@ -220,7 +220,6 @@
     "key": "nom_pays_deces",
     "type": "string",
     "title": "Pays de décès",
-    "x-refersTo": "http://schema.org/addressCountry",
     "x-capabilities": {
       "text": false
     }

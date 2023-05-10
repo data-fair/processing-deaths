@@ -139,8 +139,8 @@ exports.run = async ({ pluginConfig, processingConfig, tmpDir, axios, log, patch
     const refCodeInseePays = (await axios.get(`api/v1/datasets/${processingConfig.datasetCodeInseePays.id}/lines`, { params: { size: 10000, select: `${keyInseePays},${keyNomPays}` } })).data.results
     await log.info(`${refCodeInseePays.length} lignes dans les données de référence "${processingConfig.datasetCodeInseePays.title}"`)
 
-    await process(tmpDir, refCodeInseeComm, refCodeInseePays, keysRef, pluginConfig, processingConfig, /* dataset, */ axios, log)
+    await process(tmpDir, refCodeInseeComm, refCodeInseePays, keysRef, pluginConfig, processingConfig, dataset, axios, log)
   } else {
-    await process(tmpDir, null, null, null, pluginConfig, processingConfig, /* dataset, */ axios, log)
+    await process(tmpDir, null, null, null, pluginConfig, processingConfig, dataset, axios, log)
   }
 }
