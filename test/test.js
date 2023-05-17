@@ -29,7 +29,11 @@ describe('deaths processing', () => {
         },
         datasetChangementCommune: {
           title: 'Changement de commune',
-          id: 'cog-changements2'
+          id: 'cog-changements'
+        },
+        datasetPopulation: {
+          title: 'Population',
+          id: 'recensement-51'
         },
         datasetID: 'fichier-des-personnes-decedees'
       },
