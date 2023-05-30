@@ -16,8 +16,8 @@ describe('deaths processing', () => {
         startYear: 1970,
         maxAge: 123,
         dataset: {
-          title: 'Test Deaths',
-          id: 'test-deaths'
+          title: 'Test Deaths 2',
+          id: 'test-deaths-2'
         },
         datasetInsee: {
           title: 'Code officiel geographique',
@@ -30,10 +30,6 @@ describe('deaths processing', () => {
         datasetChangementCommune: {
           title: 'Changement de commune',
           id: 'cog-changements'
-        },
-        datasetPopulation: {
-          title: 'Population',
-          id: 'recensement-51'
         },
         datasetID: 'fichier-des-personnes-decedees'
       },

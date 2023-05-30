@@ -111,20 +111,7 @@
         }
       },
       "datasetChangementCommune":{
-        "title": "Jeu de données idiquant les changements de code commune",
-        "type": "object",
-        "x-fromUrl": "{context.dataFairUrl}/api/v1/datasets?q={q}&select=id,title&{context.ownerFilter}",
-          "x-itemsProp": "results",
-          "x-itemTitle": "title",
-          "x-itemKey": "id",
-          "properties": {
-            "id": {"type": "string", "title": "Identifiant"},
-            "title": {"type": "string", "title": "Titre"}
-          }
-
-      },
-      "datasetPopulation":{
-        "title": "Jeu de données indiquant la population des communes",
+        "title": "Jeu de données indiquant les changements de code commune",
         "type": "object",
         "x-fromUrl": "{context.dataFairUrl}/api/v1/datasets?q={q}&select=id,title&{context.ownerFilter}",
           "x-itemsProp": "results",
