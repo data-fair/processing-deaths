@@ -1,9 +1,6 @@
 {
   "type": "object",
   "properties": {
-    "urlOpposition": {
-      "type": "string",
-      "title": "URL fichier de demande d'opposition"
-    }
+   
   }
 }

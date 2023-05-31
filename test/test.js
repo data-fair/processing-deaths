@@ -12,7 +12,7 @@ describe('deaths processing', () => {
       },
       processingConfig: {
         clearFiles: false,
-        datasetMode: 'update',
+        datasetMode: 'inconsistency',
         startYear: 1970,
         maxAge: 123,
         dataset: {
