@@ -79,7 +79,7 @@
     }]
   },{
     "title": "Paramètres",
-    "required": ["datasetCodeInseeCommune", "datasetCodeInseePays"],
+    "required": ["datasetInsee", "datasetCodeInseePays", "datasetChangementCommune"],
     "properties": {
       "clearFiles": {
         "title": "Supprimer les fichiers téléchargés",
