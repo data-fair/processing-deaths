@@ -79,12 +79,17 @@
     }]
   },{
     "title": "Paramètres",
-    "required": ["datasetInsee", "datasetCodeInseePays", "datasetChangementCommune"],
+    "required": ["datasetID","datasetInsee", "datasetCodeInseePays", "datasetChangementCommune"],
     "properties": {
       "clearFiles": {
         "title": "Supprimer les fichiers téléchargés",
         "type": "boolean",
         "default": true
+      },
+      "datasetID":{
+        "type": "string",
+        "title": "ID dataset data.gouv.fr",
+        "description": "Identifiant du jeu de données à utiliser sur le portail data.gouv.fr (ex: repertoire-national-des-associations)"
       },
       "datasetInsee": {
         "title": "Jeu de données de référence - Informations INSEE",
