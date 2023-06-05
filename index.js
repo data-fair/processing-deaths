@@ -47,6 +47,14 @@ exports.run = async ({ pluginConfig, processingConfig, tmpDir, axios, log, patch
     try {
       dataset = (await axios.get(`api/v1/datasets/${processingConfig.dataset.id}`)).data
       await log.info(`le jeu de donnée existe, id="${dataset.id}", title="${dataset.title}"`)
+      const lastLine = (await axios.get(`api/v1/datasets/${processingConfig.dataset.id}/lines?size=1&sort=-_updatedAt`)).data
+      if (lastLine) {
+        processingConfig.startYear = lastLine.results[0]._updatedAt.split('-')[0]
+        await log.info(`Début du traitement en : ${processingConfig.startYear}`)
+      } else {
+        await log.info('Aucune donnée dans le jeu de données, début du traitement en 1970')
+        processingConfig.startYear = 1970
+      }
     } catch (err) {
       if (!dataset) throw new Error(`le jeu de données n'existe pas, id="${processingConfig.dataset.id}"`)
     }
