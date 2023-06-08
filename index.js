@@ -40,6 +40,7 @@ exports.run = async ({ pluginConfig, processingConfig, tmpDir, axios, log, patch
       dataset = (await axios.post('api/v1/datasets', body)).data
     }
     await log.info(`jeu de donnée créé, id="${dataset.id}", title="${dataset.title}"`)
+    await patchConfig({ datasetMode: 'update', dataset: { id: dataset.id, title: dataset.title } })
     if (!processingConfig.startYear) processingConfig.startYear = 1970
     await log.info(`Début du traitement en : ${processingConfig.startYear}`)
   } else if (processingConfig.datasetMode === 'update' || processingConfig.datasetMode === 'inconsistency' || processingConfig.datasetMode === 'incremental') {

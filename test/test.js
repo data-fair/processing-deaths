@@ -12,8 +12,8 @@ describe('deaths processing', () => {
       },
       processingConfig: {
         clearFiles: false,
-        datasetMode: 'update',
-        maxAge: 123,
+        datasetMode: 'inconsistency',
+        maxAge: 130,
         dataset: {
           title: 'Test Deaths 2',
           id: 'test-deaths-2'
