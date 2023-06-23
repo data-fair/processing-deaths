@@ -75,7 +75,6 @@ exports.run = async ({ pluginConfig, processingConfig, tmpDir, axios, log, patch
 
     const schemaInseeRef = (await axios.get(`api/v1/datasets/${processingConfig.datasetInsee.id}/schema`)).data
     const schemaInseePaysRef = (await axios.get(`api/v1/datasets/${processingConfig.datasetCodeInseePays.id}/schema`)).data
-    // console.log(schemaInseeRef)
     for (const i of schemaInseeRef) {
       if (i['x-refersTo'] === 'http://rdf.insee.fr/def/geo#codeCommune') keyInseeComm = i.key
       if (i['x-refersTo'] === 'http://schema.org/City') keyNomComm = i.key
@@ -136,7 +135,6 @@ exports.run = async ({ pluginConfig, processingConfig, tmpDir, axios, log, patch
     }
 
     const refCodeInseeComm = []
-    // let codesCommunes = (await axios.get(`api/v1/datasets/${processingConfig.datasetCodeInseeCommune.id}/lines`, { params: { size: 10000, select: `${keyInseeComm},${keyNomComm}` } })).data
     let codesCommunes = (await axios.get(`api/v1/datasets/${processingConfig.datasetInsee.id}/lines`, { params: { size: 10000, select: `${keyInseeComm},${keyNomComm},${keyInseeDept},${keyNomDept},${keyInseeRegion},${keyNomRegion}` } })).data
     refCodeInseeComm.push(...codesCommunes.results)
     while (codesCommunes.results.length === 10000) {

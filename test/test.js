@@ -15,8 +15,8 @@ describe('deaths processing', () => {
         datasetMode: 'inconsistency',
         maxAge: 130,
         dataset: {
-          title: 'Test Deaths 2',
-          id: 'test-deaths-2'
+          title: 'Test Deaths code',
+          id: 'test-deaths-code'
         },
         datasetInsee: {
           title: 'Code officiel geographique',
@@ -26,9 +26,9 @@ describe('deaths processing', () => {
           title: 'Base officielle des codes Pays',
           id: 'process-cog'
         },
-        datasetChangementCommune: {
-          title: 'Changement de commune',
-          id: 'cog-changements'
+        datasetCodesActuels: {
+          title: 'Communes actuelles',
+          id: 'test-communes-actuelles'
         },
         datasetID: 'fichier-des-personnes-decedees'
       },

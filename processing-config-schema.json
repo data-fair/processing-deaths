@@ -89,7 +89,8 @@
       "datasetID":{
         "type": "string",
         "title": "ID dataset data.gouv.fr",
-        "description": "Identifiant du jeu de données à utiliser sur le portail data.gouv.fr (ex: repertoire-national-des-associations)"
+        "description": "Identifiant du jeu de données à utiliser sur le portail data.gouv.fr (ex: repertoire-national-des-associations)",
+        "default" :"fichier-des-personnes-decedees"
       },
       "datasetInsee": {
         "title": "Jeu de données de référence - Informations INSEE",
@@ -115,8 +116,8 @@
           "title": {"type": "string", "title": "Titre"}
         }
       },
-      "datasetChangementCommune":{
-        "title": "Jeu de données indiquant les changements de code commune",
+      "datasetCodesActuels":{
+        "title": "Jeu de données indiquant les codes actuels des communes",
         "type": "object",
         "x-fromUrl": "{context.dataFairUrl}/api/v1/datasets?q={q}&select=id,title&{context.ownerFilter}",
           "x-itemsProp": "results",
