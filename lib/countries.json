@@ -1,0 +1,3368 @@
+{
+  "sources": [
+    "https://www.insee.fr/fr/statistiques/fichier/8740222/v_pays_territoire_2026.csv",
+    "https://www.insee.fr/fr/statistiques/fichier/8740222/v_pays_et_territoire_depuis_1943.csv"
+  ],
+  "countries": {
+    "99100": {
+      "history": [
+        {
+          "label": "France",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "France"
+    },
+    "99101": {
+      "history": [
+        {
+          "label": "Danemark",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Danemark"
+    },
+    "99102": {
+      "history": [
+        {
+          "label": "Islande",
+          "start": "1943-01-01",
+          "end": "1944-06-17"
+        },
+        {
+          "label": "Islande",
+          "start": "1944-06-17",
+          "end": "2022-10-12"
+        },
+        {
+          "label": "Islande",
+          "start": "2022-10-12"
+        }
+      ],
+      "label": "Islande"
+    },
+    "99103": {
+      "history": [
+        {
+          "label": "Norvège",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Norvège"
+    },
+    "99104": {
+      "history": [
+        {
+          "label": "Suède",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Suède"
+    },
+    "99105": {
+      "history": [
+        {
+          "label": "Finlande",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Finlande"
+    },
+    "99106": {
+      "history": [
+        {
+          "label": "Estonie",
+          "start": "1991-08-20"
+        }
+      ],
+      "label": "Estonie"
+    },
+    "99107": {
+      "history": [
+        {
+          "label": "Lettonie",
+          "start": "1991-11-08"
+        }
+      ],
+      "label": "Lettonie"
+    },
+    "99108": {
+      "history": [
+        {
+          "label": "Lituanie",
+          "start": "1990-03-10"
+        }
+      ],
+      "label": "Lituanie"
+    },
+    "99109": {
+      "history": [
+        {
+          "label": "Allemagne",
+          "start": "1943-01-01",
+          "end": "1949-05-23"
+        },
+        {
+          "label": "Allemagne",
+          "start": "1990-10-03"
+        }
+      ],
+      "label": "Allemagne"
+    },
+    "99110": {
+      "history": [
+        {
+          "label": "Autriche",
+          "start": "1943-01-01",
+          "end": "1945-04-27"
+        },
+        {
+          "label": "Autriche",
+          "start": "1945-04-27"
+        }
+      ],
+      "label": "Autriche"
+    },
+    "99111": {
+      "history": [
+        {
+          "label": "Bulgarie",
+          "start": "1943-01-01",
+          "end": "1946-09-15"
+        },
+        {
+          "label": "Bulgarie",
+          "start": "1946-09-15",
+          "end": "1990-11-15"
+        },
+        {
+          "label": "Bulgarie",
+          "start": "1990-11-15"
+        }
+      ],
+      "label": "Bulgarie"
+    },
+    "99112": {
+      "history": [
+        {
+          "label": "Hongrie",
+          "start": "1943-01-01",
+          "end": "1949-08-20"
+        },
+        {
+          "label": "Hongrie",
+          "start": "1949-08-20",
+          "end": "1989-10-23"
+        },
+        {
+          "label": "Hongrie",
+          "start": "1989-10-23",
+          "end": "2012-01-01"
+        },
+        {
+          "label": "Hongrie",
+          "start": "2012-01-01"
+        }
+      ],
+      "label": "Hongrie"
+    },
+    "99113": {
+      "history": [
+        {
+          "label": "Liechtenstein",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Liechtenstein"
+    },
+    "99114": {
+      "history": [
+        {
+          "label": "Roumanie",
+          "start": "1943-01-01",
+          "end": "1947-12-30"
+        },
+        {
+          "label": "Roumanie",
+          "start": "1947-12-30",
+          "end": "1965-06-28"
+        },
+        {
+          "label": "Roumanie",
+          "start": "1965-06-28",
+          "end": "1989-12-22"
+        },
+        {
+          "label": "Roumanie",
+          "start": "1989-12-22"
+        }
+      ],
+      "label": "Roumanie"
+    },
+    "99115": {
+      "history": [
+        {
+          "label": "Bohème",
+          "start": "1943-01-01",
+          "end": "1945-04-01"
+        },
+        {
+          "label": "Tchécoslovaquie",
+          "start": "1945-04-01",
+          "end": "1948-05-09"
+        },
+        {
+          "label": "Tchécoslovaquie",
+          "start": "1948-05-09",
+          "end": "1960-07-11"
+        },
+        {
+          "label": "Tchécoslovaquie",
+          "start": "1960-07-11",
+          "end": "1990-04-23"
+        },
+        {
+          "label": "Tchécoslovaquie",
+          "start": "1990-04-23",
+          "end": "1993-01-01"
+        }
+      ]
+    },
+    "99116": {
+      "history": [
+        {
+          "label": "Moravie",
+          "start": "1943-01-01",
+          "end": "1945-04-01"
+        },
+        {
+          "label": "République tchèque",
+          "start": "1993-01-01",
+          "end": "2019-04-21"
+        },
+        {
+          "label": "Tchéquie",
+          "start": "2019-04-21"
+        }
+      ],
+      "label": "Tchéquie"
+    },
+    "99117": {
+      "history": [
+        {
+          "label": "Slovaquie",
+          "start": "1943-01-01",
+          "end": "1945-04-01"
+        },
+        {
+          "label": "Slovaquie",
+          "start": "1993-01-01"
+        }
+      ],
+      "label": "Slovaquie"
+    },
+    "99118": {
+      "history": [
+        {
+          "label": "Bosnie-Herzégovine",
+          "start": "1943-01-01",
+          "end": "1945-10-29"
+        },
+        {
+          "label": "Bosnie-Herzégovine",
+          "start": "1992-03-01",
+          "end": "1995-12-14"
+        },
+        {
+          "label": "Bosnie-Herzégovine",
+          "start": "1995-12-14"
+        }
+      ],
+      "label": "Bosnie-Herzégovine"
+    },
+    "99119": {
+      "history": [
+        {
+          "label": "Croatie",
+          "start": "1943-01-01",
+          "end": "1945-10-29"
+        },
+        {
+          "label": "Croatie",
+          "start": "1991-06-25"
+        }
+      ],
+      "label": "Croatie"
+    },
+    "99120": {
+      "history": [
+        {
+          "label": "Monténégro",
+          "start": "1943-01-01",
+          "end": "1945-10-29"
+        },
+        {
+          "label": "Monténégro",
+          "start": "2006-06-08"
+        }
+      ],
+      "label": "Monténégro"
+    },
+    "99121": {
+      "history": [
+        {
+          "label": "Serbie",
+          "start": "1943-01-01",
+          "end": "1945-11-29"
+        },
+        {
+          "label": "Yougoslavie",
+          "start": "1945-11-29",
+          "end": "1992-04-27"
+        },
+        {
+          "label": "Yougoslavie",
+          "start": "1992-04-27",
+          "end": "2003-02-04"
+        },
+        {
+          "label": "Serbie-et-Monténégro",
+          "start": "2003-02-04",
+          "end": "2006-06-08"
+        },
+        {
+          "label": "Serbie",
+          "start": "2006-06-08"
+        }
+      ],
+      "label": "Serbie"
+    },
+    "99122": {
+      "history": [
+        {
+          "label": "Pologne",
+          "start": "1943-01-01",
+          "end": "1952-07-22"
+        },
+        {
+          "label": "Pologne",
+          "start": "1952-07-22",
+          "end": "1989-12-31"
+        },
+        {
+          "label": "Pologne",
+          "start": "1989-12-31"
+        }
+      ],
+      "label": "Pologne"
+    },
+    "99123": {
+      "history": [
+        {
+          "label": "URSS",
+          "start": "1943-01-01",
+          "end": "1991-12-25"
+        },
+        {
+          "label": "Russie",
+          "start": "1991-12-25"
+        }
+      ],
+      "label": "Russie"
+    },
+    "99124": {
+      "history": [
+        {
+          "label": "Turquie d’Europe",
+          "start": "1943-01-01",
+          "end": "1966-01-01"
+        }
+      ]
+    },
+    "99125": {
+      "history": [
+        {
+          "label": "Albanie",
+          "start": "1943-01-01",
+          "end": "1944-11-28"
+        },
+        {
+          "label": "Albanie",
+          "start": "1944-11-28",
+          "end": "1946-01-10"
+        },
+        {
+          "label": "Albanie",
+          "start": "1946-01-10",
+          "end": "1976-12-28"
+        },
+        {
+          "label": "Albanie",
+          "start": "1976-12-28",
+          "end": "1991-04-29"
+        },
+        {
+          "label": "Albanie",
+          "start": "1991-04-29"
+        }
+      ],
+      "label": "Albanie"
+    },
+    "99126": {
+      "history": [
+        {
+          "label": "Grèce",
+          "start": "1943-01-01",
+          "end": "1974-12-08"
+        },
+        {
+          "label": "Grèce",
+          "start": "1974-12-08"
+        }
+      ],
+      "label": "Grèce"
+    },
+    "99127": {
+      "history": [
+        {
+          "label": "Italie",
+          "start": "1943-01-01",
+          "end": "1946-06-02"
+        },
+        {
+          "label": "Italie",
+          "start": "1946-06-02"
+        }
+      ],
+      "label": "Italie"
+    },
+    "99128": {
+      "history": [
+        {
+          "label": "Saint-Marin",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Saint-Marin"
+    },
+    "99129": {
+      "history": [
+        {
+          "label": "Vatican",
+          "start": "1943-01-01",
+          "end": "2019-04-21"
+        },
+        {
+          "label": "Vatican",
+          "start": "2019-04-21"
+        }
+      ],
+      "label": "Vatican"
+    },
+    "99130": {
+      "history": [
+        {
+          "label": "Andorre",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Andorre"
+    },
+    "99131": {
+      "history": [
+        {
+          "label": "Belgique",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Belgique"
+    },
+    "99132": {
+      "history": [
+        {
+          "label": "Royaume-Uni",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Royaume-Uni"
+    },
+    "99133": {
+      "history": [
+        {
+          "label": "Territoires britanniques en Méditerranée",
+          "start": "1943-01-01",
+          "end": "1960-10-01"
+        },
+        {
+          "label": "Territoires britanniques en Méditerranée",
+          "start": "1960-10-01",
+          "end": "1964-09-21"
+        },
+        {
+          "label": "Territoires britanniques en Méditerranée",
+          "start": "1964-09-21"
+        }
+      ],
+      "label": "Territoires britanniques en Méditerranée"
+    },
+    "99134": {
+      "history": [
+        {
+          "label": "Espagne",
+          "start": "1943-01-01",
+          "end": "1975-11-22"
+        },
+        {
+          "label": "Espagne",
+          "start": "1975-11-22"
+        }
+      ],
+      "label": "Espagne"
+    },
+    "99135": {
+      "history": [
+        {
+          "label": "Pays-Bas",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Pays-Bas"
+    },
+    "99136": {
+      "history": [
+        {
+          "label": "Irlande",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Irlande"
+    },
+    "99137": {
+      "history": [
+        {
+          "label": "Luxembourg",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Luxembourg"
+    },
+    "99138": {
+      "history": [
+        {
+          "label": "Monaco",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Monaco"
+    },
+    "99139": {
+      "history": [
+        {
+          "label": "Portugal",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Portugal"
+    },
+    "99140": {
+      "history": [
+        {
+          "label": "Suisse",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Suisse"
+    },
+    "99141": {
+      "history": [
+        {
+          "label": "Allemagne de l’Est",
+          "start": "1949-05-23",
+          "end": "1990-10-03"
+        }
+      ]
+    },
+    "99142": {
+      "history": [
+        {
+          "label": "Allemagne de l’Ouest",
+          "start": "1949-05-23",
+          "end": "1990-10-03"
+        }
+      ]
+    },
+    "99143": {
+      "history": [
+        {
+          "label": "Chypre",
+          "start": "1960-10-01",
+          "end": "1994-01-01"
+        }
+      ]
+    },
+    "99144": {
+      "history": [
+        {
+          "label": "Malte",
+          "start": "1964-09-21",
+          "end": "1974-12-13"
+        },
+        {
+          "label": "Malte",
+          "start": "1974-12-13"
+        }
+      ],
+      "label": "Malte"
+    },
+    "99145": {
+      "history": [
+        {
+          "label": "Slovénie",
+          "start": "1991-06-25"
+        }
+      ],
+      "label": "Slovénie"
+    },
+    "99148": {
+      "history": [
+        {
+          "label": "Biélorussie",
+          "start": "1991-08-25"
+        }
+      ],
+      "label": "Biélorussie"
+    },
+    "99151": {
+      "history": [
+        {
+          "label": "Moldavie",
+          "start": "1991-08-27"
+        }
+      ],
+      "label": "Moldavie"
+    },
+    "99155": {
+      "history": [
+        {
+          "label": "Ukraine",
+          "start": "1991-08-24"
+        }
+      ],
+      "label": "Ukraine"
+    },
+    "99156": {
+      "history": [
+        {
+          "label": "Macédoine",
+          "start": "1991-09-08",
+          "end": "2019-02-12"
+        },
+        {
+          "label": "Macédoine du Nord",
+          "start": "2019-02-12"
+        }
+      ],
+      "label": "Macédoine du Nord"
+    },
+    "99157": {
+      "history": [
+        {
+          "label": "Kosovo",
+          "start": "2007-02-08"
+        }
+      ],
+      "label": "Kosovo"
+    },
+    "99158": {
+      "history": [
+        {
+          "label": "Féroé",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Féroé"
+    },
+    "99159": {
+      "history": [
+        {
+          "label": "Territoires norvégiens en Atlantique Nord",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Territoires norvégiens en Atlantique Nord"
+    },
+    "99160": {
+      "history": [
+        {
+          "label": "Åland",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Åland"
+    },
+    "99161": {
+      "history": [
+        {
+          "label": "Dépendances de la Couronne britannique",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Dépendances de la Couronne britannique"
+    },
+    "99162": {
+      "history": [
+        {
+          "label": "Île des Faisans",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Île des Faisans"
+    },
+    "99201": {
+      "history": [
+        {
+          "label": "Arabie saoudite",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Arabie saoudite"
+    },
+    "99202": {
+      "history": [
+        {
+          "label": "Yémen",
+          "start": "1943-01-01",
+          "end": "1962-09-27"
+        },
+        {
+          "label": "Yémen du Nord",
+          "start": "1962-09-27",
+          "end": "1990-01-01"
+        }
+      ]
+    },
+    "99203": {
+      "history": [
+        {
+          "label": "Irak",
+          "start": "1943-01-01",
+          "end": "1958-07-14"
+        },
+        {
+          "label": "Irak",
+          "start": "1958-07-14"
+        }
+      ],
+      "label": "Irak"
+    },
+    "99204": {
+      "history": [
+        {
+          "label": "Iran",
+          "start": "1943-01-01",
+          "end": "1979-04-01"
+        },
+        {
+          "label": "Iran",
+          "start": "1979-04-01"
+        }
+      ],
+      "label": "Iran"
+    },
+    "99205": {
+      "history": [
+        {
+          "label": "Liban",
+          "start": "1943-01-01",
+          "end": "1943-11-22"
+        },
+        {
+          "label": "Liban",
+          "start": "1943-11-22"
+        }
+      ],
+      "label": "Liban"
+    },
+    "99206": {
+      "history": [
+        {
+          "label": "Syrie",
+          "start": "1943-01-01",
+          "end": "1946-04-17"
+        },
+        {
+          "label": "Syrie",
+          "start": "1946-04-17",
+          "end": "1958-02-22"
+        },
+        {
+          "label": "Syrie",
+          "start": "1961-09-28"
+        }
+      ],
+      "label": "Syrie"
+    },
+    "99207": {
+      "history": [
+        {
+          "label": "Palestine",
+          "start": "1943-01-01",
+          "end": "1948-05-14"
+        },
+        {
+          "label": "Israël",
+          "start": "1948-05-14"
+        }
+      ],
+      "label": "Israël"
+    },
+    "99208": {
+      "history": [
+        {
+          "label": "Turquie",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Turquie"
+    },
+    "99209": {
+      "history": [
+        {
+          "label": "Sibérie",
+          "start": "1943-01-01",
+          "end": "1943-01-01"
+        }
+      ]
+    },
+    "99210": {
+      "history": [
+        {
+          "label": "Turkestan russe",
+          "start": "1943-01-01",
+          "end": "1943-01-01"
+        }
+      ]
+    },
+    "99211": {
+      "history": [
+        {
+          "label": "Kamtchatcka",
+          "start": "1943-01-01",
+          "end": "1943-01-01"
+        }
+      ]
+    },
+    "99212": {
+      "history": [
+        {
+          "label": "Afghanistan",
+          "start": "1943-01-01",
+          "end": "1973-01-01"
+        },
+        {
+          "label": "Afghanistan",
+          "start": "1973-01-01",
+          "end": "1978-01-01"
+        },
+        {
+          "label": "Afghanistan",
+          "start": "1978-01-01",
+          "end": "1987-01-01"
+        },
+        {
+          "label": "Afghanistan",
+          "start": "1987-01-01",
+          "end": "1992-01-01"
+        },
+        {
+          "label": "Afghanistan",
+          "start": "1992-01-01",
+          "end": "2002-01-01"
+        },
+        {
+          "label": "Afghanistan",
+          "start": "2002-01-01",
+          "end": "2004-01-01"
+        },
+        {
+          "label": "Afghanistan",
+          "start": "2004-01-01"
+        }
+      ],
+      "label": "Afghanistan"
+    },
+    "99213": {
+      "history": [
+        {
+          "label": "Bélouchistan",
+          "start": "1943-01-01",
+          "end": "1947-08-14"
+        },
+        {
+          "label": "Pakistan",
+          "start": "1947-08-14",
+          "end": "1956-03-23"
+        },
+        {
+          "label": "Pakistan",
+          "start": "1956-03-23"
+        }
+      ],
+      "label": "Pakistan"
+    },
+    "99214": {
+      "history": [
+        {
+          "label": "Bhoutan",
+          "start": "1949-08-08"
+        }
+      ],
+      "label": "Bhoutan"
+    },
+    "99215": {
+      "history": [
+        {
+          "label": "Népal",
+          "start": "1943-01-01",
+          "end": "2008-05-28"
+        },
+        {
+          "label": "Népal",
+          "start": "2008-05-28",
+          "end": "2020-12-14"
+        },
+        {
+          "label": "Népal",
+          "start": "2020-12-14"
+        }
+      ],
+      "label": "Népal"
+    },
+    "99216": {
+      "history": [
+        {
+          "label": "Chine",
+          "start": "1943-01-01",
+          "end": "1949-10-01"
+        },
+        {
+          "label": "Chine",
+          "start": "1949-10-01"
+        }
+      ],
+      "label": "Chine"
+    },
+    "99217": {
+      "history": [
+        {
+          "label": "Japon",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Japon"
+    },
+    "99218": {
+      "history": [
+        {
+          "label": "Mandchoukouo",
+          "start": "1943-01-01",
+          "end": "1945-08-18"
+        }
+      ]
+    },
+    "99219": {
+      "history": [
+        {
+          "label": "Thaïlande",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Thaïlande"
+    },
+    "99220": {
+      "history": [
+        {
+          "label": "Îles Philippines et Guam",
+          "start": "1943-01-01",
+          "end": "1946-07-04"
+        },
+        {
+          "label": "Philippines",
+          "start": "1946-07-04"
+        }
+      ],
+      "label": "Philippines"
+    },
+    "99221": {
+      "history": [
+        {
+          "label": "Territoires britanniques au Proche-Orient",
+          "start": "1943-01-01",
+          "end": "1961-06-19"
+        },
+        {
+          "label": "Territoires britanniques au Proche-Orient",
+          "start": "1961-06-19",
+          "end": "1962-04-04"
+        },
+        {
+          "label": "Territoires britanniques au Proche-Orient",
+          "start": "1962-04-04",
+          "end": "1967-11-30"
+        },
+        {
+          "label": "Territoires britanniques au Proche-Orient",
+          "start": "1967-11-30",
+          "end": "1970-08-09"
+        },
+        {
+          "label": "Territoires britanniques au Proche-Orient",
+          "start": "1970-08-09",
+          "end": "1971-08-14"
+        },
+        {
+          "label": "Territoires britanniques au Proche-Orient",
+          "start": "1971-08-14",
+          "end": "1971-09-03"
+        },
+        {
+          "label": "Territoires britanniques au Proche-Orient",
+          "start": "1971-09-03",
+          "end": "1971-12-02"
+        }
+      ]
+    },
+    "99222": {
+      "history": [
+        {
+          "label": "Transjordanie",
+          "start": "1943-01-01",
+          "end": "1946-01-01"
+        },
+        {
+          "label": "Jordanie",
+          "start": "1946-01-01"
+        }
+      ],
+      "label": "Jordanie"
+    },
+    "99223": {
+      "history": [
+        {
+          "label": "Indes britanniques",
+          "start": "1943-01-01",
+          "end": "1947-08-14"
+        },
+        {
+          "label": "Inde",
+          "start": "1947-08-14",
+          "end": "1950-01-26"
+        },
+        {
+          "label": "Inde",
+          "start": "1950-01-26"
+        }
+      ],
+      "label": "Inde"
+    },
+    "99224": {
+      "history": [
+        {
+          "label": "Birmanie",
+          "start": "1943-01-01",
+          "end": "1948-01-04"
+        },
+        {
+          "label": "Birmanie",
+          "start": "1948-01-04",
+          "end": "1974-01-04"
+        },
+        {
+          "label": "Birmanie",
+          "start": "1974-01-04",
+          "end": "1988-09-23"
+        },
+        {
+          "label": "Birmanie",
+          "start": "1988-09-23",
+          "end": "2010-10-21"
+        },
+        {
+          "label": "Birmanie",
+          "start": "2010-10-21"
+        }
+      ],
+      "label": "Birmanie"
+    },
+    "99225": {
+      "history": [
+        {
+          "label": "Bornéo britannique",
+          "start": "1943-01-01",
+          "end": "1946-07-15"
+        },
+        {
+          "label": "Bornéo britannique",
+          "start": "1946-07-15",
+          "end": "1963-09-16"
+        },
+        {
+          "label": "Brunei",
+          "start": "1963-09-16",
+          "end": "1984-01-01"
+        },
+        {
+          "label": "Brunei",
+          "start": "1984-01-01",
+          "end": "2019-04-21"
+        },
+        {
+          "label": "Brunei",
+          "start": "2019-04-21"
+        }
+      ],
+      "label": "Brunei"
+    },
+    "99226": {
+      "history": [
+        {
+          "label": "Établissements des détroits",
+          "start": "1943-01-01",
+          "end": "1946-04-01"
+        },
+        {
+          "label": "Singapour",
+          "start": "1946-04-01",
+          "end": "1959-01-01"
+        },
+        {
+          "label": "Singapour",
+          "start": "1959-01-01",
+          "end": "1963-09-16"
+        },
+        {
+          "label": "Singapour",
+          "start": "1965-08-09"
+        }
+      ],
+      "label": "Singapour"
+    },
+    "99227": {
+      "history": [
+        {
+          "label": "États malais fédérés",
+          "start": "1943-01-01",
+          "end": "1946-04-01"
+        },
+        {
+          "label": "Malaisie",
+          "start": "1946-04-01",
+          "end": "1948-01-31"
+        },
+        {
+          "label": "Malaisie",
+          "start": "1948-01-31",
+          "end": "1957-08-31"
+        },
+        {
+          "label": "Malaisie",
+          "start": "1957-08-31",
+          "end": "1963-09-16"
+        },
+        {
+          "label": "Malaisie",
+          "start": "1963-09-16"
+        }
+      ],
+      "label": "Malaisie"
+    },
+    "99228": {
+      "history": [
+        {
+          "label": "États malais non fédérés",
+          "start": "1943-01-01",
+          "end": "1946-04-01"
+        }
+      ]
+    },
+    "99229": {
+      "history": [
+        {
+          "label": "Îles britanniques de l’Océan Indien",
+          "start": "1943-01-01",
+          "end": "1947-08-14"
+        },
+        {
+          "label": "Îles britanniques de l’Océan Indien",
+          "start": "1947-08-14",
+          "end": "1955-11-23"
+        },
+        {
+          "label": "Îles britanniques de l’Océan Indien",
+          "start": "1955-11-23",
+          "end": "1958-10-01"
+        },
+        {
+          "label": "Maldives",
+          "start": "1958-10-01",
+          "end": "1965-07-26"
+        },
+        {
+          "label": "Maldives",
+          "start": "1965-07-26"
+        }
+      ],
+      "label": "Maldives"
+    },
+    "99230": {
+      "history": [
+        {
+          "label": "Hong Kong",
+          "start": "1943-01-01",
+          "end": "1997-07-01"
+        },
+        {
+          "label": "Hong Kong",
+          "start": "1997-07-01"
+        }
+      ],
+      "label": "Hong Kong"
+    },
+    "99231": {
+      "history": [
+        {
+          "label": "Indes néerlandaises",
+          "start": "1943-01-01",
+          "end": "1945-01-01"
+        },
+        {
+          "label": "Indonésie",
+          "start": "1945-01-01"
+        }
+      ],
+      "label": "Indonésie"
+    },
+    "99232": {
+      "history": [
+        {
+          "label": "Territoires portugais en Asie",
+          "start": "1943-01-01",
+          "end": "1961-12-19"
+        },
+        {
+          "label": "Territoires portugais en Asie",
+          "start": "1961-12-19",
+          "end": "1975-01-01"
+        },
+        {
+          "label": "Macao",
+          "start": "1975-01-01",
+          "end": "1999-12-20"
+        },
+        {
+          "label": "Macao",
+          "start": "1999-12-20"
+        }
+      ],
+      "label": "Macao"
+    },
+    "99233": {
+      "history": [
+        {
+          "label": "Fédération d’Arabie du Sud",
+          "start": "1962-04-04",
+          "end": "1967-11-30"
+        },
+        {
+          "label": "Yémen du Sud",
+          "start": "1967-11-30",
+          "end": "1990-01-01"
+        }
+      ]
+    },
+    "99234": {
+      "history": [
+        {
+          "label": "Cambodge",
+          "start": "1953-11-09"
+        }
+      ],
+      "label": "Cambodge"
+    },
+    "99235": {
+      "history": [
+        {
+          "label": "Ceylan",
+          "start": "1947-08-14",
+          "end": "1948-02-04"
+        },
+        {
+          "label": "Ceylan",
+          "start": "1948-02-04",
+          "end": "1975-01-01"
+        },
+        {
+          "label": "Sri Lanka",
+          "start": "1975-01-01"
+        }
+      ],
+      "label": "Sri Lanka"
+    },
+    "99236": {
+      "history": [
+        {
+          "label": "Chine nationaliste (Formose)",
+          "start": "1949-10-01",
+          "end": "1985-01-01"
+        },
+        {
+          "label": "Taïwan",
+          "start": "1985-01-01"
+        }
+      ],
+      "label": "Taïwan"
+    },
+    "99237": {
+      "history": [
+        {
+          "label": "Corée",
+          "start": "1945-08-18",
+          "end": "1953-01-01"
+        }
+      ]
+    },
+    "99238": {
+      "history": [
+        {
+          "label": "Corée du Nord",
+          "start": "1953-01-01"
+        }
+      ],
+      "label": "Corée du Nord"
+    },
+    "99239": {
+      "history": [
+        {
+          "label": "Corée du Sud",
+          "start": "1953-01-01"
+        }
+      ],
+      "label": "Corée du Sud"
+    },
+    "99240": {
+      "history": [
+        {
+          "label": "Koweït",
+          "start": "1961-06-19"
+        }
+      ],
+      "label": "Koweït"
+    },
+    "99241": {
+      "history": [
+        {
+          "label": "Laos",
+          "start": "1953-10-22",
+          "end": "1975-12-02"
+        },
+        {
+          "label": "Laos",
+          "start": "1975-12-02"
+        }
+      ],
+      "label": "Laos"
+    },
+    "99242": {
+      "history": [
+        {
+          "label": "Mongolie",
+          "start": "1945-10-20",
+          "end": "1992-02-12"
+        },
+        {
+          "label": "Mongolie",
+          "start": "1992-02-12"
+        }
+      ],
+      "label": "Mongolie"
+    },
+    "99243": {
+      "history": [
+        {
+          "label": "Vietnam",
+          "start": "1976-07-02"
+        }
+      ],
+      "label": "Vietnam"
+    },
+    "99244": {
+      "history": [
+        {
+          "label": "Vietnam du Nord",
+          "start": "1954-07-20",
+          "end": "1976-07-02"
+        }
+      ]
+    },
+    "99245": {
+      "history": [
+        {
+          "label": "Vietnam du Sud",
+          "start": "1954-07-20",
+          "end": "1976-07-02"
+        }
+      ]
+    },
+    "99246": {
+      "history": [
+        {
+          "label": "Bangladesh",
+          "start": "1971-03-16"
+        }
+      ],
+      "label": "Bangladesh"
+    },
+    "99247": {
+      "history": [
+        {
+          "label": "Émirats arabes unis",
+          "start": "1971-12-02"
+        }
+      ],
+      "label": "Émirats arabes unis"
+    },
+    "99248": {
+      "history": [
+        {
+          "label": "Qatar",
+          "start": "1971-09-03"
+        }
+      ],
+      "label": "Qatar"
+    },
+    "99249": {
+      "history": [
+        {
+          "label": "Bahreïn",
+          "start": "1971-08-14",
+          "end": "2002-02-14"
+        },
+        {
+          "label": "Bahreïn",
+          "start": "2002-02-14"
+        }
+      ],
+      "label": "Bahreïn"
+    },
+    "99250": {
+      "history": [
+        {
+          "label": "Oman",
+          "start": "1970-08-09"
+        }
+      ],
+      "label": "Oman"
+    },
+    "99251": {
+      "history": [
+        {
+          "label": "Yémen",
+          "start": "1990-01-01"
+        }
+      ],
+      "label": "Yémen"
+    },
+    "99252": {
+      "history": [
+        {
+          "label": "Arménie",
+          "start": "1991-09-21"
+        }
+      ],
+      "label": "Arménie"
+    },
+    "99253": {
+      "history": [
+        {
+          "label": "Azerbaïdjan",
+          "start": "1991-08-30"
+        }
+      ],
+      "label": "Azerbaïdjan"
+    },
+    "99254": {
+      "history": [
+        {
+          "label": "Chypre",
+          "start": "1994-01-01"
+        }
+      ],
+      "label": "Chypre"
+    },
+    "99255": {
+      "history": [
+        {
+          "label": "Géorgie",
+          "start": "1991-04-09",
+          "end": "1995-10-17"
+        },
+        {
+          "label": "Géorgie",
+          "start": "1995-10-17"
+        }
+      ],
+      "label": "Géorgie"
+    },
+    "99256": {
+      "history": [
+        {
+          "label": "Kazakhstan",
+          "start": "1991-12-16"
+        }
+      ],
+      "label": "Kazakhstan"
+    },
+    "99257": {
+      "history": [
+        {
+          "label": "Kirghizstan",
+          "start": "1991-08-31"
+        }
+      ],
+      "label": "Kirghizstan"
+    },
+    "99258": {
+      "history": [
+        {
+          "label": "Ouzbékistan",
+          "start": "1991-08-31"
+        }
+      ],
+      "label": "Ouzbékistan"
+    },
+    "99259": {
+      "history": [
+        {
+          "label": "Tadjikistan",
+          "start": "1991-09-09"
+        }
+      ],
+      "label": "Tadjikistan"
+    },
+    "99260": {
+      "history": [
+        {
+          "label": "Turkménistan",
+          "start": "1991-10-27"
+        }
+      ],
+      "label": "Turkménistan"
+    },
+    "99261": {
+      "history": [
+        {
+          "label": "Palestine",
+          "start": "1948-05-14",
+          "end": "1988-11-15"
+        },
+        {
+          "label": "Palestine",
+          "start": "1988-11-15"
+        }
+      ],
+      "label": "Palestine"
+    },
+    "99262": {
+      "history": [
+        {
+          "label": "Timor oriental",
+          "start": "2002-05-20"
+        }
+      ],
+      "label": "Timor oriental"
+    },
+    "99263": {
+      "history": [
+        {
+          "label": "Protectorat d’Arabie du Sud",
+          "start": "1962-04-04",
+          "end": "1967-11-30"
+        }
+      ]
+    },
+    "99264": {
+      "history": [
+        {
+          "label": "Nouvelle-Guinée néerlandaise",
+          "start": "1962-01-01",
+          "end": "1963-05-01"
+        }
+      ]
+    },
+    "99265": {
+      "history": [
+        {
+          "label": "Territoires australiens de l’océan Indien",
+          "start": "1943-01-01",
+          "end": "1947-01-01"
+        },
+        {
+          "label": "Territoires australiens de l’océan Indien",
+          "start": "1947-01-01",
+          "end": "1955-11-23"
+        },
+        {
+          "label": "Territoires australiens de l’océan Indien",
+          "start": "1955-11-23",
+          "end": "1958-10-01"
+        },
+        {
+          "label": "Territoires australiens de l’océan Indien",
+          "start": "1958-10-01"
+        }
+      ],
+      "label": "Territoires australiens de l’océan Indien"
+    },
+    "99301": {
+      "history": [
+        {
+          "label": "Égypte",
+          "start": "1943-01-01",
+          "end": "1953-06-18"
+        },
+        {
+          "label": "Égypte",
+          "start": "1953-06-18",
+          "end": "1958-02-22"
+        },
+        {
+          "label": "République arabe unie",
+          "start": "1958-02-22",
+          "end": "1971-09-02"
+        },
+        {
+          "label": "Égypte",
+          "start": "1971-09-02"
+        }
+      ],
+      "label": "Égypte"
+    },
+    "99302": {
+      "history": [
+        {
+          "label": "Libéria",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Libéria"
+    },
+    "99303": {
+      "history": [
+        {
+          "label": "Union sud-africaine",
+          "start": "1943-01-01",
+          "end": "1966-01-01"
+        },
+        {
+          "label": "Afrique du Sud",
+          "start": "1966-01-01"
+        }
+      ],
+      "label": "Afrique du Sud"
+    },
+    "99304": {
+      "history": [
+        {
+          "label": "Territoires britanniques en Afrique occidentale",
+          "start": "1943-01-01",
+          "end": "1957-03-06"
+        },
+        {
+          "label": "Territoires britanniques en Afrique occidentale",
+          "start": "1957-03-06",
+          "end": "1960-10-01"
+        },
+        {
+          "label": "Territoires britanniques en Afrique occidentale",
+          "start": "1960-10-01",
+          "end": "1961-04-27"
+        },
+        {
+          "label": "Gambie",
+          "start": "1961-04-27",
+          "end": "1965-02-18"
+        },
+        {
+          "label": "Gambie",
+          "start": "1965-02-18"
+        }
+      ],
+      "label": "Gambie"
+    },
+    "99305": {
+      "history": [
+        {
+          "label": "Cameroun et Togo britanniques",
+          "start": "1943-01-01",
+          "end": "1957-03-06"
+        },
+        {
+          "label": "Cameroun britannique",
+          "start": "1957-03-06",
+          "end": "1961-10-01"
+        }
+      ]
+    },
+    "99306": {
+      "history": [
+        {
+          "label": "Territoires britanniques de l’océan Atlantique",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Territoires britanniques de l’océan Atlantique"
+    },
+    "99307": {
+      "history": [
+        {
+          "label": "Soudan anglo-égyptien, Kenya, Ouganda",
+          "start": "1943-01-01",
+          "end": "1956-01-01"
+        },
+        {
+          "label": "Kenya, Ouganda",
+          "start": "1956-01-01",
+          "end": "1962-10-09"
+        },
+        {
+          "label": "Kenya",
+          "start": "1962-10-09",
+          "end": "1963-12-12"
+        }
+      ]
+    },
+    "99308": {
+      "history": [
+        {
+          "label": "Territoires britanniques de l’océan Indien",
+          "start": "1943-01-01",
+          "end": "1960-07-01"
+        },
+        {
+          "label": "Territoires britanniques de l’océan Indien",
+          "start": "1960-07-01",
+          "end": "1963-12-10"
+        },
+        {
+          "label": "Territoires britanniques de l’océan Indien",
+          "start": "1963-12-10",
+          "end": "1968-03-12"
+        },
+        {
+          "label": "Territoires britanniques de l’océan Indien",
+          "start": "1968-03-12",
+          "end": "1976-06-29"
+        },
+        {
+          "label": "Territoire britannique de l’océan Indien",
+          "start": "1976-06-29"
+        }
+      ],
+      "label": "Territoire britannique de l’océan Indien"
+    },
+    "99309": {
+      "history": [
+        {
+          "label": "Tanganyika",
+          "start": "1943-01-01",
+          "end": "1961-12-09"
+        },
+        {
+          "label": "Tanganyika",
+          "start": "1961-12-09",
+          "end": "1962-12-09"
+        },
+        {
+          "label": "Tanganyika",
+          "start": "1962-12-09",
+          "end": "1964-04-26"
+        },
+        {
+          "label": "Tanzanie",
+          "start": "1964-04-26"
+        }
+      ],
+      "label": "Tanzanie"
+    },
+    "99310": {
+      "history": [
+        {
+          "label": "Territoires britanniques en Afrique australe",
+          "start": "1943-01-01",
+          "end": "1964-07-06"
+        },
+        {
+          "label": "Territoires britanniques en Afrique australe",
+          "start": "1964-07-06",
+          "end": "1964-10-24"
+        },
+        {
+          "label": "Territoires britanniques en Afrique australe",
+          "start": "1964-10-24",
+          "end": "1966-09-30"
+        },
+        {
+          "label": "Territoires britanniques en Afrique australe",
+          "start": "1966-09-30",
+          "end": "1966-10-04"
+        },
+        {
+          "label": "Territoires britanniques en Afrique australe",
+          "start": "1966-10-04",
+          "end": "1968-09-06"
+        },
+        {
+          "label": "Rhodésie du Sud",
+          "start": "1968-09-06",
+          "end": "1980-04-17"
+        },
+        {
+          "label": "Zimbabwe",
+          "start": "1980-04-17"
+        }
+      ],
+      "label": "Zimbabwe"
+    },
+    "99311": {
+      "history": [
+        {
+          "label": "Sud-Ouest africain",
+          "start": "1943-01-01",
+          "end": "1968-06-12"
+        },
+        {
+          "label": "Namibie",
+          "start": "1968-06-12",
+          "end": "1990-03-21"
+        },
+        {
+          "label": "Namibie",
+          "start": "1990-03-21"
+        }
+      ],
+      "label": "Namibie"
+    },
+    "99312": {
+      "history": [
+        {
+          "label": "Congo belge",
+          "start": "1943-01-01",
+          "end": "1960-06-30"
+        },
+        {
+          "label": "République du Congo",
+          "start": "1960-06-30",
+          "end": "1965-01-01"
+        },
+        {
+          "label": "République démocratique du Congo",
+          "start": "1965-01-01",
+          "end": "1971-01-01"
+        },
+        {
+          "label": "Zaïre",
+          "start": "1971-01-01",
+          "end": "1997-01-01"
+        },
+        {
+          "label": "République démocratique du Congo",
+          "start": "1997-01-01"
+        }
+      ],
+      "label": "République démocratique du Congo"
+    },
+    "99313": {
+      "history": [
+        {
+          "label": "Territoires espagnols en Afrique du Nord",
+          "start": "1943-01-01",
+          "end": "1956-03-02"
+        },
+        {
+          "label": "Territoires espagnols en Afrique du Nord",
+          "start": "1956-03-02",
+          "end": "1958-01-12"
+        },
+        {
+          "label": "Territoires espagnols en Afrique du Nord",
+          "start": "1958-01-12",
+          "end": "1968-10-12"
+        },
+        {
+          "label": "Territoires espagnols en Afrique du Nord",
+          "start": "1968-10-12",
+          "end": "1969-06-30"
+        },
+        {
+          "label": "Territoires espagnols en Afrique du Nord",
+          "start": "1969-06-30",
+          "end": "1976-01-01"
+        },
+        {
+          "label": "Territoires espagnols en Afrique du Nord",
+          "start": "1976-01-01"
+        }
+      ],
+      "label": "Territoires espagnols en Afrique du Nord"
+    },
+    "99314": {
+      "history": [
+        {
+          "label": "Guinée espagnole et îles Canaries",
+          "start": "1943-01-01",
+          "end": "1968-10-12"
+        },
+        {
+          "label": "Guinée équatoriale",
+          "start": "1968-10-12"
+        }
+      ],
+      "label": "Guinée équatoriale"
+    },
+    "99315": {
+      "history": [
+        {
+          "label": "Éthiopie",
+          "start": "1943-01-01",
+          "end": "1975-03-21"
+        },
+        {
+          "label": "Éthiopie",
+          "start": "1975-03-21",
+          "end": "1987-09-10"
+        },
+        {
+          "label": "Éthiopie",
+          "start": "1987-09-10",
+          "end": "1991-05-28"
+        },
+        {
+          "label": "Éthiopie",
+          "start": "1991-05-28",
+          "end": "1995-08-22"
+        },
+        {
+          "label": "Éthiopie",
+          "start": "1995-08-22"
+        }
+      ],
+      "label": "Éthiopie"
+    },
+    "99316": {
+      "history": [
+        {
+          "label": "Libye",
+          "start": "1943-01-01",
+          "end": "1951-12-24"
+        },
+        {
+          "label": "Libye",
+          "start": "1951-12-24",
+          "end": "1969-12-01"
+        },
+        {
+          "label": "Libye",
+          "start": "1969-12-01",
+          "end": "1977-03-02"
+        },
+        {
+          "label": "Libye",
+          "start": "1977-03-02",
+          "end": "2011-10-23"
+        },
+        {
+          "label": "Libye",
+          "start": "2011-10-23"
+        }
+      ],
+      "label": "Libye"
+    },
+    "99317": {
+      "history": [
+        {
+          "label": "Érythrée",
+          "start": "1943-01-01",
+          "end": "1962-01-01"
+        },
+        {
+          "label": "Érythrée",
+          "start": "1993-05-24"
+        }
+      ],
+      "label": "Érythrée"
+    },
+    "99318": {
+      "history": [
+        {
+          "label": "Somalie italienne",
+          "start": "1943-01-01",
+          "end": "1960-07-01"
+        },
+        {
+          "label": "Somalie",
+          "start": "1960-07-01",
+          "end": "1969-10-21"
+        },
+        {
+          "label": "Somalie",
+          "start": "1969-10-21",
+          "end": "1991-07-21"
+        },
+        {
+          "label": "Somalie",
+          "start": "1991-07-21",
+          "end": "2012-08-20"
+        },
+        {
+          "label": "Somalie",
+          "start": "2012-08-20"
+        }
+      ],
+      "label": "Somalie"
+    },
+    "99319": {
+      "history": [
+        {
+          "label": "Territoires portugais de l’océan Atlantique",
+          "start": "1943-01-01",
+          "end": "1974-09-10"
+        },
+        {
+          "label": "Territoires portugais de l’océan Atlantique",
+          "start": "1974-09-10",
+          "end": "1975-07-05"
+        },
+        {
+          "label": "Territoires portugais de l’océan Atlantique",
+          "start": "1975-07-05",
+          "end": "1975-07-12"
+        },
+        {
+          "label": "Territoires portugais de l’océan Atlantique",
+          "start": "1975-07-12",
+          "end": "1975-11-11"
+        },
+        {
+          "label": "Territoires portugais de l’océan Atlantique",
+          "start": "1975-11-11"
+        }
+      ],
+      "label": "Territoires portugais de l’océan Atlantique"
+    },
+    "99320": {
+      "history": [
+        {
+          "label": "Mozambique",
+          "start": "1943-01-01",
+          "end": "1975-06-25"
+        }
+      ]
+    },
+    "99321": {
+      "history": [
+        {
+          "label": "Ruanda-Urundi",
+          "start": "1960-06-30",
+          "end": "1962-07-01"
+        },
+        {
+          "label": "Burundi",
+          "start": "1962-07-01",
+          "end": "1966-11-29"
+        },
+        {
+          "label": "Burundi",
+          "start": "1966-11-29"
+        }
+      ],
+      "label": "Burundi"
+    },
+    "99322": {
+      "history": [
+        {
+          "label": "Cameroun",
+          "start": "1961-10-01"
+        }
+      ],
+      "label": "Cameroun"
+    },
+    "99323": {
+      "history": [
+        {
+          "label": "Centrafrique",
+          "start": "1960-08-13",
+          "end": "1976-12-04"
+        },
+        {
+          "label": "Centrafrique",
+          "start": "1976-12-04",
+          "end": "1979-09-21"
+        },
+        {
+          "label": "Centrafrique",
+          "start": "1979-09-21"
+        }
+      ],
+      "label": "Centrafrique"
+    },
+    "99324": {
+      "history": [
+        {
+          "label": "Congo",
+          "start": "1960-08-15",
+          "end": "1969-12-31"
+        },
+        {
+          "label": "Congo",
+          "start": "1969-12-31",
+          "end": "1992-03-15"
+        },
+        {
+          "label": "Congo",
+          "start": "1992-03-15"
+        }
+      ],
+      "label": "Congo"
+    },
+    "99325": {
+      "history": [
+        {
+          "label": "Tanger",
+          "start": "1943-01-01",
+          "end": "1956-10-29"
+        }
+      ]
+    },
+    "99326": {
+      "history": [
+        {
+          "label": "Côte d’Ivoire",
+          "start": "1960-08-07"
+        }
+      ],
+      "label": "Côte d’Ivoire"
+    },
+    "99327": {
+      "history": [
+        {
+          "label": "Dahomey",
+          "start": "1960-08-01",
+          "end": "1975-11-30"
+        },
+        {
+          "label": "Bénin",
+          "start": "1975-11-30"
+        }
+      ],
+      "label": "Bénin"
+    },
+    "99328": {
+      "history": [
+        {
+          "label": "Gabon",
+          "start": "1960-08-17"
+        }
+      ],
+      "label": "Gabon"
+    },
+    "99329": {
+      "history": [
+        {
+          "label": "Ghana",
+          "start": "1957-03-06"
+        }
+      ],
+      "label": "Ghana"
+    },
+    "99330": {
+      "history": [
+        {
+          "label": "Guinée",
+          "start": "1958-10-02"
+        }
+      ],
+      "label": "Guinée"
+    },
+    "99331": {
+      "history": [
+        {
+          "label": "Haute-Volta",
+          "start": "1960-08-05",
+          "end": "1984-08-04"
+        },
+        {
+          "label": "Burkina",
+          "start": "1984-08-04"
+        }
+      ],
+      "label": "Burkina"
+    },
+    "99332": {
+      "history": [
+        {
+          "label": "Kenya",
+          "start": "1963-12-12"
+        }
+      ],
+      "label": "Kenya"
+    },
+    "99333": {
+      "history": [
+        {
+          "label": "Madagascar",
+          "start": "1960-06-26"
+        }
+      ],
+      "label": "Madagascar"
+    },
+    "99334": {
+      "history": [
+        {
+          "label": "Malawi",
+          "start": "1964-07-06"
+        }
+      ],
+      "label": "Malawi"
+    },
+    "99335": {
+      "history": [
+        {
+          "label": "Fédération du Mali",
+          "start": "1960-06-22",
+          "end": "1960-09-22"
+        },
+        {
+          "label": "Mali",
+          "start": "1960-09-22"
+        }
+      ],
+      "label": "Mali"
+    },
+    "99336": {
+      "history": [
+        {
+          "label": "Mauritanie",
+          "start": "1960-11-28"
+        }
+      ],
+      "label": "Mauritanie"
+    },
+    "99337": {
+      "history": [
+        {
+          "label": "Niger",
+          "start": "1960-08-03"
+        }
+      ],
+      "label": "Niger"
+    },
+    "99338": {
+      "history": [
+        {
+          "label": "Nigéria",
+          "start": "1960-10-01"
+        }
+      ],
+      "label": "Nigéria"
+    },
+    "99339": {
+      "history": [
+        {
+          "label": "Ouganda",
+          "start": "1962-10-09"
+        }
+      ],
+      "label": "Ouganda"
+    },
+    "99340": {
+      "history": [
+        {
+          "label": "Rwanda",
+          "start": "1962-07-01"
+        }
+      ],
+      "label": "Rwanda"
+    },
+    "99341": {
+      "history": [
+        {
+          "label": "Sénégal",
+          "start": "1960-08-20"
+        }
+      ],
+      "label": "Sénégal"
+    },
+    "99342": {
+      "history": [
+        {
+          "label": "Sierra Leone",
+          "start": "1961-04-27"
+        }
+      ],
+      "label": "Sierra Leone"
+    },
+    "99343": {
+      "history": [
+        {
+          "label": "Soudan",
+          "start": "1956-01-01"
+        }
+      ],
+      "label": "Soudan"
+    },
+    "99344": {
+      "history": [
+        {
+          "label": "Tchad",
+          "start": "1960-08-11"
+        }
+      ],
+      "label": "Tchad"
+    },
+    "99345": {
+      "history": [
+        {
+          "label": "Togo",
+          "start": "1960-04-27"
+        }
+      ],
+      "label": "Togo"
+    },
+    "99346": {
+      "history": [
+        {
+          "label": "Zambie",
+          "start": "1964-10-24"
+        }
+      ],
+      "label": "Zambie"
+    },
+    "99347": {
+      "history": [
+        {
+          "label": "Botswana",
+          "start": "1966-09-30"
+        }
+      ],
+      "label": "Botswana"
+    },
+    "99348": {
+      "history": [
+        {
+          "label": "Lesotho",
+          "start": "1966-10-04"
+        }
+      ],
+      "label": "Lesotho"
+    },
+    "99349": {
+      "history": [
+        {
+          "label": "Soudan du Sud",
+          "start": "2011-07-09"
+        }
+      ],
+      "label": "Soudan du Sud"
+    },
+    "99350": {
+      "history": [
+        {
+          "label": "Maroc",
+          "start": "1956-03-02"
+        }
+      ],
+      "label": "Maroc"
+    },
+    "99351": {
+      "history": [
+        {
+          "label": "Tunisie",
+          "start": "1956-03-20"
+        }
+      ],
+      "label": "Tunisie"
+    },
+    "99352": {
+      "history": [
+        {
+          "label": "Algérie",
+          "start": "1962-07-05"
+        }
+      ],
+      "label": "Algérie"
+    },
+    "99362": {
+      "history": [
+        {
+          "label": "Zanzibar",
+          "start": "1963-12-10",
+          "end": "1964-04-26"
+        }
+      ]
+    },
+    "99363": {
+      "history": [
+        {
+          "label": "Terres australes norvégiennes",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Terres australes norvégiennes"
+    },
+    "99389": {
+      "history": [
+        {
+          "label": "Sahara occidental",
+          "start": "1994-01-01"
+        }
+      ],
+      "label": "Sahara occidental"
+    },
+    "99390": {
+      "history": [
+        {
+          "label": "Maurice",
+          "start": "1968-03-12"
+        }
+      ],
+      "label": "Maurice"
+    },
+    "99391": {
+      "history": [
+        {
+          "label": "Swaziland",
+          "start": "1968-09-06"
+        }
+      ],
+      "label": "Swaziland"
+    },
+    "99392": {
+      "history": [
+        {
+          "label": "Guinée-Bissao",
+          "start": "1974-09-10"
+        }
+      ],
+      "label": "Guinée-Bissao"
+    },
+    "99393": {
+      "history": [
+        {
+          "label": "Mozambique",
+          "start": "1975-06-25"
+        }
+      ],
+      "label": "Mozambique"
+    },
+    "99394": {
+      "history": [
+        {
+          "label": "Sao Tomé-et-Principe",
+          "start": "1975-07-12"
+        }
+      ],
+      "label": "Sao Tomé-et-Principe"
+    },
+    "99395": {
+      "history": [
+        {
+          "label": "Angola",
+          "start": "1975-11-11",
+          "end": "1992-08-26"
+        },
+        {
+          "label": "Angola",
+          "start": "1992-08-26"
+        }
+      ],
+      "label": "Angola"
+    },
+    "99396": {
+      "history": [
+        {
+          "label": "Cap-Vert",
+          "start": "1975-07-05"
+        }
+      ],
+      "label": "Cap-Vert"
+    },
+    "99397": {
+      "history": [
+        {
+          "label": "Comores",
+          "start": "1975-07-06",
+          "end": "1978-10-05"
+        },
+        {
+          "label": "Comores",
+          "start": "1978-10-05",
+          "end": "2001-12-23"
+        },
+        {
+          "label": "Comores",
+          "start": "2001-12-23"
+        }
+      ],
+      "label": "Comores"
+    },
+    "99398": {
+      "history": [
+        {
+          "label": "Seychelles",
+          "start": "1976-06-29"
+        }
+      ],
+      "label": "Seychelles"
+    },
+    "99399": {
+      "history": [
+        {
+          "label": "Djibouti",
+          "start": "1977-06-27"
+        }
+      ],
+      "label": "Djibouti"
+    },
+    "99401": {
+      "history": [
+        {
+          "label": "Canada",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Canada"
+    },
+    "99402": {
+      "history": [
+        {
+          "label": "Terre-Neuve",
+          "start": "1943-01-01",
+          "end": "1949-03-31"
+        }
+      ]
+    },
+    "99403": {
+      "history": [
+        {
+          "label": "Labrador",
+          "start": "1943-01-01",
+          "end": "1949-03-31"
+        }
+      ]
+    },
+    "99404": {
+      "history": [
+        {
+          "label": "États-Unis",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "États-Unis"
+    },
+    "99405": {
+      "history": [
+        {
+          "label": "Mexique",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Mexique"
+    },
+    "99406": {
+      "history": [
+        {
+          "label": "Costa Rica",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Costa Rica"
+    },
+    "99407": {
+      "history": [
+        {
+          "label": "Cuba",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Cuba"
+    },
+    "99408": {
+      "history": [
+        {
+          "label": "République dominicaine",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "République dominicaine"
+    },
+    "99409": {
+      "history": [
+        {
+          "label": "Guatémala",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Guatémala"
+    },
+    "99410": {
+      "history": [
+        {
+          "label": "Haïti",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Haïti"
+    },
+    "99411": {
+      "history": [
+        {
+          "label": "Honduras",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Honduras"
+    },
+    "99412": {
+      "history": [
+        {
+          "label": "Nicaragua",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Nicaragua"
+    },
+    "99413": {
+      "history": [
+        {
+          "label": "Panama",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Panama"
+    },
+    "99414": {
+      "history": [
+        {
+          "label": "Salvador",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Salvador"
+    },
+    "99415": {
+      "history": [
+        {
+          "label": "Argentine",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Argentine"
+    },
+    "99416": {
+      "history": [
+        {
+          "label": "Brésil",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Brésil"
+    },
+    "99417": {
+      "history": [
+        {
+          "label": "Chili",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Chili"
+    },
+    "99418": {
+      "history": [
+        {
+          "label": "Bolivie",
+          "start": "1943-01-01",
+          "end": "2010-01-22"
+        },
+        {
+          "label": "Bolivie",
+          "start": "2010-01-22"
+        }
+      ],
+      "label": "Bolivie"
+    },
+    "99419": {
+      "history": [
+        {
+          "label": "Colombie",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Colombie"
+    },
+    "99420": {
+      "history": [
+        {
+          "label": "Équateur",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Équateur"
+    },
+    "99421": {
+      "history": [
+        {
+          "label": "Paraguay",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Paraguay"
+    },
+    "99422": {
+      "history": [
+        {
+          "label": "Pérou",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Pérou"
+    },
+    "99423": {
+      "history": [
+        {
+          "label": "Uruguay",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Uruguay"
+    },
+    "99424": {
+      "history": [
+        {
+          "label": "Vénézuéla",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Vénézuéla"
+    },
+    "99425": {
+      "history": [
+        {
+          "label": "Territoires britanniques dans les Antilles et Bermudes",
+          "start": "1943-01-01",
+          "end": "1956-07-01"
+        },
+        {
+          "label": "Territoires britanniques dans les Antilles et Bermudes",
+          "start": "1956-07-01",
+          "end": "1958-01-03"
+        },
+        {
+          "label": "Territoires britanniques dans les Antilles et Bermudes",
+          "start": "1958-01-03",
+          "end": "1962-08-31"
+        },
+        {
+          "label": "Territoires britanniques dans les Antilles et Bermudes",
+          "start": "1962-08-31",
+          "end": "1966-11-30"
+        },
+        {
+          "label": "Territoires britanniques dans les Antilles et Bermudes",
+          "start": "1966-11-30",
+          "end": "1973-07-10"
+        },
+        {
+          "label": "Territoires britanniques dans les Antilles et Bermudes",
+          "start": "1973-07-10",
+          "end": "1974-02-07"
+        },
+        {
+          "label": "Territoires britanniques dans les Antilles et Bermudes",
+          "start": "1974-02-07",
+          "end": "1978-11-03"
+        },
+        {
+          "label": "Territoires britanniques dans les Antilles et Bermudes",
+          "start": "1978-11-03",
+          "end": "1979-02-22"
+        },
+        {
+          "label": "Territoires britanniques dans les Antilles et Bermudes",
+          "start": "1979-02-22",
+          "end": "1979-10-27"
+        },
+        {
+          "label": "Territoires britanniques dans les Antilles et Bermudes",
+          "start": "1979-10-27",
+          "end": "1981-11-01"
+        },
+        {
+          "label": "Territoires britanniques dans les Antilles et Bermudes",
+          "start": "1981-11-01",
+          "end": "1983-09-19"
+        },
+        {
+          "label": "Territoires britanniques dans les Antilles et Bermudes",
+          "start": "1983-09-19"
+        }
+      ],
+      "label": "Territoires britanniques dans les Antilles et Bermudes"
+    },
+    "99426": {
+      "history": [
+        {
+          "label": "Jamaïque, Bermudes, Trinité-et-Tobago",
+          "start": "1943-01-01",
+          "end": "1962-08-31"
+        },
+        {
+          "label": "Jamaïque",
+          "start": "1962-08-31"
+        }
+      ],
+      "label": "Jamaïque"
+    },
+    "99427": {
+      "history": [
+        {
+          "label": "Territoires britanniques dans l’océan Atlantique Sud",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Territoires britanniques dans l’océan Atlantique Sud"
+    },
+    "99428": {
+      "history": [
+        {
+          "label": "Guyane britannique",
+          "start": "1943-01-01",
+          "end": "1966-01-01"
+        },
+        {
+          "label": "Guyana",
+          "start": "1966-01-01"
+        }
+      ],
+      "label": "Guyana"
+    },
+    "99429": {
+      "history": [
+        {
+          "label": "Honduras britannique",
+          "start": "1943-01-01",
+          "end": "1981-01-01"
+        },
+        {
+          "label": "Bélize",
+          "start": "1981-01-01"
+        }
+      ],
+      "label": "Bélize"
+    },
+    "99430": {
+      "history": [
+        {
+          "label": "Groenland",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Groenland"
+    },
+    "99431": {
+      "history": [
+        {
+          "label": "Territoires néerlandais en Amérique",
+          "start": "1943-01-01",
+          "end": "1975-11-25"
+        },
+        {
+          "label": "Territoires néerlandais en Amérique",
+          "start": "1975-11-25",
+          "end": "2010-10-10"
+        },
+        {
+          "label": "Aruba",
+          "start": "2010-10-10"
+        }
+      ],
+      "label": "Aruba"
+    },
+    "99432": {
+      "history": [
+        {
+          "label": "Territoires des États-Unis en Amérique",
+          "start": "1943-01-01",
+          "end": "1959-01-03"
+        },
+        {
+          "label": "Territoires des États-Unis en Amérique",
+          "start": "1959-01-03",
+          "end": "1999-12-31"
+        },
+        {
+          "label": "Territoires des États-Unis en Amérique",
+          "start": "1999-12-31"
+        }
+      ],
+      "label": "Territoires des États-Unis en Amérique"
+    },
+    "99433": {
+      "history": [
+        {
+          "label": "Trinité-et-Tobago",
+          "start": "1962-08-31"
+        }
+      ],
+      "label": "Trinité-et-Tobago"
+    },
+    "99434": {
+      "history": [
+        {
+          "label": "Barbade",
+          "start": "1966-11-30"
+        }
+      ],
+      "label": "Barbade"
+    },
+    "99435": {
+      "history": [
+        {
+          "label": "Grenade",
+          "start": "1974-02-07"
+        }
+      ],
+      "label": "Grenade"
+    },
+    "99436": {
+      "history": [
+        {
+          "label": "Bahamas",
+          "start": "1973-07-10"
+        }
+      ],
+      "label": "Bahamas"
+    },
+    "99437": {
+      "history": [
+        {
+          "label": "Suriname",
+          "start": "1975-11-25"
+        }
+      ],
+      "label": "Suriname"
+    },
+    "99438": {
+      "history": [
+        {
+          "label": "Dominique",
+          "start": "1978-11-03"
+        }
+      ],
+      "label": "Dominique"
+    },
+    "99439": {
+      "history": [
+        {
+          "label": "Sainte-Lucie",
+          "start": "1979-02-22"
+        }
+      ],
+      "label": "Sainte-Lucie"
+    },
+    "99440": {
+      "history": [
+        {
+          "label": "Saint-Vincent-et-les-Grenadines",
+          "start": "1979-10-27"
+        }
+      ],
+      "label": "Saint-Vincent-et-les-Grenadines"
+    },
+    "99441": {
+      "history": [
+        {
+          "label": "Antigua-et-Barbuda",
+          "start": "1981-11-01"
+        }
+      ],
+      "label": "Antigua-et-Barbuda"
+    },
+    "99442": {
+      "history": [
+        {
+          "label": "Saint-Christophe-et-Niévès",
+          "start": "1983-09-19"
+        }
+      ],
+      "label": "Saint-Christophe-et-Niévès"
+    },
+    "99443": {
+      "history": [
+        {
+          "label": "Bonaire, Saint-Eustache, Saba",
+          "start": "2010-10-10"
+        }
+      ],
+      "label": "Bonaire, Saint-Eustache, Saba"
+    },
+    "99444": {
+      "history": [
+        {
+          "label": "Curaçao",
+          "start": "2010-10-10"
+        }
+      ],
+      "label": "Curaçao"
+    },
+    "99445": {
+      "history": [
+        {
+          "label": "Saint-Martin (partie néerlandaise)",
+          "start": "2010-10-10"
+        }
+      ],
+      "label": "Saint-Martin (partie néerlandaise)"
+    },
+    "99446": {
+      "history": [
+        {
+          "label": "Territoire antarctique argentin",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Territoire antarctique argentin"
+    },
+    "99447": {
+      "history": [
+        {
+          "label": "Territoire antarctique chilien",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Territoire antarctique chilien"
+    },
+    "99501": {
+      "history": [
+        {
+          "label": "Australie",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Australie"
+    },
+    "99502": {
+      "history": [
+        {
+          "label": "Nouvelle-Zélande",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Nouvelle-Zélande"
+    },
+    "99503": {
+      "history": [
+        {
+          "label": "Territoires britanniques en Océanie",
+          "start": "1943-01-01",
+          "end": "1970-06-04"
+        },
+        {
+          "label": "Territoires britanniques en Océanie",
+          "start": "1970-06-04",
+          "end": "1970-10-10"
+        },
+        {
+          "label": "Territoires britanniques en Océanie",
+          "start": "1970-10-10",
+          "end": "1978-07-07"
+        },
+        {
+          "label": "Territoires britanniques en Océanie",
+          "start": "1978-07-07",
+          "end": "1978-10-01"
+        },
+        {
+          "label": "Territoires britanniques en Océanie",
+          "start": "1978-10-01",
+          "end": "1979-07-12"
+        },
+        {
+          "label": "Territoires britanniques en Océanie",
+          "start": "1979-07-12",
+          "end": "1980-07-30"
+        },
+        {
+          "label": "Pitcairn",
+          "start": "1980-07-30"
+        }
+      ],
+      "label": "Pitcairn"
+    },
+    "99504": {
+      "history": [
+        {
+          "label": "Îles Hawaï",
+          "start": "1943-01-01",
+          "end": "1959-08-21"
+        }
+      ]
+    },
+    "99505": {
+      "history": [
+        {
+          "label": "Territoires des États-Unis en Océanie",
+          "start": "1943-01-01",
+          "end": "1946-07-04"
+        },
+        {
+          "label": "Territoires des États-Unis en Océanie",
+          "start": "1946-07-04",
+          "end": "1979-07-12"
+        },
+        {
+          "label": "Territoires des États-Unis en Océanie",
+          "start": "1979-07-12",
+          "end": "1990-12-22"
+        },
+        {
+          "label": "Territoires des États-Unis en Océanie",
+          "start": "1990-12-22",
+          "end": "1994-10-01"
+        },
+        {
+          "label": "Territoires des États-Unis en Océanie",
+          "start": "1994-10-01"
+        }
+      ],
+      "label": "Territoires des États-Unis en Océanie"
+    },
+    "99506": {
+      "history": [
+        {
+          "label": "Nouvelle-Guinée néerlandaise",
+          "start": "1945-01-01",
+          "end": "1962-01-01"
+        },
+        {
+          "label": "Samoa occidentales",
+          "start": "1962-01-01",
+          "end": "1997-07-04"
+        },
+        {
+          "label": "Samoa",
+          "start": "1997-07-04"
+        }
+      ],
+      "label": "Samoa"
+    },
+    "99507": {
+      "history": [
+        {
+          "label": "Nauru",
+          "start": "1968-01-31"
+        }
+      ],
+      "label": "Nauru"
+    },
+    "99508": {
+      "history": [
+        {
+          "label": "Fidji",
+          "start": "1970-10-10",
+          "end": "2019-04-21"
+        },
+        {
+          "label": "Fidji",
+          "start": "2019-04-21"
+        }
+      ],
+      "label": "Fidji"
+    },
+    "99509": {
+      "history": [
+        {
+          "label": "Tonga",
+          "start": "1970-06-04"
+        }
+      ],
+      "label": "Tonga"
+    },
+    "99510": {
+      "history": [
+        {
+          "label": "Papouasie-Nouvelle-Guinée",
+          "start": "1975-09-16",
+          "end": "2019-04-21"
+        },
+        {
+          "label": "Papouasie-Nouvelle-Guinée",
+          "start": "2019-04-21"
+        }
+      ],
+      "label": "Papouasie-Nouvelle-Guinée"
+    },
+    "99511": {
+      "history": [
+        {
+          "label": "Tuvalu",
+          "start": "1978-10-01"
+        }
+      ],
+      "label": "Tuvalu"
+    },
+    "99512": {
+      "history": [
+        {
+          "label": "Salomon",
+          "start": "1978-07-07"
+        }
+      ],
+      "label": "Salomon"
+    },
+    "99513": {
+      "history": [
+        {
+          "label": "Kiribati",
+          "start": "1979-07-12"
+        }
+      ],
+      "label": "Kiribati"
+    },
+    "99514": {
+      "history": [
+        {
+          "label": "Vanuatu",
+          "start": "1980-07-30"
+        }
+      ],
+      "label": "Vanuatu"
+    },
+    "99515": {
+      "history": [
+        {
+          "label": "Marshall",
+          "start": "1990-12-22"
+        }
+      ],
+      "label": "Marshall"
+    },
+    "99516": {
+      "history": [
+        {
+          "label": "Micronésie",
+          "start": "1990-12-22"
+        }
+      ],
+      "label": "Micronésie"
+    },
+    "99517": {
+      "history": [
+        {
+          "label": "Palaos",
+          "start": "1994-10-01"
+        }
+      ],
+      "label": "Palaos"
+    },
+    "99519": {
+      "history": [
+        {
+          "label": "Territoires de la Nouvelle-Zélande",
+          "start": "1943-01-01",
+          "end": "1946-01-01"
+        },
+        {
+          "label": "Territoires de la Nouvelle-Zélande",
+          "start": "1946-01-01",
+          "end": "1962-01-01"
+        },
+        {
+          "label": "Territoires de la Nouvelle-Zélande",
+          "start": "1962-01-01",
+          "end": "1965-08-04"
+        },
+        {
+          "label": "Territoires de la Nouvelle-Zélande",
+          "start": "1965-08-04",
+          "end": "1974-10-19"
+        },
+        {
+          "label": "Territoires de la Nouvelle-Zélande",
+          "start": "1974-10-19",
+          "end": "1977-01-01"
+        },
+        {
+          "label": "Territoires de la Nouvelle-Zélande",
+          "start": "1977-01-01"
+        }
+      ],
+      "label": "Territoires de la Nouvelle-Zélande"
+    },
+    "99520": {
+      "history": [
+        {
+          "label": "Cook",
+          "start": "1965-08-04"
+        }
+      ],
+      "label": "Cook"
+    },
+    "99521": {
+      "history": [
+        {
+          "label": "Niue",
+          "start": "1974-10-19"
+        }
+      ],
+      "label": "Niue"
+    },
+    "99522": {
+      "history": [
+        {
+          "label": "Territoires de l’Australie en Océanie",
+          "start": "1943-01-01",
+          "end": "1949-07-01"
+        },
+        {
+          "label": "Territoires de l’Australie en Océanie",
+          "start": "1949-07-01",
+          "end": "1968-01-31"
+        },
+        {
+          "label": "Territoires de l’Australie en Océanie",
+          "start": "1968-01-31",
+          "end": "1969-09-30"
+        },
+        {
+          "label": "Territoires de l’Australie en Océanie",
+          "start": "1969-09-30",
+          "end": "1975-09-16"
+        },
+        {
+          "label": "Territoires de l’Australie en Océanie",
+          "start": "1975-09-16"
+        }
+      ],
+      "label": "Territoires de l’Australie en Océanie"
+    },
+    "99699": {
+      "history": [
+        {
+          "label": "Antarctique",
+          "start": "1943-01-01"
+        }
+      ],
+      "label": "Antarctique"
+    }
+  }
+}

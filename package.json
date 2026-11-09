@@ -2,12 +2,19 @@
   "name": "@data-fair/processing-deaths",
   "version": "0.6.5",
   "description": "Inject deaths in France into data-fair datasets",
-  "main": "index.js",
+  "main": "index.ts",
+  "type": "module",
   "scripts": {
-    "test": "mocha",
-    "lint": "eslint --ignore-path .gitignore .",
-    "lint-fix": "eslint --ignore-path .gitignore --fix .",
-    "start": "node src/process.js"
+    "lint": "eslint .",
+    "lint-fix": "eslint --fix .",
+    "prepare": "husky || true",
+    "build-types": "export NODE_OPTIONS='--experimental-strip-types' && df-build-types ./",
+    "test-base": "NODE_ENV=test node --experimental-strip-types --test-force-exit --test-concurrency=1 --test --test-reporter=spec --test-reporter-destination=stdout",
+    "test": "npm run test-base test-it/*.ts",
+    "update-countries": "node --experimental-strip-types scripts/update-countries.ts"
+  },
+  "imports": {
+    "#types/*": "./types/*"
   },
   "repository": {
     "type": "git",
@@ -16,26 +23,35 @@
   "keywords": [
     "data-fair-processings-plugin"
   ],
-  "author": " ",
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "bugs": {
     "url": "https://github.com/data-fair/processing-deaths/issues"
   },
   "homepage": "https://github.com/data-fair/processing-deaths#readme",
-  "devDependencies": {
-    "@data-fair/processings-test-utils": "^0.5.2",
-    "axios": "^0.21.4",
-    "config": "^3.3.6",
-    "eslint": "^8.16.0",
-    "eslint-config-standard": "^17.0.0",
-    "mocha": "^10.2.0"
-  },
   "dependencies": {
-    "byline": "^5.0.0",
-    "csv": "^6.1.2",
-    "dayjs": "^1.11.2",
-    "form-data": "^4.0.0",
-    "fs-extra": "^10.0.1",
-    "pump": "^3.0.0"
-  }
+    "csv-parse": "^5.6.0",
+    "dayjs": "^1.11.13",
+    "fs-extra": "^11.2.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@data-fair/lib-common-types": "^1.21.0",
+    "@data-fair/lib-processing-dev": "^0.3.0",
+    "@data-fair/lib-types-builder": "^1.14.0",
+    "@data-fair/lib-utils": "^1.11.0",
+    "@types/fs-extra": "^11.0.4",
+    "axios": "^1.7.9",
+    "config": "^4.4.1",
+    "debug": "^4.4.0",
+    "eslint": "^9.26.0",
+    "husky": "^9.1.7",
+    "neostandard": "^0.12.1",
+    "typescript": "^5.8.3",
+    "ws": "^8.19.0"
+  },
+  "files": [
+    "processing-config-schema.json",
+    "./lib/**/*"
+  ]
 }

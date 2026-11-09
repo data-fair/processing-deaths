@@ -1,20 +1,20 @@
 {
   "type": "object",
-  "x-display": "tabs",
+  "layout": "tabs",
   "required": ["datasetMode"],
   "allOf": [{
     "title": "Jeu de données",
+    "default": { "datasetMode": "update" },
     "oneOf": [{
       "title": "Créer un jeu de données",
-      "required": ["dataset", "maxAge"],
+      "required": ["datasetMode", "maxAge"],
       "properties": {
         "datasetMode": { "type": "string", "const": "create", "title": "Action" },
-        "dataset": {
-          "type": "object",
-          "required": ["title"],
-          "properties": {
-            "title": {"type": "string", "title": "Nom du jeu de données", "default": "Décès"}
-          }
+        "datasetTitle": {
+          "type": "string",
+          "title": "Titre du jeu de données à créer",
+          "description": "Le jeu de données est créé à la première exécution, le traitement passe ensuite de lui-même en mise à jour.",
+          "default": "Décès"
         },
         "startYear": {
           "title": "Commencer le traitement à partir de l'année",
@@ -34,101 +34,95 @@
       "title": "Mettre à jour un jeu de données",
       "required": ["dataset", "maxAge"],
       "properties": {
-        "datasetMode": { "type": "string", "const": "update" },
-        "dataset": {
-          "type": "object",
-          "x-fromUrl": "{context.dataFairUrl}/api/v1/datasets?q={q}&select=id,title&{context.ownerFilter}",
-          "x-itemsProp": "results",
-          "x-itemTitle": "title",
-          "x-itemKey": "id",
-          "properties": {
-            "id": {"type": "string", "title": "Identifiant"},
-            "title": {"type": "string", "title": "Titre"}
-          }
-        },
-        "maxAge": {
-          "title": "Définir un âge maximal",
-          "description": "Les âges au dessus de cette valeur seront considérés comme incohérents",
-          "type": "integer",
-          "default": 130
-        }
+        "datasetMode": { "type": "string", "const": "update", "title": "Action" },
+        "dataset": { "$ref": "#/$defs/dataset" },
+        "maxAge": { "$ref": "#/$defs/maxAge" }
       }
     }, {
       "title": "Mettre à jour les incohérences et demandes d'opposition",
       "required": ["dataset", "maxAge"],
       "properties": {
-        "datasetMode": { "type": "string", "const": "inconsistency" },
-        "dataset": {
-          "type": "object",
-          "x-fromUrl": "{context.dataFairUrl}/api/v1/datasets?q={q}&select=id,title&{context.ownerFilter}",
-          "x-itemsProp": "results",
-          "x-itemTitle": "title",
-          "x-itemKey": "id",
-          "properties": {
-            "id": {"type": "string", "title": "Identifiant"},
-            "title": {"type": "string", "title": "Titre"}
-          }
-        },
-        "maxAge": {
-          "title": "Définir un âge maximal",
-          "description": "Les âges au dessus de cette valeur seront considérés comme incohérents",
-          "type": "integer",
-          "default": 130
-        }
+        "datasetMode": { "type": "string", "const": "inconsistency", "title": "Action" },
+        "dataset": { "$ref": "#/$defs/dataset" },
+        "maxAge": { "$ref": "#/$defs/maxAge" }
       }
     }]
-  },{
+  }, {
     "title": "Paramètres",
-    "required": ["datasetID","datasetInsee", "datasetCodeInseePays", "datasetChangementCommune"],
+    "required": ["datasetID", "datasetInsee"],
     "properties": {
       "clearFiles": {
         "title": "Supprimer les fichiers téléchargés",
         "type": "boolean",
         "default": true
       },
-      "datasetID":{
+      "datasetID": {
         "type": "string",
         "title": "ID dataset data.gouv.fr",
-        "description": "Identifiant du jeu de données à utiliser sur le portail data.gouv.fr (ex: repertoire-national-des-associations)",
-        "default" :"fichier-des-personnes-decedees"
+        "description": "Identifiant du jeu de données à utiliser sur le portail data.gouv.fr (ex: fichier-des-personnes-decedees)",
+        "default": "fichier-des-personnes-decedees"
       },
       "datasetInsee": {
         "title": "Jeu de données de référence - Informations INSEE",
+        "description": "Communes actuelles avec les concepts « Code commune INSEE », « Commune », « Code département INSEE », « Code région INSEE », et les colonnes `nom_departement` et `nom_region` (par exemple « Communes de France »).",
         "type": "object",
-        "x-fromUrl": "{context.dataFairUrl}/api/v1/datasets?q={q}&select=id,title&{context.ownerFilter}",
-        "x-itemsProp": "results",
-        "x-itemTitle": "title",
-        "x-itemKey": "id",
-        "properties": {
-          "id": {"type": "string", "title": "Identifiant"},
-          "title": {"type": "string", "title": "Titre"}
-        }
-      },
-      "datasetCodeInseePays": {
-        "title": "Jeu de données de référence - Codes INSEE pays",
-        "type": "object",
-        "x-fromUrl": "{context.dataFairUrl}/api/v1/datasets?q={q}&select=id,title&concepts=http://rdf.insee.fr/def/geo%23codePays,http://schema.org/addressCountry&{context.ownerFilter}",
-        "x-itemsProp": "results",
-        "x-itemTitle": "title",
-        "x-itemKey": "id",
-        "properties": {
-          "id": {"type": "string", "title": "Identifiant"},
-          "title": {"type": "string", "title": "Titre"}
-        }
-      },
-      "datasetCodesActuels":{
-        "title": "Jeu de données indiquant les codes actuels des communes",
-        "type": "object",
-        "x-fromUrl": "{context.dataFairUrl}/api/v1/datasets?q={q}&select=id,title&{context.ownerFilter}",
-          "x-itemsProp": "results",
-          "x-itemTitle": "title",
-          "x-itemKey": "id",
-          "properties": {
-            "id": {"type": "string", "title": "Identifiant"},
-            "title": {"type": "string", "title": "Titre"}
+        "layout": {
+          "getItems": {
+            "url": "${context.dataFairUrl}/api/v1/datasets?select=id,title&size=50&concepts=http://rdf.insee.fr/def/geo%23codeCommune&${context.ownerFilter}&raw=true",
+            "qSearchParam": "q",
+            "itemsResults": "data.results",
+            "itemTitle": "item.title",
+            "itemKey": "item.id"
           }
-
+        },
+        "properties": {
+          "id": { "type": "string", "title": "Identifiant" },
+          "title": { "type": "string", "title": "Titre" }
+        }
+      },
+      "datasetCodesActuels": {
+        "title": "Jeu de données indiquant les codes actuels des communes",
+        "description": "Correspondance entre anciens et nouveaux codes de communes, colonnes `COM_AV` et `COM_AP` (par exemple « Anciens codes commune »).",
+        "type": "object",
+        "layout": {
+          "getItems": {
+            "url": "${context.dataFairUrl}/api/v1/datasets?select=id,title&size=50&${context.ownerFilter}&raw=true",
+            "qSearchParam": "q",
+            "itemsResults": "data.results",
+            "itemTitle": "item.title",
+            "itemKey": "item.id"
+          }
+        },
+        "properties": {
+          "id": { "type": "string", "title": "Identifiant" },
+          "title": { "type": "string", "title": "Titre" }
+        }
       }
     }
-  }]
+  }],
+  "$defs": {
+    "dataset": {
+      "type": "object",
+      "title": "Jeu de données",
+      "layout": {
+        "getItems": {
+          "url": "${context.dataFairUrl}/api/v1/datasets?select=id,title&size=50&${context.ownerFilter}&raw=true",
+          "qSearchParam": "q",
+          "itemsResults": "data.results",
+          "itemTitle": "item.title",
+          "itemKey": "item.id"
+        }
+      },
+      "properties": {
+        "id": { "type": "string", "title": "Identifiant" },
+        "title": { "type": "string", "title": "Titre" }
+      }
+    },
+    "maxAge": {
+      "title": "Définir un âge maximal",
+      "description": "Les âges au dessus de cette valeur seront considérés comme incohérents",
+      "type": "integer",
+      "default": 130
+    }
+  }
 }

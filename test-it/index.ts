@@ -1,0 +1,88 @@
+import { describe, it } from 'node:test'
+import assert from 'assert'
+import processingConfigSchema from '../processing-config-schema.json' with { type: 'json' }
+import outputSchema from '../lib/output-schema.json' with { type: 'json' }
+import { countryName } from '../lib/countries.ts'
+import { selectResources } from '../lib/download.ts'
+import { communeKeys } from '../lib/references.ts'
+import { fixInconsistentLines } from '../lib/inconsistency.ts'
+
+describe('Deaths processing', () => {
+  it('exposes a processing config schema for users', () => {
+    assert.equal(processingConfigSchema.type, 'object')
+    assert.doesNotMatch(JSON.stringify(processingConfigSchema), /"x-(display|fromUrl|itemsProp|itemTitle|itemKey)"/)
+  })
+
+  it('keeps the columns of the published dataset', () => {
+    assert.deepEqual(outputSchema.map(f => f.key), [
+      'nom', 'prenom', 'sexe', 'date_naissance', 'date_mort',
+      'code_source_ville_naissance', 'nom_source_ville_naissance', 'code_actuel_ville_naissance', 'nom_actuel_ville_naissance',
+      'code_actuel_departement_naissance', 'nom_actuel_departement_naissance', 'code_actuel_region_naissance', 'nom_actuel_region_naissance',
+      'pays_naissance', 'age_deces', 'code_source_ville_deces', 'code_actuel_ville_deces', 'nom_actuel_ville_deces',
+      'code_actuel_departement_deces', 'nom_actuel_departement_deces', 'code_actuel_region_deces', 'nom_actuel_region_deces',
+      'nom_pays_deces', 'numero_acte_deces'
+    ])
+  })
+})
+
+describe('countryName', () => {
+  it('uses the name valid at the date', () => {
+    assert.equal(countryName('99109', '1945-06-01'), 'Allemagne')
+    assert.equal(countryName('99123', '1990'), 'URSS')
+    assert.equal(countryName('99123', '1992-01'), 'Russie')
+  })
+  it('falls back to the current name', () => {
+    assert.equal(countryName('99131'), 'Belgique')
+    // 99109 has no period between 1949 and 1990 (two German states then)
+    assert.equal(countryName('99109', '1970-01-01'), 'Allemagne')
+  })
+  it('returns an empty name for an unknown code', () => {
+    assert.equal(countryName('99999', '2000-01-01'), '')
+  })
+})
+
+describe('selectResources', () => {
+  const resources = [
+    { title: 'deces-2026-m02.txt', url: 'https://x/deces-2026-m02.txt' },
+    { title: 'deces-2026-m01.txt', url: 'https://x/deces-2026-m01.txt' },
+    { title: 'deces-2025-m12.txt', url: 'https://x/deces-2025-m12.txt' },
+    { title: 'deces-2025.txt', url: 'https://x/deces-2025.txt' },
+    { title: 'deces-2024.txt', url: 'https://x/deces-2024.txt' },
+    { title: 'fichier-opposition-deces.csv', url: 'https://x/fichier-opposition-deces.csv' },
+    { title: 'documentation.pdf', url: 'https://x/documentation.pdf' }
+  ]
+  it('keeps the yearly files from the start year, the monthly files of the latest year and the opposition file', () => {
+    assert.deepEqual(selectResources(resources, 2025).sort(), [
+      'https://x/deces-2025.txt', 'https://x/deces-2026-m01.txt', 'https://x/deces-2026-m02.txt', 'https://x/fichier-opposition-deces.csv'
+    ])
+  })
+  it('keeps only the opposition file without a start year', () => {
+    assert.deepEqual(selectResources(resources), ['https://x/fichier-opposition-deces.csv'])
+  })
+})
+
+describe('communeKeys', () => {
+  it('finds the columns from the concepts', () => {
+    const keys = communeKeys([
+      { key: 'code_commune', 'x-refersTo': 'http://rdf.insee.fr/def/geo#codeCommune' },
+      { key: 'nom_commune', 'x-refersTo': 'http://schema.org/City' },
+      { key: 'code_departement', 'x-refersTo': 'http://rdf.insee.fr/def/geo#codeDepartement' },
+      { key: 'nom_departement' },
+      { key: 'code_region', 'x-refersTo': 'http://rdf.insee.fr/def/geo#codeRegion' },
+      { key: 'nom_region' }
+    ])
+    assert.equal(keys.code, 'code_commune')
+    assert.equal(keys.nomRegion, 'nom_region')
+  })
+  it('lists what is missing', () => {
+    assert.throws(() => communeKeys([{ key: 'nom_region' }]), /Code commune INSEE.*nom_departement/)
+  })
+})
+
+describe('fixInconsistentLines', () => {
+  it('removes the faulty fields once per person', () => {
+    const line = { _id: '1', _score: 1, nom: 'A', prenom: 'B', numero_acte_deces: '1', age_deces: -3, date_naissance: '2090-01-01', date_mort: '1990-01-01' }
+    const fixed = fixInconsistentLines([line], [line], [])
+    assert.deepEqual(fixed, [{ _id: '1', _action: 'update', nom: 'A', prenom: 'B', numero_acte_deces: '1', date_mort: '1990-01-01' }])
+  })
+})
