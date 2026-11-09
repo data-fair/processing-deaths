@@ -1,6 +1,6 @@
 {
   "name": "@data-fair/processing-deaths",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "Inject deaths in France into data-fair datasets",
   "main": "index.ts",
   "type": "module",
