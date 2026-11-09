@@ -35,11 +35,45 @@ export const fixInconsistentLines = (weirdAge: Line[], weirdBirth: Line[], weird
 }
 
 /**
- * Remove the incoherent ages and dates, then delete the people listed in the opposition file
+ * Lines whose first name swallowed the next fields (sex, dates, place), written by the parser before
+ * v1: `COLETTE MARIE THERESE      21928072721208COURTIVRON`. Names hold no digit and the overflow always
+ * starts with the sex digit, so the first name is what comes before the first digit.
+ * The first name is part of the primary key, hence of the line id: the polluted line is deleted
+ * and the fixed one created (or updated when a later import already created it).
+ */
+export const fixFirstNames = (lines: Line[]): Line[] => lines.flatMap(line => {
+  const prenom = String(line.prenom ?? '').split(/\d/)[0].trim()
+  if (prenom === line.prenom) return []
+  const { _id, ...fixed } = clean(line)
+  return [{ _id, _action: 'delete' }, { ...fixed, prenom, _action: 'createOrUpdate' }]
+})
+
+/** Every line matching a query string, following the `next` links */
+const searchAll = async (axios: AxiosInstance, datasetId: string, qs: string): Promise<Line[]> => {
+  const lines: Line[] = []
+  let page = (await axios.get(`api/v1/datasets/${datasetId}/lines`, { params: { qs, size: 10000 } })).data
+  lines.push(...page.results)
+  while (page.next && page.results.length) {
+    page = (await axios.get(page.next)).data
+    lines.push(...page.results)
+  }
+  return lines
+}
+
+/**
+ * Fix the polluted first names, remove the incoherent ages and dates, then delete the people listed in the opposition file
  * (people who asked not to appear, identified by date of death, place code and record number).
  */
 export default async (tmpDir: string, maxAge: number, datasetId: string, axios: AxiosInstance, log: LogFunctions): Promise<void> => {
   await log.step('Vérification des données incohérentes et demandes d\'opposition')
+
+  const firstNames = fixFirstNames(await searchAll(axios, datasetId, 'prenom:/.*[0-9].*/'))
+  await log.info(`${firstNames.length / 2} prénom(s) débordant sur les colonnes suivantes à corriger`)
+  for (let i = 0; i < firstNames.length; i += SEND_BATCH) {
+    if (isStopped()) return
+    await sendBatch(axios, log, datasetId, firstNames.slice(i, i + SEND_BATCH))
+  }
+
   const today = dayjs().format('YYYY-MM-DD')
   const search = async (qs: string): Promise<Line[]> =>
     (await axios.get(`api/v1/datasets/${datasetId}/lines`, { params: { qs, size: 10000 } })).data.results

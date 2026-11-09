@@ -5,7 +5,7 @@ import outputSchema from '../lib/output-schema.json' with { type: 'json' }
 import { countryName } from '../lib/countries.ts'
 import { selectResources } from '../lib/download.ts'
 import { communeKeys } from '../lib/references.ts'
-import { fixInconsistentLines } from '../lib/inconsistency.ts'
+import { fixInconsistentLines, fixFirstNames } from '../lib/inconsistency.ts'
 
 describe('Deaths processing', () => {
   it('exposes a processing config schema for users', () => {
@@ -76,6 +76,17 @@ describe('communeKeys', () => {
   })
   it('lists what is missing', () => {
     assert.throws(() => communeKeys([{ key: 'nom_region' }]), /Code commune INSEE.*nom_departement/)
+  })
+})
+
+describe('fixFirstNames', () => {
+  it('replaces a polluted first name and leaves the others', () => {
+    const polluted = { _id: 'old', _score: null, nom: 'X', prenom: 'COLETTE MARIE THERESE              21928072721208COURTIVRON', numero_acte_deces: '7' }
+    const ok = { _id: 'ok', nom: 'Y', prenom: 'JEAN', numero_acte_deces: '8' }
+    assert.deepEqual(fixFirstNames([polluted, ok]), [
+      { _id: 'old', _action: 'delete' },
+      { nom: 'X', prenom: 'COLETTE MARIE THERESE', numero_acte_deces: '7', _action: 'createOrUpdate' }
+    ])
   })
 })
 
