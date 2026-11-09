@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/data-fair/processing-deaths#readme",
   "dependencies": {
-    "csv-parse": "^5.6.0",
+    "csv-parse": "^7.0.3",
     "dayjs": "^1.11.13",
     "fs-extra": "^11.2.0"
   },

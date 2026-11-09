@@ -47,7 +47,7 @@ describe('parseLine', () => {
     assert.equal(identity.nom_actuel_ville_naissance, 'Rennes')
     assert.equal(identity.nom_actuel_region_deces, 'Bretagne')
     assert.equal(identity.pays_naissance, 'FRANCE')
-    assert.equal(identity.nom_pays_deces, 'France')
+    assert.equal(identity.nom_pays_deces, 'FRANCE')
     assert.equal(identity.numero_acte_deces, '123')
   })
 
@@ -76,8 +76,22 @@ describe('parseLine', () => {
     const before = parseLine(deathLine({ names: 'MARTIN*PAUL/', death: '19850304', deathCode: '99123' }), refs, 130)
     assert.equal(before.nom_pays_deces, 'URSS')
     const after = parseLine(deathLine({ names: 'MARTIN*PAUL/', death: '20200304', deathCode: '99123' }), refs, 130)
-    assert.equal(after.nom_pays_deces, 'Russie')
+    assert.equal(after.nom_pays_deces, 'RUSSIE')
     assert.equal(after.code_actuel_ville_deces, '')
+  })
+
+  it('writes the country in upper case without accents, like the lines already published', () => {
+    const identity = parseLine(deathLine({ names: 'MARTIN*PAUL/', death: '20200304', deathCode: '99352' }), refs, 130)
+    assert.equal(identity.nom_pays_deces, 'ALGERIE')
+  })
+
+  it('publishes a person whose dates are partial, without them', () => {
+    const identity = parseLine(deathLine({ names: 'MARTIN*PAUL/', birth: '19300800', death: '19850300', deathCode: '99123' }), refs, 130)
+    assert.equal(identity.date_naissance, undefined)
+    assert.equal(identity.date_mort, undefined)
+    assert.equal(identity.age_deces, undefined)
+    // the partial date of death is still enough to name the country
+    assert.equal(identity.nom_pays_deces, 'URSS')
   })
 
   it('keeps the birth country of the source file', () => {

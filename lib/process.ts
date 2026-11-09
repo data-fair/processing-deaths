@@ -58,9 +58,15 @@ export const parseDate = (raw: string): string | undefined => {
   return `${year}-${month}-${day}`
 }
 
-/** The current commune of an INSEE code, directly or through its former code */
-const findCommune = (code: string, refs: References): Commune | undefined =>
-  refs.communes.get(code) ?? refs.communes.get(refs.newCodes.get(code) ?? code)
+const isFullDate = (date?: string): date is string => date?.length === 10
+
+/** The current commune of an INSEE code, directly or through its former code (already resolved to a current one) */
+const findCommune = (code: string, refs: References): Commune | undefined => {
+  const commune = refs.communes.get(code)
+  if (commune) return commune
+  const newCode = refs.newCodes.get(code)
+  return newCode === undefined ? undefined : refs.communes.get(newCode)
+}
 
 /**
  * Parse one line of the INSEE death file (fixed width, see the file documentation on data.gouv.fr).
@@ -100,7 +106,7 @@ export const parseLine = (line: string, refs: References, maxAge: number): Ident
     numero_acte_deces: line.slice(167, 176).trim()
   }
 
-  if (identity.date_mort && identity.date_naissance) {
+  if (isFullDate(identity.date_mort) && isFullDate(identity.date_naissance)) {
     const age = parseFloat(dayjs(identity.date_mort).diff(dayjs(identity.date_naissance), 'year', true).toFixed(3))
     if (age >= 0 && age <= maxAge) {
       identity.age_deces = age
@@ -108,12 +114,19 @@ export const parseLine = (line: string, refs: References, maxAge: number): Ident
       identity.age_deces = undefined
       identity.date_naissance = undefined
     }
+  } else {
+    identity.age_deces = undefined
   }
 
-  // foreign places have a 99xxx code, named as the country was at the date of death
-  identity.nom_pays_deces = identity.code_source_ville_deces.startsWith('99')
+  // foreign places have a 99xxx code, named as the country was at the date of death (a partial date is enough);
+  // upper case without accents, like the 29 million lines already published and the birth country of the source file
+  identity.nom_pays_deces = (identity.code_source_ville_deces.startsWith('99')
     ? countryName(identity.code_source_ville_deces, identity.date_mort)
-    : 'France'
+    : 'France').normalize('NFD').replace(/\p{Diacritic}/gu, '').toUpperCase()
+
+  // the date columns refuse a partial date (YYYY or YYYY-MM): the person is published without it
+  if (!isFullDate(identity.date_naissance)) identity.date_naissance = undefined
+  if (!isFullDate(identity.date_mort)) identity.date_mort = undefined
 
   const naissance = findCommune(identity.code_source_ville_naissance, refs)
   if (naissance) {

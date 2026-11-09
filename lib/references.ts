@@ -49,6 +49,36 @@ export const communeKeys = (schema: SchemaField[]): Record<keyof typeof CONCEPTS
   return { ...keys, nomDepartement: NOM_DEPARTEMENT, nomRegion: NOM_REGION }
 }
 
+type CodeChange = { COM_AV?: unknown, COM_AP?: unknown, DATE_EFF?: unknown }
+
+/**
+ * Map each former commune code to the current commune it ended in.
+ * A commune can change several times (merged into a commune nouvelle, merged again later): the most recent
+ * change of each code is followed until a current commune is reached. Resolved once here, so the lookup of
+ * each death line stays a single map read.
+ */
+export const resolveNewCodes = (changes: CodeChange[], communes: Map<string, unknown>): Map<string, string> => {
+  const latest = new Map<string, string>()
+  const sorted = changes
+    .map(c => ({ av: str(c.COM_AV), ap: str(c.COM_AP), date: str(c.DATE_EFF) }))
+    .filter(c => c.av && c.ap && c.av !== c.ap)
+    .sort((a, b) => a.date < b.date ? -1 : a.date > b.date ? 1 : 0)
+  for (const { av, ap } of sorted) latest.set(av, ap)
+
+  const newCodes = new Map<string, string>()
+  for (const av of latest.keys()) {
+    if (communes.has(av)) continue
+    const seen = new Set<string>()
+    let code = av
+    while (!communes.has(code) && latest.has(code) && !seen.has(code)) {
+      seen.add(code)
+      code = latest.get(code)!
+    }
+    if (communes.has(code)) newCodes.set(av, code)
+  }
+  return newCodes
+}
+
 export default async (processingConfig: ProcessingConfig, axios: AxiosInstance, log: LogFunctions): Promise<References> => {
   await log.step('Récupération des jeux de données de référence')
 
@@ -70,12 +100,10 @@ export default async (processingConfig: ProcessingConfig, axios: AxiosInstance, 
   }
   await log.info(`${communes.size} communes dans « ${communesDataset.title ?? communesDataset.id} »`)
 
-  const newCodes = new Map<string, string>()
+  let newCodes = new Map<string, string>()
   const codesDataset = processingConfig.datasetCodesActuels as DatasetRef | undefined
   if (codesDataset?.id) {
-    for (const line of await readAllLines(axios, codesDataset.id)) {
-      if (line.COM_AV && line.COM_AP) newCodes.set(str(line.COM_AV), str(line.COM_AP))
-    }
+    newCodes = resolveNewCodes(await readAllLines(axios, codesDataset.id), communes)
     await log.info(`${newCodes.size} anciens codes de communes dans « ${codesDataset.title ?? codesDataset.id} »`)
   } else {
     await log.warning('Aucun jeu de données des codes actuels des communes : les anciens codes ne seront pas rattachés')

@@ -4,8 +4,8 @@ import processingConfigSchema from '../processing-config-schema.json' with { typ
 import outputSchema from '../lib/output-schema.json' with { type: 'json' }
 import { countryName } from '../lib/countries.ts'
 import { selectResources } from '../lib/download.ts'
-import { communeKeys } from '../lib/references.ts'
-import { fixInconsistentLines, fixFirstNames } from '../lib/inconsistency.ts'
+import { communeKeys, resolveNewCodes } from '../lib/references.ts'
+import { fixInconsistentLines, fixFirstNames, oppositionQuery } from '../lib/inconsistency.ts'
 
 describe('Deaths processing', () => {
   it('exposes a processing config schema for users', () => {
@@ -48,16 +48,16 @@ describe('selectResources', () => {
     { title: 'deces-2025-m12.txt', url: 'https://x/deces-2025-m12.txt' },
     { title: 'deces-2025.txt', url: 'https://x/deces-2025.txt' },
     { title: 'deces-2024.txt', url: 'https://x/deces-2024.txt' },
-    { title: 'fichier-opposition-deces.csv', url: 'https://x/fichier-opposition-deces.csv' },
+    { title: 'Fichier des oppositions à la publication des décès - Version du 20261030', url: 'https://x/fichier-opposition-deces-261030.csv', format: 'csv' },
     { title: 'documentation.pdf', url: 'https://x/documentation.pdf' }
   ]
   it('keeps the yearly files from the start year, the monthly files of the latest year and the opposition file', () => {
     assert.deepEqual(selectResources(resources, 2025).sort(), [
-      'https://x/deces-2025.txt', 'https://x/deces-2026-m01.txt', 'https://x/deces-2026-m02.txt', 'https://x/fichier-opposition-deces.csv'
+      'https://x/deces-2025.txt', 'https://x/deces-2026-m01.txt', 'https://x/deces-2026-m02.txt', 'https://x/fichier-opposition-deces-261030.csv'
     ])
   })
   it('keeps only the opposition file without a start year', () => {
-    assert.deepEqual(selectResources(resources), ['https://x/fichier-opposition-deces.csv'])
+    assert.deepEqual(selectResources(resources), ['https://x/fichier-opposition-deces-261030.csv'])
   })
 })
 
@@ -95,5 +95,46 @@ describe('fixInconsistentLines', () => {
     const line = { _id: '1', _score: 1, nom: 'A', prenom: 'B', numero_acte_deces: '1', age_deces: -3, date_naissance: '2090-01-01', date_mort: '1990-01-01' }
     const fixed = fixInconsistentLines([line], [line], [])
     assert.deepEqual(fixed, [{ _id: '1', _action: 'update', nom: 'A', prenom: 'B', numero_acte_deces: '1', date_mort: '1990-01-01' }])
+  })
+})
+
+describe('resolveNewCodes', () => {
+  const communes = new Map([['49261', {}], ['39190', {}], ['39302', {}], ['01138', {}]])
+  it('follows a commune merged several times to the current commune', () => {
+    const codes = resolveNewCodes([
+      { COM_AV: '49149', COM_AP: '49261', DATE_EFF: '2019-01-01' },
+      { COM_AV: '49094', COM_AP: '49149', DATE_EFF: '2016-12-15' }
+    ], communes)
+    assert.equal(codes.get('49094'), '49261')
+    assert.equal(codes.get('49149'), '49261')
+  })
+  it('keeps the most recent change of a code, whatever the order of the lines', () => {
+    const codes = resolveNewCodes([
+      { COM_AV: '39414', COM_AP: '39190', DATE_EFF: '2019-01-01' },
+      { COM_AV: '39414', COM_AP: '39302', DATE_EFF: '1973-01-01' }
+    ], communes)
+    assert.equal(codes.get('39414'), '39190')
+  })
+  it('ignores current codes, cycles and codes ending nowhere', () => {
+    const codes = resolveNewCodes([
+      { COM_AV: '01138', COM_AP: '01039', DATE_EFF: '2023-01-01' },
+      { COM_AV: 'A', COM_AP: 'B', DATE_EFF: '2000-01-01' },
+      { COM_AV: 'B', COM_AP: 'A', DATE_EFF: '2001-01-01' },
+      { COM_AV: '75059', COM_AP: '75056', DATE_EFF: '1980-01-01' }
+    ], communes)
+    assert.deepEqual([...codes], [])
+  })
+})
+
+describe('oppositionQuery', () => {
+  it('searches a death by date, place and record number', () => {
+    assert.equal(oppositionQuery(['20160121', '30189', '170']), 'date_mort:"2016-01-21" AND code_source_ville_deces:"30189" AND numero_acte_deces:"170"')
+  })
+  it('leaves out a blank place code', () => {
+    assert.equal(oppositionQuery(['20100716', '     ', '01355']), 'date_mort:"2010-07-16" AND numero_acte_deces:"01355"')
+  })
+  it('skips the header and rows with only a date', () => {
+    assert.equal(oppositionQuery(['\uFEFFDate de décès', 'Code du lieu de décès', "Numéro d'acte de décès"]), undefined)
+    assert.equal(oppositionQuery(['20100716', '', '']), undefined)
   })
 })

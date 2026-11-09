@@ -5,10 +5,9 @@ import { parse } from 'csv-parse/sync'
 import type { AxiosInstance } from 'axios'
 import type { LogFunctions } from '@data-fair/lib-common-types/processings.js'
 import { isStopped, sendBatch, SEND_BATCH } from './process.ts'
+import { OPPOSITION_FILE } from './download.ts'
 
 type Line = Record<string, any>
-
-const OPPOSITION_FILE = 'fichier-opposition-deces.csv'
 
 /** Drop the technical fields returned by /lines, they are refused by _bulk_lines */
 const clean = ({ _score, _rand, _i, _updatedAt, ...line }: Line): Line => line
@@ -47,6 +46,19 @@ export const fixFirstNames = (lines: Line[]): Line[] => lines.flatMap(line => {
   const { _id, ...fixed } = clean(line)
   return [{ _id, _action: 'delete' }, { ...fixed, prenom, _action: 'createOrUpdate' }]
 })
+
+/**
+ * Query string of a row of the opposition file (date of death, place code, record number).
+ * Empty fields are left out of the query (some rows have a blank place code), only a single match is deleted.
+ */
+export const oppositionQuery = (row: string[]): string | undefined => {
+  const [date, code, acte] = row.map(v => v.trim().replace(/"/g, ''))
+  if (!/^\d{8}$/.test(date ?? '')) return undefined
+  const terms = [`date_mort:"${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}"`]
+  if (code) terms.push(`code_source_ville_deces:"${code}"`)
+  if (acte) terms.push(`numero_acte_deces:"${acte}"`)
+  return terms.length > 1 ? terms.join(' AND ') : undefined
+}
 
 /** Every line matching a query string, following the `next` links */
 const searchAll = async (axios: AxiosInstance, datasetId: string, qs: string): Promise<Line[]> => {
@@ -94,15 +106,14 @@ export default async (tmpDir: string, maxAge: number, datasetId: string, axios: 
     let removed = 0
     for (const row of rows) {
       if (isStopped()) return
-      const [date, code, acte] = row.map(v => v.trim())
-      if (!/^\d{8}$/.test(date ?? '')) continue
-      const qs = `date_mort:"${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}" AND code_source_ville_deces:"${code}" AND numero_acte_deces:"${acte}"`
+      const qs = oppositionQuery(row)
+      if (!qs) continue
       const found = (await axios.get(`api/v1/datasets/${datasetId}/lines`, { params: { qs } })).data
       if (found.total === 1) {
         toUpdate.push({ ...clean(found.results[0]), _action: 'delete' })
         removed++
       } else if (found.total > 1) {
-        await log.info(`Impossible de déterminer la personne à supprimer (${date}, ${code}, ${acte})`)
+        await log.info(`Impossible de déterminer la personne à supprimer (${row.map(v => v.trim()).join(', ')})`)
       }
     }
     await log.info(`Suppression de ${removed} ligne(s) suite à une demande d'opposition`)
