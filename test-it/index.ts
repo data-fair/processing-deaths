@@ -5,7 +5,7 @@ import outputSchema from '../lib/output-schema.json' with { type: 'json' }
 import { countryName } from '../lib/countries.ts'
 import { selectResources } from '../lib/download.ts'
 import { communeKeys, resolveNewCodes } from '../lib/references.ts'
-import { fixInconsistentLines, fixFirstNames, oppositionQuery } from '../lib/inconsistency.ts'
+import { fixInconsistentLines, fixFirstNames, oppositionQuery, oppositionMatches } from '../lib/inconsistency.ts'
 
 describe('Deaths processing', () => {
   it('exposes a processing config schema for users', () => {
@@ -128,13 +128,32 @@ describe('resolveNewCodes', () => {
 
 describe('oppositionQuery', () => {
   it('searches a death by date, place and record number', () => {
-    assert.equal(oppositionQuery(['20160121', '30189', '170']), 'date_mort:"2016-01-21" AND code_source_ville_deces:"30189" AND numero_acte_deces:"170"')
+    assert.deepEqual(oppositionQuery(['20160121', '30189', '170']), {
+      qs: 'date_mort:"2016-01-21" AND code_source_ville_deces:"30189" AND numero_acte_deces:"170"',
+      complete: true
+    })
   })
   it('leaves out a blank place code', () => {
-    assert.equal(oppositionQuery(['20100716', '     ', '01355']), 'date_mort:"2010-07-16" AND numero_acte_deces:"01355"')
+    assert.deepEqual(oppositionQuery(['20100716', '     ', '01355']), { qs: 'date_mort:"2010-07-16" AND numero_acte_deces:"01355"', complete: false })
   })
   it('skips the header and rows with only a date', () => {
     assert.equal(oppositionQuery(['\uFEFFDate de décès', 'Code du lieu de décès', "Numéro d'acte de décès"]), undefined)
     assert.equal(oppositionQuery(['20100716', '', '']), undefined)
+  })
+})
+
+describe('oppositionMatches', () => {
+  const lines = (n: number) => Array.from({ length: n }, (_, i) => ({ _id: String(i) }))
+  it('deletes the single match, or nothing when the person is absent', () => {
+    assert.deepEqual(oppositionMatches(true, 1, lines(1)), lines(1))
+    assert.deepEqual(oppositionMatches(false, 1, lines(1)), lines(1))
+    assert.deepEqual(oppositionMatches(true, 0, []), [])
+  })
+  it('deletes every match of a complete request, the same person published several times', () => {
+    assert.deepEqual(oppositionMatches(true, 3, lines(3)), lines(3))
+  })
+  it('deletes nothing for an incomplete request with several matches, or too many matches', () => {
+    assert.equal(oppositionMatches(false, 2, lines(2)), undefined)
+    assert.equal(oppositionMatches(true, 11, lines(11)), undefined)
   })
 })
